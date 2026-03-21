@@ -556,6 +556,8 @@ function ChatCard({ visible }) {
       
       
 
+      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 80% 75% at 50% 50%, transparent 40%, #111118 80%)", pointerEvents: "none", zIndex: 20 }} />
+      <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: "40%", background: "radial-gradient(ellipse at 50% 0%, rgba(45,212,191,0.06), transparent)", pointerEvents: "none" }} />
       {/* Header */}
       <div style={{ padding: "20px 28px", borderBottom: "1px solid rgba(255,255,255,0.03)", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
         <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#2DD4BF", letterSpacing: "0.12em" }}>STEP 03</div>
@@ -883,7 +885,6 @@ export default function Page() {
                     background: "rgba(255,255,255,0.025)",
                     border: "none",
                     backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
-                    maskImage: "radial-gradient(ellipse 88% 82% at 50% 50%, black 45%, transparent 100%)", WebkitMaskImage: "radial-gradient(ellipse 88% 82% at 50% 50%, black 45%, transparent 100%)",
                     transform: `translateY(${-leaving * 150}px) scale(${1 - leaving * 0.08})`,
                     opacity: isActive ? 1 : leaving > 0 ? 1 - leaving : 0,
                     boxShadow: "0 30px 80px rgba(0,0,0,0.5)",
@@ -891,6 +892,8 @@ export default function Page() {
                     zIndex: 3,
                   }}>
                     
+                    <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 80% 75% at 50% 50%, transparent 40%, #111118 80%)", pointerEvents: "none", zIndex: 20 }} />
+                    <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: "55%", background: "radial-gradient(ellipse at 50% 0%, rgba(45,212,191,0.07), transparent)", pointerEvents: "none" }} />
                     <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#2DD4BF", letterSpacing: "0.12em", marginBottom: 28, position: "relative" }}>STEP 01</div>
                     <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 44, fontWeight: 800, letterSpacing: "-0.03em", color: "#F0F0F5", margin: "0 0 18px 0", lineHeight: 1.15, position: "relative" }}>
                       Your agents <span style={{ color: "#2DD4BF" }}>never sleep.</span>
@@ -914,11 +917,10 @@ export default function Page() {
                 return (
                   <div style={{
                     position: "absolute", width: "90%", maxWidth: 720,
+                    borderRadius: 28, overflow: "hidden",
                     background: "rgba(255,255,255,0.02)",
                     border: "none",
-                    borderRadius: 28, overflow: "hidden",
                     backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
-                    maskImage: "radial-gradient(ellipse 88% 82% at 50% 50%, black 45%, transparent 100%)", WebkitMaskImage: "radial-gradient(ellipse 88% 82% at 50% 50%, black 45%, transparent 100%)",
                     transform: `translateY(${isActive ? 0 : activeIdx < 1 ? 80 : -leaving * 150}px) scale(${isActive ? 1 : activeIdx < 1 ? 0.95 : 1 - leaving * 0.08})`,
                     opacity: isActive ? 1 : leaving > 0 ? 1 - leaving : (activeIdx < 1 ? 0 : 0),
                     boxShadow: "0 30px 80px rgba(0,0,0,0.5), 0 0 40px rgba(249,115,22,0.03)",
@@ -927,6 +929,8 @@ export default function Page() {
                   }}>
                     
                     
+                    <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 80% 75% at 50% 50%, transparent 40%, #111118 80%)", pointerEvents: "none", zIndex: 20 }} />
+                    <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: "55%", background: "radial-gradient(ellipse at 50% 0%, rgba(212,168,0,0.07), transparent)", pointerEvents: "none" }} />
                     <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#D4A800", letterSpacing: "0.12em", marginBottom: 28, position: "relative" }}>STEP 02</div>
                     <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 44, fontWeight: 800, letterSpacing: "-0.03em", color: "#F0F0F5", margin: "0 0 18px 0", lineHeight: 1.15, position: "relative" }}>
                       Tell us what you need.<br/><span style={{ color: "#D4A800" }}>We'll execute.</span>
