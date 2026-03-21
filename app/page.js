@@ -657,10 +657,10 @@ export default function Page() {
     <div style={{ background: "#111118", minHeight: "100vh", fontFamily: "'Inter', sans-serif", color: "#D8D8E0", overflow: introPhase !== "hero" ? "hidden" : undefined, height: introPhase !== "hero" ? "100vh" : undefined }}>
       
 
-      {/* â•â•â• SCROLL PROGRESS BAR â•â•â• */}
+      {/* â-â-â- SCROLL PROGRESS BAR â-â-â- */}
       <div style={{ position: "fixed", top: 0, left: 0, height: 2, background: "linear-gradient(90deg, #2DD4BF, #D4A800)", width: `${scrollPct}%`, zIndex: 200, transition: "width 0.1s", boxShadow: "0 0 8px rgba(45,212,191,0.3)" }} />
 
-      {/* â•â• INTRO OVERLAY â•â• */}
+      {/* â-â- INTRO OVERLAY â-â- */}
       <div style={{
         position: "fixed", inset: 0, zIndex: introPhase === "hero" ? -1 : 200,
         background: "#111118",
@@ -747,7 +747,7 @@ export default function Page() {
         </div>
       </nav>
 
-      {/* â•â•â•â•â•â•â•â•â•â• HERO â•â•â•â•â•â•â•â•â•â• */}
+      {/* â-â-â-â-â-â-â-â-â-â- HERO â-â-â-â-â-â-â-â-â-â- */}
       <section style={{ position: "relative", height: "100vh", background: "#111118", overflow: "hidden" }}>
         <div style={{ position: "relative", width: "100%", height: "100vh" }}>
           {/* BG */}
@@ -857,7 +857,7 @@ export default function Page() {
       {/* Divider */}
       <div style={{ width: "100%", borderTop: "1px dashed rgba(255,255,255,0.08)" }} />
 
-      {/* â•â•â•â•â•â•â•â•â•â• HOW IT WORKS â€” 3 CARDS â•â•â•â•â•â•â•â•â•â• */}
+      {/* â-â-â-â-â-â-â-â-â-â- HOW IT WORKS â€” 3 CARDS â-â-â-â-â-â-â-â-â-â- */}
       {(() => {
         const sStart = vh * 0.85;
         const sLen = vh * 3;
@@ -876,7 +876,7 @@ export default function Page() {
           <section style={{ position: "relative", height: "350vh", zIndex: 1, background: "#111118" }}>
             <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", opacity: fadeIn, overflow: "hidden" }}>
 
-              {/* â•â•â• CARD 1: Your agents never sleep â•â•â• */}
+              {/* â-â-â- CARD 1: Your agents never sleep â-â-â- */}
               {(() => {
                 const { leaving, isActive } = cardTransition(0);
                 return (
@@ -909,7 +909,7 @@ export default function Page() {
                 );
               })()}
 
-              {/* â•â•â• CARD 2: Tell us what you need â•â•â• */}
+              {/* â-â-â- CARD 2: Tell us what you need â-â-â- */}
               {(() => {
                 const { leaving, entering, isActive } = cardTransition(1);
                 const show = activeIdx >= 1 ? entering : 0;
@@ -947,7 +947,7 @@ export default function Page() {
                 );
               })()}
 
-              {/* â•â•â• CARD 3: Live chat â€” the showstopper â•â•â• */}
+              {/* â-â-â- CARD 3: Live chat â€” the showstopper â-â-â- */}
               {(() => {
                 const show = activeIdx >= 2;
                 return <ChatCard visible={show} />;
@@ -963,10 +963,10 @@ export default function Page() {
           </section>
         );
       })()}
-      {/* â•â•â• TICKER â•â•â• */}
+      {/* â-â-â- TICKER â-â-â- */}
       <Ticker items={["MANSA: EP.1 IN PRODUCTION","CHRONOS â†’ COMPILING BRIEF","SCRIPT-V â†’ GENERATING SHOTS","$26K PIPELINE ACTIVE","4 PROJECTS IN MOTION","847 ASSETS GENERATED","COCA-COLA DECK DUE FRIDAY","3 AGENTS ONLINE"]} speed={45} />
 
-      {/* â•â•â•â•â•â•â•â•â•â• SECTIONS â•â•â•â•â•â•â•â•â•â• */}
+      {/* â-â-â-â-â-â-â-â-â-â- SECTIONS â-â-â-â-â-â-â-â-â-â- */}
       <div style={{ position: "relative", zIndex: 1, background: "#111118" }}>
         {/* Global scanline + grid â€” parallax at 0.3x */}
         <div style={{ position: "absolute", inset: 0, opacity: 0.02, backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.04) 2px, rgba(255,255,255,0.04) 4px)", pointerEvents: "none", transform: `translateY(${scrollY * -0.05}px)` }} />
@@ -1030,7 +1030,7 @@ export default function Page() {
             <div style={{ position: "absolute", top: -40, left: "20%", width: "30%", height: 80, background: "radial-gradient(ellipse at 50% 50%, rgba(45,212,191,0.03), transparent)", pointerEvents: "none" }} />
             <SectionHeader idx="02" badge="PROJECTS" title="Active Work" desc="personal_ip â†’ client_work â†’ consulting" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 36, fontWeight: 700, color: "#2DD4BF" }}><Counter to={4} dur={1200} /><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#445", marginLeft: 6 }}>active</span></span>} />
 
-            {/* â•â•â• FEATURED: MANSA â•â•â• */}
+            {/* â-â-â- FEATURED: MANSA â-â-â- */}
             <Reveal delay={40} parallax={0.2}>
               <div className="bento-hover" style={{ borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 360, background: "rgba(255,255,255,0.015)", border: "1px solid rgba(45,212,191,0.1)", cursor: "pointer", marginBottom: 24 }}>
                 <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(45,212,191,0.08) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s", pointerEvents: "none" }} />
