@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useRef } from "react";
 
@@ -469,9 +469,9 @@ function AmbientCell({ title, subtitle, g1, g2, accent, style = {} }) {
       <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${g1}, ${g2}, #111118)` }} />
       <div style={{ position: "absolute", top: 0, left: "20%", right: "20%", height: 80, background: `radial-gradient(ellipse at 50% 0%, ${accent}12, transparent)`, opacity: h ? 1 : 0.4, transition: "opacity 0.6s" }} />
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 40%, rgba(17,17,24,0.85) 100%)" }} />
-      <div style={{ position: "absolute", top: 10, left: 12, fontFamily: "'Space Mono', monospace", fontSize: 7, color: `${accent}20` }}>REC â— 00:00:12:04</div>
+      <div style={{ position: "absolute", top: 10, left: 12, fontFamily: "'Space Mono', monospace", fontSize: 7, color: `${accent}20` }}>REC  00:00:12:04</div>
       <div style={{ position: "absolute", top: "50%", left: "50%", transform: `translate(-50%,-50%) scale(${h ? 1 : 0.75})`, opacity: h ? 0.7 : 0.15, width: 36, height: 36, borderRadius: "50%", background: `${accent}0A`, border: `1px solid ${accent}20`, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.4s" }}>
-        <span style={{ color: accent, fontSize: 11, marginLeft: 2 }}>â–¶</span>
+        <span style={{ color: accent, fontSize: 11, marginLeft: 2 }}>></span>
       </div>
       <div style={{ position: "absolute", bottom: 12, left: 14 }}>
         <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: `${accent}50`, marginBottom: 2 }}>{subtitle}</div>
@@ -587,13 +587,13 @@ function ChatCard({ visible }) {
             <div style={{ width: 22, height: 22, borderRadius: 7, background: `rgba(${m.color},0.06)`, border: `1px solid rgba(${m.color},0.1)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 7, fontWeight: 800, color: `rgba(${m.color},0.8)`, flexShrink: 0 }}>{m.name}</div>
             <div style={{ padding: "9px 14px", borderRadius: "14px 14px 14px 4px", background: `rgba(${m.color},0.03)`, border: `1px solid rgba(${m.color},0.05)`, maxWidth: "75%" }}>
               <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#889", lineHeight: 1.5 }}>{m.text}</div>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#445", marginTop: 3 }}>{m.agent} Â· {m.time}</div>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#445", marginTop: 3 }}>{m.agent} / {m.time}</div>
             </div>
           </div>
         ))}
         {loading && (
           <div style={{ display: "flex", gap: 8, alignItems: "flex-end" }}>
-            <div style={{ width: 22, height: 22, borderRadius: 7, background: "rgba(45,212,191,0.06)", border: "1px solid rgba(45,212,191,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 7, fontWeight: 800, color: "rgba(45,212,191,0.8)", flexShrink: 0 }}>â—</div>
+            <div style={{ width: 22, height: 22, borderRadius: 7, background: "rgba(45,212,191,0.06)", border: "1px solid rgba(45,212,191,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 7, fontWeight: 800, color: "rgba(45,212,191,0.8)", flexShrink: 0 }}></div>
             <div style={{ padding: "10px 16px", borderRadius: "14px 14px 14px 4px", background: "rgba(45,212,191,0.03)", border: "1px solid rgba(45,212,191,0.05)" }}>
               <div style={{ display: "flex", gap: 4 }}>{[0,1,2].map(j => <span key={j} style={{ width: 5, height: 5, borderRadius: "50%", background: "#2DD4BF", opacity: 0.4, animation: `pulse 1s ${j*0.2}s infinite` }} />)}</div>
             </div>
@@ -655,12 +655,12 @@ export default function Page() {
 
   return (
     <div style={{ background: "#111118", minHeight: "100vh", fontFamily: "'Inter', sans-serif", color: "#D8D8E0", overflow: introPhase !== "hero" ? "hidden" : undefined, height: introPhase !== "hero" ? "100vh" : undefined }}>
-      
 
-      {/* â-â-â- SCROLL PROGRESS BAR â-â-â- */}
+
+      {/*  SCROLL PROGRESS BAR  */}
       <div style={{ position: "fixed", top: 0, left: 0, height: 2, background: "linear-gradient(90deg, #2DD4BF, #D4A800)", width: `${scrollPct}%`, zIndex: 200, transition: "width 0.1s", boxShadow: "0 0 8px rgba(45,212,191,0.3)" }} />
 
-      {/* â-â- INTRO OVERLAY â-â- */}
+      {/*  INTRO OVERLAY  */}
       <div style={{
         position: "fixed", inset: 0, zIndex: introPhase === "hero" ? -1 : 200,
         background: "#111118",
@@ -723,7 +723,7 @@ export default function Page() {
         )}
       </div>
 
-      {/* NAV â€” hidden during intro */}
+      {/* NAV " hidden during intro */}
       <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "0 44px", background: "rgba(17,17,24,0.65)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)", borderBottom: "1px dashed rgba(255,255,255,0.08)", opacity: introPhase === "hero" ? 1 : 0, transform: introPhase === "hero" ? "translateY(0)" : "translateY(-20px)", transition: "opacity 0.4s, transform 0.4s" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", height: 54 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
@@ -747,7 +747,7 @@ export default function Page() {
         </div>
       </nav>
 
-      {/* â-â-â-â-â-â-â-â-â-â- HERO â-â-â-â-â-â-â-â-â-â- */}
+      {/*  HERO  */}
       <section style={{ position: "relative", height: "100vh", background: "#111118", overflow: "hidden" }}>
         <div style={{ position: "relative", width: "100%", height: "100vh" }}>
           {/* BG */}
@@ -761,15 +761,15 @@ export default function Page() {
           {/* Top gradient for nav readability */}
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "20%", background: "linear-gradient(0deg, transparent, rgba(17,17,24,0.6))", pointerEvents: "none", zIndex: 1 }} />
 
-          {/* Content â€” Maze-inspired layout */}
+          {/* Content " Maze-inspired layout */}
           <div style={{ position: "absolute", inset: 0, zIndex: 2, display: "flex", flexDirection: "column", padding: "0 44px" }}>
 
-            {/* Top badge â€” near nav */}
+            {/* Top badge " near nav */}
             <div style={{ display: "flex", justifyContent: "center", paddingTop: 90, animation: introPhase === "hero" ? "heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.05s both" : "none", opacity: introPhase === "hero" ? undefined : 0 }}>
               <div onClick={() => {}} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "7px 16px", borderRadius: 30, border: "1px dashed rgba(45,212,191,0.15)", background: "rgba(255,255,255,0.02)", backdropFilter: "blur(8px)", cursor: "pointer", transition: "all 0.3s" }}>
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#2DD4BF", boxShadow: "0 0 6px rgba(45,212,191,0.4)" }} />
                 <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#AAB", letterSpacing: "0.04em" }}>4 Active Projects</span>
-                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#2DD4BF" }}>â†’</span>
+                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#2DD4BF" }}>-&gt;</span>
               </div>
             </div>
 
@@ -799,7 +799,7 @@ export default function Page() {
               <div style={{ animation: introPhase === "hero" ? "heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s both" : "none", opacity: introPhase === "hero" ? undefined : 0, marginTop: 32 }}>
                 <div onClick={() => {}} className="action-btn" style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "14px 32px", borderRadius: 14, border: "1px solid rgba(45,212,191,0.12)", background: "rgba(255,255,255,0.04)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", cursor: "pointer", transition: "all 0.3s", boxShadow: "0 4px 24px rgba(0,0,0,0.2)" }}>
                   <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 14, fontWeight: 600, color: "#E8E8F0", letterSpacing: "0.01em" }}>Meet the team</span>
-                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: "#2DD4BF" }}>â†’</span>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: "#2DD4BF" }}>-&gt;</span>
                 </div>
               </div>
             </div>
@@ -857,7 +857,7 @@ export default function Page() {
       {/* Divider */}
       <div style={{ width: "100%", borderTop: "1px dashed rgba(255,255,255,0.08)" }} />
 
-      {/* â-â-â-â-â-â-â-â-â-â- HOW IT WORKS â€” 3 CARDS â-â-â-â-â-â-â-â-â-â- */}
+      {/*  HOW IT WORKS " 3 CARDS  */}
       {(() => {
         const sStart = vh * 0.85;
         const sLen = vh * 3;
@@ -876,7 +876,7 @@ export default function Page() {
           <section style={{ position: "relative", height: "350vh", zIndex: 1, background: "#111118" }}>
             <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", opacity: fadeIn, overflow: "hidden" }}>
 
-              {/* â-â-â- CARD 1: Your agents never sleep â-â-â- */}
+              {/*  CARD 1: Your agents never sleep  */}
               {(() => {
                 const { leaving, isActive } = cardTransition(0);
                 return (
@@ -909,7 +909,7 @@ export default function Page() {
                 );
               })()}
 
-              {/* â-â-â- CARD 2: Tell us what you need â-â-â- */}
+              {/*  CARD 2: Tell us what you need  */}
               {(() => {
                 const { leaving, entering, isActive } = cardTransition(1);
                 const show = activeIdx >= 1 ? entering : 0;
@@ -947,7 +947,7 @@ export default function Page() {
                 );
               })()}
 
-              {/* â-â-â- CARD 3: Live chat â€” the showstopper â-â-â- */}
+              {/*  CARD 3: Live chat " the showstopper  */}
               {(() => {
                 const show = activeIdx >= 2;
                 return <ChatCard visible={show} />;
@@ -963,19 +963,19 @@ export default function Page() {
           </section>
         );
       })()}
-      {/* â-â-â- TICKER â-â-â- */}
-      <Ticker items={["MANSA: EP.1 IN PRODUCTION","CHRONOS â†’ COMPILING BRIEF","SCRIPT-V â†’ GENERATING SHOTS","$26K PIPELINE ACTIVE","4 PROJECTS IN MOTION","847 ASSETS GENERATED","COCA-COLA DECK DUE FRIDAY","3 AGENTS ONLINE"]} speed={45} />
+      {/*  TICKER  */}
+      <Ticker items={["MANSA: EP.1 IN PRODUCTION","CHRONOS ' COMPILING BRIEF","SCRIPT-V ' GENERATING SHOTS","$26K PIPELINE ACTIVE","4 PROJECTS IN MOTION","847 ASSETS GENERATED","COCA-COLA DECK DUE FRIDAY","3 AGENTS ONLINE"]} speed={45} />
 
-      {/* â-â-â-â-â-â-â-â-â-â- SECTIONS â-â-â-â-â-â-â-â-â-â- */}
+      {/*  SECTIONS  */}
       <div style={{ position: "relative", zIndex: 1, background: "#111118" }}>
-        {/* Global scanline + grid â€” parallax at 0.3x */}
+        {/* Global scanline + grid " parallax at 0.3x */}
         <div style={{ position: "absolute", inset: 0, opacity: 0.02, backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.04) 2px, rgba(255,255,255,0.04) 4px)", pointerEvents: "none", transform: `translateY(${scrollY * -0.05}px)` }} />
         <div style={{ position: "absolute", inset: 0, opacity: 0.012, backgroundImage: "linear-gradient(rgba(45,212,191,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(45,212,191,0.1) 1px, transparent 1px)", backgroundSize: "140px 140px", pointerEvents: "none", transform: `translateY(${scrollY * -0.08}px)` }} />
         <div style={{ position: "relative", maxWidth: 1200, margin: "0 auto", padding: "0 44px" }}>
 
           {/* SECTION 1: YOUR DAY */}
           <section style={{ padding: "80px 0 0" }}>
-            <SectionHeader idx="01" badge="YOUR DAY" title="Today's Focus" desc="priorities â†’ schedule â†’ quick_actions" right={<div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 14px", borderRadius: 3, border: "1px solid rgba(45,212,191,0.06)" }}><span style={{ fontSize: 16 }}>â˜€</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, fontWeight: 700 }}>72Â°</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445" }}>NYC</span></div>} />
+            <SectionHeader idx="01" badge="YOUR DAY" title="Today's Focus" desc="priorities ' schedule ' quick_actions" right={<div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 14px", borderRadius: 3, border: "1px solid rgba(45,212,191,0.06)" }}><span style={{ fontSize: 16 }}>☀</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, fontWeight: 700 }}>72deg</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445" }}>NYC</span></div>} />
             <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: 12 }}>
               <Reveal delay={40} style={{ gridColumn: "span 5" }}>
                 <Card>
@@ -1013,7 +1013,7 @@ export default function Page() {
               <Reveal delay={120} style={{ gridColumn: "span 3" }}>
                 <Card>
                   <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#556", marginBottom: 14 }}>QUICK ACTIONS</div>
-                  {[{ l: "New Project", ic: "ï¼‹", c: "#2DD4BF" }, { l: "Gen Prompt", ic: "âŸ¡", c: "#D4A800" }, { l: "Review Deal", ic: "â—†", c: "#F59E0B" }, { l: "Launch Agent", ic: "â—‰", c: "#2DD4BF" }].map((a, i) => (
+                  {[{ l: "New Project", ic: "+", c: "#2DD4BF" }, { l: "Gen Prompt", ic: "*", c: "#D4A800" }, { l: "Review Deal", ic: "#", c: "#F59E0B" }, { l: "Launch Agent", ic: "O", c: "#2DD4BF" }].map((a, i) => (
                     <div key={i} className="action-btn" style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 10px", borderRadius: 8, background: `${a.c}04`, border: `1px solid ${a.c}0C`, marginBottom: 5, cursor: "pointer" }}>
                       <span style={{ fontSize: 12, color: a.c, width: 16, textAlign: "center" }}>{a.ic}</span>
                       <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: a.c }}>{a.l}</span>
@@ -1028,9 +1028,9 @@ export default function Page() {
           <section style={{ padding: "80px 0 0", position: "relative" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "1px dashed rgba(255,255,255,0.06)" }} />
             <div style={{ position: "absolute", top: -40, left: "20%", width: "30%", height: 80, background: "radial-gradient(ellipse at 50% 50%, rgba(45,212,191,0.03), transparent)", pointerEvents: "none" }} />
-            <SectionHeader idx="02" badge="PROJECTS" title="Active Work" desc="personal_ip â†’ client_work â†’ consulting" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 36, fontWeight: 700, color: "#2DD4BF" }}><Counter to={4} dur={1200} /><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#445", marginLeft: 6 }}>active</span></span>} />
+            <SectionHeader idx="02" badge="PROJECTS" title="Active Work" desc="personal_ip ' client_work ' consulting" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 36, fontWeight: 700, color: "#2DD4BF" }}><Counter to={4} dur={1200} /><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#445", marginLeft: 6 }}>active</span></span>} />
 
-            {/* â-â-â- FEATURED: MANSA â-â-â- */}
+            {/*  FEATURED: MANSA  */}
             <Reveal delay={40} parallax={0.2}>
               <div className="bento-hover" style={{ borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 360, background: "rgba(255,255,255,0.015)", border: "1px solid rgba(45,212,191,0.1)", cursor: "pointer", marginBottom: 24 }}>
                 <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(45,212,191,0.08) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s", pointerEvents: "none" }} />
@@ -1046,14 +1046,14 @@ export default function Page() {
                     <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 40% 40%, rgba(45,212,191,0.05), transparent 60%)" }} />
                     {/* Play button */}
                     <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 56, height: 56, borderRadius: "50%", background: "rgba(45,212,191,0.08)", border: "1px solid rgba(45,212,191,0.2)", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(8px)" }}>
-                      <span style={{ color: "#2DD4BF", fontSize: 18, marginLeft: 3 }}>â–¶</span>
+                      <svg width="14" height="16" viewBox="0 0 14 16" fill="#2DD4BF"><polygon points="0,0 14,8 0,16"/></svg>
                     </div>
                     {/* Rec badge */}
                     <div style={{ position: "absolute", top: 16, left: 16, display: "flex", alignItems: "center", gap: 6 }}>
                       <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#2DD4BF", animation: "pulse 2s infinite" }} />
                       <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "rgba(45,212,191,0.5)" }}>MANSA_EP1_REEL.MP4</span>
                     </div>
-                    <div style={{ position: "absolute", bottom: 16, left: 16, fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#334" }}>2.39:1 â†’ 24fps â†’ AMISSA STUDIOS</div>
+                    <div style={{ position: "absolute", bottom: 16, left: 16, fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#334" }}>2.39:1 ' 24fps ' AMISSA STUDIOS</div>
                   </div>
 
                   {/* Right: Info */}
@@ -1062,7 +1062,7 @@ export default function Page() {
                       <Pill t="FEATURED" c="#2DD4BF" />
                       <Pill t="IN PRODUCTION" c="#2DD4BF" />
                     </div>
-                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445", letterSpacing: "0.08em", marginBottom: 8 }}>PERSONAL IP â†’ EPISODE 1</div>
+                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445", letterSpacing: "0.08em", marginBottom: 8 }}>PERSONAL IP ' EPISODE 1</div>
                     <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 26, fontWeight: 800, color: "#F0F0F5", margin: "0 0 10px", letterSpacing: "-0.02em" }}>Mansa: Whispers of the Wind</h3>
                     <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#556", lineHeight: 1.6, margin: "0 0 24px" }}>African historical epic. Full storyboard pipeline from script to first-frame prompts, motion direction, and camera language. Collaborating with Hoyt Dwyer.</p>
                     <div style={{ marginTop: "auto" }}>
@@ -1218,7 +1218,7 @@ export default function Page() {
           <section style={{ padding: "80px 0 0", position: "relative" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "1px dashed rgba(255,255,255,0.06)" }} />
             <div style={{ position: "absolute", top: -40, right: "20%", width: "30%", height: 80, background: "radial-gradient(ellipse at 50% 50%, rgba(249,115,22,0.03), transparent)", pointerEvents: "none" }} />
-            <SectionHeader idx="03" badge="YOUR AI TEAM" title="Agents" desc="autonomous_agents â†’ creative_pipeline â†’ always_building" right={<div style={{ display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: "#D4A800", boxShadow: "0 0 6px rgba(212,168,0,0.4)", animation: "pulse 2s infinite" }} /><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#D4A800" }}>3 ONLINE</span></div>} />
+            <SectionHeader idx="03" badge="YOUR AI TEAM" title="Agents" desc="autonomous_agents ' creative_pipeline ' always_building" right={<div style={{ display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: "#D4A800", boxShadow: "0 0 6px rgba(212,168,0,0.4)", animation: "pulse 2s infinite" }} /><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#D4A800" }}>3 ONLINE</span></div>} />
             <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10 }}>
               {agentsData.map((a, i) => {
                 const isActive = a.progress > 0;
@@ -1280,7 +1280,7 @@ export default function Page() {
           <section style={{ padding: "80px 0 0", position: "relative" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "1px dashed rgba(255,255,255,0.06)" }} />
             <div style={{ position: "absolute", top: -40, left: "40%", width: "20%", height: 80, background: "radial-gradient(ellipse at 50% 50%, rgba(245,158,11,0.03), transparent)", pointerEvents: "none" }} />
-            <SectionHeader idx="04" badge="BUSINESS" title="Deals + Pipeline" desc="partnerships â†’ workshops â†’ credentials" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32, fontWeight: 700, color: "#F59E0B" }}>$<Counter to={26} dur={1400} />k<span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#445", marginLeft: 6 }}>pipeline</span></span>} />
+            <SectionHeader idx="04" badge="BUSINESS" title="Deals + Pipeline" desc="partnerships ' workshops ' credentials" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32, fontWeight: 700, color: "#F59E0B" }}>$<Counter to={26} dur={1400} />k<span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#445", marginLeft: 6 }}>pipeline</span></span>} />
             <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: 12 }}>
               <Reveal delay={40} style={{ gridColumn: "span 5" }}>
                 <Card>
@@ -1293,7 +1293,7 @@ export default function Page() {
                       </div>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445" }}>{d.type}</span>
-                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: riskC[d.risk], padding: "2px 8px", borderRadius: 2, background: `${riskC[d.risk]}08`, border: `1px solid ${riskC[d.risk]}15` }}>IPâ†’{d.risk.toUpperCase()}</span>
+                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: riskC[d.risk], padding: "2px 8px", borderRadius: 2, background: `${riskC[d.risk]}08`, border: `1px solid ${riskC[d.risk]}15` }}>IP'{d.risk.toUpperCase()}</span>
                       </div>
                     </div>
                   ))}
@@ -1317,13 +1317,13 @@ export default function Page() {
                   </div>
                   {/* Play button */}
                   <div style={{ position: "absolute", top: "45%", left: "50%", transform: "translate(-50%,-50%)", width: 40, height: 40, borderRadius: "50%", background: "rgba(212,168,0,0.06)", border: "1px solid rgba(212,168,0,0.15)", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(6px)" }}>
-                    <span style={{ color: "#D4A800", fontSize: 12, marginLeft: 2 }}>â–¶</span>
+                    <svg width="10" height="12" viewBox="0 0 10 12" fill="#D4A800"><polygon points="0,0 10,6 0,12"/></svg>
                   </div>
                   {/* Info */}
                   <div style={{ position: "absolute", bottom: 14, left: 14, right: 14 }}>
-                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "rgba(212,168,0,0.5)", marginBottom: 3 }}>MANSA â†’ SHOT 001</div>
+                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "rgba(212,168,0,0.5)", marginBottom: 3 }}>MANSA ' SHOT 001</div>
                     <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, fontWeight: 700, color: "#E8E8F0" }}>Desert Palace</div>
-                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#334", marginTop: 3 }}>2.39:1 â†’ 24fps â†’ Runway Gen-3</div>
+                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#334", marginTop: 3 }}>2.39:1 ' 24fps ' Runway Gen-3</div>
                   </div>
                 </div>
               </Reveal>
@@ -1379,12 +1379,12 @@ export default function Page() {
                 <svg width="12" height="12" viewBox="0 0 12 12"><line x1="6" y1="0" x2="6" y2="12" stroke="#2DD4BF" strokeWidth="0.6" opacity="0.3"/><line x1="0" y1="6" x2="12" y2="6" stroke="#2DD4BF" strokeWidth="0.6" opacity="0.3"/></svg>
                 <div>
                   <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, fontWeight: 700 }}>ISSA SISSOKO</div>
-                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#334", marginTop: 2 }}>Amissa Studios [LLC] â†’ Command Centre [V1.0]</div>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#334", marginTop: 2 }}>Amissa Studios [LLC] ' Command Centre [V1.0]</div>
                 </div>
               </div>
               <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#223", textAlign: "right", lineHeight: 1.8 }}>
-                40.7128Â°N 74.0060Â°W<br/>
-                Â© 2026
+                40.7128N 74.0060W<br/>
+                2026
               </div>
             </div>
           </div>
