@@ -471,7 +471,7 @@ function AmbientCell({ title, subtitle, g1, g2, accent, style = {} }) {
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 40%, rgba(17,17,24,0.85) 100%)" }} />
       <div style={{ position: "absolute", top: 10, left: 12, fontFamily: "'Space Mono', monospace", fontSize: 7, color: `${accent}20` }}>REC  00:00:12:04</div>
       <div style={{ position: "absolute", top: "50%", left: "50%", transform: `translate(-50%,-50%) scale(${h ? 1 : 0.75})`, opacity: h ? 0.7 : 0.15, width: 36, height: 36, borderRadius: "50%", background: `${accent}0A`, border: `1px solid ${accent}20`, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.4s" }}>
-        <span style={{ color: accent, fontSize: 11, marginLeft: 2 }}>></span>
+        <svg width="10" height="12" viewBox="0 0 10 12" fill={accent}><polygon points="0,0 10,6 0,12"/></svg>
       </div>
       <div style={{ position: "absolute", bottom: 12, left: 14 }}>
         <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: `${accent}50`, marginBottom: 2 }}>{subtitle}</div>
