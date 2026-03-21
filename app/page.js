@@ -878,8 +878,12 @@ export default function Page() {
                 return (
                   <div style={{
                     position: "absolute", width: "90%", maxWidth: 720,
-                    background: "none",
-                    backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+                    borderRadius: 28, overflow: "hidden",
+                    borderRadius: 28, overflow: "hidden",
+                    background: "rgba(255,255,255,0.025)",
+                    border: "none",
+                    backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
+                    maskImage: "radial-gradient(ellipse 88% 82% at 50% 50%, black 45%, transparent 100%)", WebkitMaskImage: "radial-gradient(ellipse 88% 82% at 50% 50%, black 45%, transparent 100%)",
                     transform: `translateY(${-leaving * 150}px) scale(${1 - leaving * 0.08})`,
                     opacity: isActive ? 1 : leaving > 0 ? 1 - leaving : 0,
                     boxShadow: "0 30px 80px rgba(0,0,0,0.5)",
@@ -910,8 +914,11 @@ export default function Page() {
                 return (
                   <div style={{
                     position: "absolute", width: "90%", maxWidth: 720,
-                    background: "none",
-                    backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+                    background: "rgba(255,255,255,0.02)",
+                    border: "none",
+                    borderRadius: 28, overflow: "hidden",
+                    backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
+                    maskImage: "radial-gradient(ellipse 88% 82% at 50% 50%, black 45%, transparent 100%)", WebkitMaskImage: "radial-gradient(ellipse 88% 82% at 50% 50%, black 45%, transparent 100%)",
                     transform: `translateY(${isActive ? 0 : activeIdx < 1 ? 80 : -leaving * 150}px) scale(${isActive ? 1 : activeIdx < 1 ? 0.95 : 1 - leaving * 0.08})`,
                     opacity: isActive ? 1 : leaving > 0 ? 1 - leaving : (activeIdx < 1 ? 0 : 0),
                     boxShadow: "0 30px 80px rgba(0,0,0,0.5), 0 0 40px rgba(249,115,22,0.03)",
