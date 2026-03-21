@@ -546,8 +546,8 @@ function ChatCard({ visible }) {
       "--glow-color": "rgba(45,212,191,0.1)",
       position: "absolute", width: "92%", maxWidth: 760,
       borderRadius: 28, overflow: "hidden",
-      background: "rgba(255,255,255,0.02)",
-      border: "1px solid rgba(45,212,191,0.1)",
+      background: "radial-gradient(ellipse 92% 88% at 50% 50%, rgba(255,255,255,0.035) 10%, rgba(255,255,255,0.015) 65%, transparent 100%)",
+      border: "none",
       backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
       transform: `translateY(${visible ? 0 : 80}px) scale(${visible ? 1 : 0.95})`,
       opacity: visible ? 1 : 0,
@@ -883,7 +883,7 @@ export default function Page() {
                   <div style={{
                     position: "absolute", width: "90%", maxWidth: 720,
                     borderRadius: 28, overflow: "hidden",
-                    background: "rgba(255,255,255,0.025)",
+                    background: "radial-gradient(ellipse 92% 88% at 50% 50%, rgba(255,255,255,0.04) 10%, rgba(255,255,255,0.018) 65%, transparent 100%)",
                     border: "none",
                     backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
                     transform: `translateY(${-leaving * 150}px) scale(${1 - leaving * 0.08})`,
@@ -917,8 +917,8 @@ export default function Page() {
                   <div style={{
                     position: "absolute", width: "90%", maxWidth: 720,
                     borderRadius: 28, overflow: "hidden",
-                    background: "rgba(255,255,255,0.02)",
-                    border: "1px solid rgba(249,115,22,0.08)",
+                    background: "radial-gradient(ellipse 92% 88% at 50% 50%, rgba(255,255,255,0.035) 10%, rgba(255,255,255,0.015) 65%, transparent 100%)",
+                    border: "none",
                     backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
                     transform: `translateY(${isActive ? 0 : activeIdx < 1 ? 80 : -leaving * 150}px) scale(${isActive ? 1 : activeIdx < 1 ? 0.95 : 1 - leaving * 0.08})`,
                     opacity: isActive ? 1 : leaving > 0 ? 1 - leaving : (activeIdx < 1 ? 0 : 0),
@@ -1176,7 +1176,7 @@ export default function Page() {
                       </div>
 
                       {/* Card */}
-                      <div className="bento-hover" style={{ width: "90%", padding: "20px 18px", borderRadius: 14, border: "1px solid rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.015)", cursor: "pointer", textAlign: "left" }}>
+                      <div className="bento-hover" style={{ width: "90%", padding: "20px 18px", borderRadius: 14, border: "none", background: "rgba(255,255,255,0.015)", cursor: "pointer", textAlign: "left" }}>
                         <div className="bento-glow" style={{ position: "absolute", top: "-20%", left: "10%", right: "10%", height: "50%", background: `radial-gradient(ellipse at 50% 100%, ${stage.color}08, transparent)`, opacity: 0, transition: "opacity 0.5s", pointerEvents: "none" }} />
                         <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: `linear-gradient(90deg, transparent, ${stage.color}08, transparent)`, pointerEvents: "none", left: "-100%" }} />
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
@@ -1199,7 +1199,7 @@ export default function Page() {
             <Reveal delay={120}>
               <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
                 {contentQueue.map((item, i) => (
-                  <div key={i} className="bento-hover" style={{ padding: "14px 16px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.04)", background: "rgba(255,255,255,0.01)", cursor: "pointer" }}>
+                  <div key={i} className="bento-hover" style={{ padding: "14px 16px", borderRadius: 10, border: "none", background: "rgba(255,255,255,0.01)", cursor: "pointer" }}>
                     <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#AAB", lineHeight: 1.4, marginBottom: 8 }}>{item.prompt}</div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
@@ -1300,7 +1300,7 @@ export default function Page() {
                 </Card>
               </Reveal>
               <Reveal delay={80} style={{ gridColumn: "span 3" }}>
-                <div style={{ borderRadius: 14, overflow: "hidden", position: "relative", minHeight: 260, border: "1px solid rgba(255,255,255,0.04)", cursor: "pointer" }}>
+                <div style={{ borderRadius: 14, overflow: "hidden", position: "relative", minHeight: 260, border: "none", cursor: "pointer" }}>
                   {/* Video - replace src with Desert Palace clip */}
                   <video autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.5 }}>
                     {/* <source src="/desert-palace.mp4" type="video/mp4" /> */}
@@ -1345,7 +1345,7 @@ export default function Page() {
                 </Card>
               </Reveal>
               <Reveal delay={140} style={{ gridColumn: "span 12" }}>
-                <div style={{ borderRadius: 12, overflow: "hidden", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.04)", backdropFilter: "blur(12px)" }}>
+                <div style={{ borderRadius: 12, overflow: "hidden", background: "rgba(255,255,255,0.02)", border: "none", backdropFilter: "blur(12px)" }}>
                   {/* Stats row */}
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
                     {[{ v: 12, l: "PROJECTS", c: "#2DD4BF" }, { v: 847, l: "ASSETS GENERATED", c: "#2DD4BF" }, { v: 3, l: "AGENTS ONLINE", c: "#D4A800" }].map((s, i) => (
