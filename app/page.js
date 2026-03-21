@@ -1034,7 +1034,7 @@ export default function Page() {
             <Reveal delay={40} parallax={0.2}>
               <div className="bento-hover" style={{ borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 360, background: "rgba(255,255,255,0.015)", border: "1px solid rgba(45,212,191,0.1)", cursor: "pointer", marginBottom: 24 }}>
                 <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(45,212,191,0.08) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s", pointerEvents: "none" }} />
-                <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.06), transparent)", pointerEvents: "none", left: "-100%" }} />
+                <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 2 }}><div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.06), transparent)", pointerEvents: "none", left: "-100%" }} /></div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: 360 }}>
                   {/* Left: Video area */}
                   <div style={{ position: "relative", overflow: "hidden", borderRight: "1px solid rgba(255,255,255,0.03)" }}>
@@ -1086,7 +1086,7 @@ export default function Page() {
               <Reveal delay={100} parallax={0.25}>
                 <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(255,255,255,0.015)", border: "1px solid rgba(249,115,22,0.08)", cursor: "pointer" }}>
                   <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(249,115,22,0.07) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s", pointerEvents: "none" }} />
-                  <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(249,115,22,0.06), transparent)", pointerEvents: "none", left: "-100%" }} />
+                  <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 2 }}><div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(249,115,22,0.06), transparent)", pointerEvents: "none", left: "-100%" }} /></div>
                   <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "55%", background: "radial-gradient(ellipse at 85% 15%, rgba(249,115,22,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
                   <div style={{ position: "relative" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
@@ -1107,7 +1107,7 @@ export default function Page() {
               <Reveal delay={160} parallax={0.3}>
                 <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(255,255,255,0.015)", border: "1px solid rgba(94,234,212,0.06)", cursor: "pointer" }}>
                   <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(94,234,212,0.06) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s", pointerEvents: "none" }} />
-                  <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(94,234,212,0.05), transparent)", pointerEvents: "none", left: "-100%" }} />
+                  <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 2 }}><div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(94,234,212,0.05), transparent)", pointerEvents: "none", left: "-100%" }} /></div>
                   <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "55%", background: "radial-gradient(ellipse at 85% 15%, rgba(94,234,212,0.03) 0%, transparent 70%)", pointerEvents: "none" }} />
                   <div style={{ position: "relative" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
@@ -1128,7 +1128,7 @@ export default function Page() {
               <Reveal delay={220} parallax={0.35}>
                 <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(255,255,255,0.015)", border: "1px solid rgba(45,212,191,0.06)", cursor: "pointer" }}>
                   <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(45,212,191,0.06) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s", pointerEvents: "none" }} />
-                  <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.05), transparent)", pointerEvents: "none", left: "-100%" }} />
+                  <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 2 }}><div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.05), transparent)", pointerEvents: "none", left: "-100%" }} /></div>
                   <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "55%", background: "radial-gradient(ellipse at 85% 15%, rgba(45,212,191,0.03) 0%, transparent 70%)", pointerEvents: "none" }} />
                   <div style={{ position: "relative" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
