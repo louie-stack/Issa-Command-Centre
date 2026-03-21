@@ -1027,7 +1027,7 @@ export default function Page() {
           {/* SECTION 2: PROJECTS */}
           <section style={{ padding: "80px 0 0", position: "relative" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "1px dashed rgba(255,255,255,0.06)" }} />
-            <div style={{ position: "absolute", top: -40, left: "20%", width: "30%", height: 80, background: "radial-gradient(ellipse at 50% 50%, rgba(45,212,191,0.03), transparent)", pointerEvents: "none" }} />
+            
             <SectionHeader idx="02" badge="PROJECTS" title="Active Work" desc="personal_ip ' client_work ' consulting" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 36, fontWeight: 700, color: "#2DD4BF" }}><Counter to={4} dur={1200} /><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#445", marginLeft: 6 }}>active</span></span>} />
 
             {/*  FEATURED: MANSA  */}
@@ -1176,8 +1176,8 @@ export default function Page() {
                       </div>
 
                       {/* Card */}
-                      <div className="bento-hover" style={{ width: "90%", padding: "20px 18px", borderRadius: 14, border: "none", background: "rgba(255,255,255,0.015)", cursor: "pointer", textAlign: "left" }}>
-                        <div className="bento-glow" style={{ position: "absolute", top: "-20%", left: "10%", right: "10%", height: "50%", background: `radial-gradient(ellipse at 50% 100%, ${stage.color}08, transparent)`, opacity: 0, transition: "opacity 0.5s", pointerEvents: "none" }} />
+                      <div className="bento-hover" style={{ width: "90%", padding: "20px 18px", borderRadius: 14, border: "none", background: "rgba(255,255,255,0.015)", cursor: "pointer", textAlign: "left", position: "relative", overflow: "hidden" }}>
+                        <div className="bento-glow" style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: "50%", background: `radial-gradient(ellipse at 50% 0%, ${stage.color}10, transparent)`, opacity: 0, transition: "opacity 0.5s", pointerEvents: "none" }} />
                         <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: `linear-gradient(90deg, transparent, ${stage.color}08, transparent)`, pointerEvents: "none", left: "-100%" }} />
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
                           <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.1em", color: stage.color }}>{stage.label}</span>
@@ -1217,7 +1217,7 @@ export default function Page() {
           {/* SECTION 3: AI TEAM */}
           <section style={{ padding: "80px 0 0", position: "relative" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "1px dashed rgba(255,255,255,0.06)" }} />
-            <div style={{ position: "absolute", top: -40, right: "20%", width: "30%", height: 80, background: "radial-gradient(ellipse at 50% 50%, rgba(249,115,22,0.03), transparent)", pointerEvents: "none" }} />
+            
             <SectionHeader idx="03" badge="YOUR AI TEAM" title="Agents" desc="autonomous_agents ' creative_pipeline ' always_building" right={<div style={{ display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: "#D4A800", boxShadow: "0 0 6px rgba(212,168,0,0.4)", animation: "pulse 2s infinite" }} /><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#D4A800" }}>3 ONLINE</span></div>} />
             <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10 }}>
               {agentsData.map((a, i) => {
@@ -1279,7 +1279,7 @@ export default function Page() {
           {/* SECTION 4: BUSINESS */}
           <section style={{ padding: "80px 0 0", position: "relative" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "1px dashed rgba(255,255,255,0.06)" }} />
-            <div style={{ position: "absolute", top: -40, left: "40%", width: "20%", height: 80, background: "radial-gradient(ellipse at 50% 50%, rgba(245,158,11,0.03), transparent)", pointerEvents: "none" }} />
+            
             <SectionHeader idx="04" badge="BUSINESS" title="Deals + Pipeline" desc="partnerships ' workshops ' credentials" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32, fontWeight: 700, color: "#F59E0B" }}>$<Counter to={26} dur={1400} />k<span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#445", marginLeft: 6 }}>pipeline</span></span>} />
             <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: 12 }}>
               <Reveal delay={40} style={{ gridColumn: "span 5" }}>
