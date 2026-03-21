@@ -723,7 +723,7 @@ export default function Page() {
 
       {/* NAV " hidden during intro */}
       <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "0 44px", background: "rgba(17,17,24,0.65)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)", borderBottom: "1px dashed rgba(255,255,255,0.08)", opacity: introPhase === "hero" ? 1 : 0, transform: introPhase === "hero" ? "translateY(0)" : "translateY(-20px)", transition: "opacity 0.4s, transform 0.4s" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", height: 54 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", height: 54, width: "100%" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
             <img src={PROFILE_IMG} alt="Issa" style={{ width: 30, height: 30, borderRadius: "50%", objectFit: "cover", border: "1.5px solid rgba(45,212,191,0.25)" }} />
             <div>
@@ -765,9 +765,9 @@ export default function Page() {
             {/* Top badge " near nav */}
             <div style={{ display: "flex", justifyContent: "center", paddingTop: 90, animation: introPhase === "hero" ? "heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.05s both" : "none", opacity: introPhase === "hero" ? undefined : 0 }}>
               <div onClick={() => {}} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "7px 16px", borderRadius: 30, border: "1px dashed rgba(45,212,191,0.15)", background: "rgba(255,255,255,0.02)", backdropFilter: "blur(8px)", cursor: "pointer", transition: "all 0.3s" }}>
-                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#2DD4BF", boxShadow: "0 0 6px rgba(45,212,191,0.4)" }} />
-                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#AAB", letterSpacing: "0.04em" }}>4 Active Projects</span>
-                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#2DD4BF" }}>-&gt;</span>
+                <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#2DD4BF", boxShadow: "0 0 6px rgba(45,212,191,0.4)", flexShrink: 0, display: "inline-block" }} />
+                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#AAB", letterSpacing: "0.04em", lineHeight: 1 }}>4 Active Projects</span>
+                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#2DD4BF", lineHeight: 1 }}>-&gt;</span>
               </div>
             </div>
 
@@ -820,10 +820,8 @@ export default function Page() {
 
                 {/* Agents status */}
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                    {[1,1,1,0].map((on,i)=><span key={i} style={{ width: 6, height: 6, borderRadius: "50%", background: on ? "#2DD4BF" : "rgba(255,255,255,0.06)", boxShadow: on ? "0 0 6px rgba(45,212,191,0.3)" : "none" }} />)}
-                  </div>
-                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#556", letterSpacing: "0.08em" }}>3 AGENTS ONLINE</span>
+                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 24, fontWeight: 800, color: "#2DD4BF" }}>3</span>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#556", letterSpacing: "0.08em", lineHeight: 1.3 }}>AGENTS<br/>ONLINE</span>
                 </div>
 
                 <div style={{ width: 1, height: 28, borderLeft: "1px dashed rgba(255,255,255,0.06)" }} />
