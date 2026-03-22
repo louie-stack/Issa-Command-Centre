@@ -808,7 +808,7 @@ export default function Page() {
                 <div onClick={() => {}} className="action-btn" style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "14px 32px", borderRadius: 14, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.07)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", cursor: "pointer", transition: "all 0.3s", boxShadow: "0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)", overflow: "hidden", position: "relative" }}>
                   <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: 1, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)", pointerEvents: "none" }} />
                   <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 14, fontWeight: 600, color: "#E8E8F0", letterSpacing: "0.01em", position: "relative" }}>Meet the team</span>
-                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: "#2DD4BF", position: "relative" }}>â†’</span>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: "#2DD4BF", position: "relative" }}>{"\u2192"}</span>
                 </div>
               </div>
             </div>
@@ -827,7 +827,7 @@ export default function Page() {
                       <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#556", marginTop: 2 }}>AI Filmmaker + Creative Director</div>
                     </div>
                   </div>
-                  {/* Agents â€” glowing dots */}
+                  {/* Agents - glowing dots */}
                   <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center", borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                       {[0, 0.3, 0.6].map((d, i) => (
@@ -996,7 +996,7 @@ export default function Page() {
 
           {/* SECTION 1: YOUR DAY */}
           <section style={{ padding: "80px 0 0" }}>
-            <SectionHeader idx="01" badge="YOUR DAY" title="Today's Focus" desc="priorities ' schedule ' quick_actions" right={<div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 14px", borderRadius: 3, border: "1px solid rgba(45,212,191,0.06)" }}><span style={{ fontSize: 16 }}>â˜€</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, fontWeight: 700 }}>72deg</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445" }}>NYC</span></div>} />
+            <SectionHeader idx="01" badge="YOUR DAY" title="Today's Focus" desc="priorities ' schedule ' quick_actions" right={<div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 14px", borderRadius: 3, border: "1px solid rgba(45,212,191,0.06)" }}><span style={{ fontSize: 16 }}>{"\u2600"}</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, fontWeight: 700 }}>72deg</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445" }}>NYC</span></div>} />
             <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: 12 }}>
               <Reveal delay={40} style={{ gridColumn: "span 5" }}>
                 <Card>
@@ -1451,5 +1451,6 @@ export default function Page() {
     </div>
   );
 }
+
 
 
