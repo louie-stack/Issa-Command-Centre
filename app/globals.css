@@ -75,3 +75,14 @@ html { scroll-behavior: smooth; }
 .svg-node-4 { animation: nodeFloat1 4.5s ease-in-out 0.5s infinite; }
 .svg-node-5 { animation: nodeFloat2 5s ease-in-out 1s infinite; }
 .svg-dash-flow { animation: dashFlow 2s linear infinite; }
+
+@keyframes panelPulse0 { 0%,100% { opacity: 0.25; } 25% { opacity: 0.8; } }
+@keyframes panelPulse1 { 0%,100% { opacity: 0.25; } 50% { opacity: 0.8; } }
+@keyframes panelPulse2 { 0%,100% { opacity: 0.25; } 75% { opacity: 0.8; } }
+@keyframes panelPulse3 { 0%,100% { opacity: 0.25; } 0% { opacity: 0.8; } }
+@keyframes scanLine { 0% { transform: translateX(-100%); } 100% { transform: translateX(600%); } }
+.svg-panel-0 { animation: panelPulse0 2.4s ease-in-out infinite; }
+.svg-panel-1 { animation: panelPulse1 2.4s ease-in-out infinite; }
+.svg-panel-2 { animation: panelPulse2 2.4s ease-in-out infinite; }
+.svg-panel-3 { animation: panelPulse3 2.4s ease-in-out infinite; }
+.svg-scan { animation: scanLine 2s linear infinite; overflow: hidden; }

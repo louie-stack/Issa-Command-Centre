@@ -1271,20 +1271,25 @@ export default function Page() {
         </svg>
       )}
       {ai === 1 && (
-        <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="80" height="80" viewBox="0 0 80 80">
+        <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", overflow: "visible" }} width="80" height="80" viewBox="0 0 80 80">
+          <defs><clipPath id="board-clip"><rect x="6" y="6" width="68" height="68"/></clipPath></defs>
           {[[8,8,28,28],[44,8,28,28],[8,44,28,28],[44,44,28,28]].map(([x,y,w,h],i) => (
-            <g key={i}>
+            <g key={i} className={`svg-panel-${i}`}>
               <rect x={x} y={y} width={w} height={h} rx="4" fill={`${agent.color}10`} stroke={`${agent.color}40`} strokeWidth="0.8"/>
-              <line x1={x+5} y1={y+8} x2={x+w-5} y2={y+8} stroke={agent.color} strokeWidth="0.7" opacity="0.5"/>
-              <line x1={x+5} y1={y+14} x2={x+w-10} y2={y+14} stroke={agent.color} strokeWidth="0.7" opacity="0.3"/>
+              <line x1={x+5} y1={y+8} x2={x+w-5} y2={y+8} stroke={agent.color} strokeWidth="0.7" opacity="0.6"/>
+              <line x1={x+5} y1={y+14} x2={x+w-10} y2={y+14} stroke={agent.color} strokeWidth="0.7" opacity="0.35"/>
+              <line x1={x+5} y1={y+20} x2={x+w-8} y2={y+20} stroke={agent.color} strokeWidth="0.7" opacity="0.2"/>
             </g>
           ))}
+          <g clipPath="url(#board-clip)">
+            <rect className="svg-scan" x="6" y="6" width="8" height="68" fill={`${agent.color}18`} rx="2"/>
+          </g>
         </svg>
       )}
       {ai === 2 && (
         <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="80" height="80" viewBox="0 0 80 80">
-          <circle cx="40" cy="40" r="34" fill="none" stroke={`${agent.color}20`} strokeWidth="1" className="svg-spin-slow"/>
-          <circle cx="40" cy="40" r="24" fill="none" stroke={`${agent.color}30`} strokeWidth="0.8" className="svg-spin-reverse"/>
+          <circle cx="40" cy="40" r="34" fill="none" stroke={`${agent.color}40`} strokeWidth="1" strokeDasharray="18 8 4 8" strokeLinecap="round" className="svg-spin-slow"/>
+          <circle cx="40" cy="40" r="24" fill="none" stroke={`${agent.color}50`} strokeWidth="1.5" strokeDasharray="10 6 2 6" strokeLinecap="round" className="svg-spin-reverse"/>
           <circle cx="40" cy="40" r="10" fill={`${agent.color}15`} stroke={`${agent.color}60`} strokeWidth="1"/>
           <circle cx="40" cy="40" r="4" fill={agent.color} opacity="0.7"/>
           {[0,90,180,270].map((deg,i) => { const rad=deg*Math.PI/180, cx=40+24*Math.cos(rad), cy=40+24*Math.sin(rad); return <circle key={i} cx={cx} cy={cy} r="3" fill={agent.color} opacity="0.6"/>; })}
