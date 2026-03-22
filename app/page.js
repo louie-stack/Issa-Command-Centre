@@ -1353,7 +1353,7 @@ export default function Page() {
               <Reveal delay={80} style={{ gridColumn: "span 3" }}>
                 <div style={{ borderRadius: 14, overflow: "hidden", position: "relative", height: 320, border: "none", cursor: "pointer" }}>
                   {/* Video - replace src with Desert Palace clip */}
-                  <video autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 1 }}>
+                  <video autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", transform: "scale(1.18)", opacity: 1 }}>
                     <source src="/Zombie.mp4" type="video/mp4" />
                   </video>
                   {/* Bottom gradient for text */}
