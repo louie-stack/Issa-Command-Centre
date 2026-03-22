@@ -454,8 +454,7 @@ function Card({ children, label, style = {} }) {
       <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
         {/* Ambient glow */}
         <div style={{ position: "absolute", top: "-40%", left: 0, right: 0, height: "70%", background: "radial-gradient(ellipse at 50% 100%, rgba(45,212,191,0.08) 0%, transparent 65%)", opacity: h ? 1 : 0, transition: "opacity 0.5s" }} />
-        {/* Shimmer line on hover */}
-        <div style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.04), transparent)", left: "-100%", animation: h ? "shimmer 1.5s ease-out" : "none" }} />
+
         {/* Top edge highlight */}
         <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: 1, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent)", opacity: h ? 1 : 0.15, transition: "opacity 0.4s" }} />
       </div>
