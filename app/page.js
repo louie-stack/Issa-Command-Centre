@@ -552,17 +552,18 @@ function ChatCard({ visible }) {
   return (
     <div className="agent-reveal-card" style={{
       "--glow-color": "rgba(45,212,191,0.1)",
-      position: "absolute", width: "92%", maxWidth: 760,
+      position: "absolute", width: "90%", maxWidth: 720,
       borderRadius: 28, overflow: "hidden",
       background: "rgba(255,255,255,0.045)",
+      border: "1px solid rgba(255,255,255,0.08)",
       backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
       transform: `translateY(${visible ? 0 : 80}px) scale(${visible ? 1 : 0.95})`,
       opacity: visible ? 1 : 0,
       transition: "all 0.6s cubic-bezier(0.16,1,0.3,1)",
-      boxShadow: `0 40px 100px rgba(0,0,0,0.6), 0 0 60px rgba(45,212,191,${visible ? 0.06 : 0}), inset 0 0 80px 30px #08080D, inset 0 1px 0 rgba(255,255,255,0.06)`,
+      boxShadow: `0 30px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06)`,
       zIndex: 1, display: "flex", flexDirection: "column", maxHeight: "85vh",
     }}>
-      <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: "35%", background: "radial-gradient(ellipse at 50% 0%, rgba(45,212,191,0.07), transparent)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "60%", background: "radial-gradient(ellipse at 50% 0%, rgba(45,212,191,0.07), transparent 70%)", pointerEvents: "none" }} />
       {/* Header */}
       <div style={{ padding: "20px 28px", borderBottom: "1px solid rgba(255,255,255,0.03)", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
         <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#2DD4BF", letterSpacing: "0.12em" }}>STEP 03</div>
