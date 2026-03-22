@@ -890,7 +890,13 @@ export default function Page() {
         };
 
         return (
-          <section style={{ position: "relative", height: "350vh", zIndex: 1, background: "#08080D" }}>
+          <section style={{ position: "relative", height: "350vh", zIndex: 1, background: "#08080D", overflow: "hidden" }}>
+            {/* Background video */}
+            <video autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.08, pointerEvents: "none", zIndex: 0 }}>
+              <source src="/dark%20city.mp4" type="video/mp4" />
+            </video>
+            {/* Dark overlay */}
+            <div style={{ position: "absolute", inset: 0, background: "rgba(8,8,13,0.6)", pointerEvents: "none", zIndex: 0 }} />
             <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", opacity: fadeIn, overflow: "hidden" }}>
 
               {/*  CARD 1: Your agents never sleep  */}
