@@ -1351,7 +1351,7 @@ export default function Page() {
                 </Card>
               </Reveal>
               <Reveal delay={80} style={{ gridColumn: "span 3" }}>
-                <div style={{ borderRadius: 14, overflow: "hidden", position: "relative", minHeight: 260, border: "none", cursor: "pointer" }}>
+                <div style={{ borderRadius: 14, overflow: "hidden", position: "relative", height: 320, border: "none", cursor: "pointer" }}>
                   {/* Video - replace src with Desert Palace clip */}
                   <video autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 1 }}>
                     <source src="/Zombie.mp4" type="video/mp4" />
