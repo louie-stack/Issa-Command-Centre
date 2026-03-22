@@ -626,6 +626,90 @@ function ChatCard({ visible }) {
   );
 }
 
+function ParticleField() {
+  const canvasRef = useRef(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    let raf;
+    const COLORS = [
+      { r: 45,  g: 212, b: 191 }, // teal
+      { r: 45,  g: 212, b: 191 },
+      { r: 45,  g: 212, b: 191 },
+      { r: 212, g: 168, b: 0   }, // gold
+      { r: 212, g: 168, b: 0   },
+      { r: 140, g: 160, b: 200 }, // slate
+    ];
+    const resize = () => {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+    const N = 55;
+    const particles = Array.from({ length: N }, () => {
+      const c = COLORS[Math.floor(Math.random() * COLORS.length)];
+      return {
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        r: 0.6 + Math.random() * 1.6,
+        vx: (Math.random() - 0.5) * 0.18,
+        vy: (Math.random() - 0.5) * 0.18,
+        baseAlpha: 0.04 + Math.random() * 0.12,
+        alpha: 0,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.003 + Math.random() * 0.006,
+        color: c,
+      };
+    });
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const t = performance.now() * 0.001;
+      particles.forEach(p => {
+        p.phase += p.speed;
+        p.alpha = p.baseAlpha * (0.5 + 0.5 * Math.sin(p.phase));
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < -4) p.x = canvas.width  + 4;
+        if (p.x > canvas.width  + 4) p.x = -4;
+        if (p.y < -4) p.y = canvas.height + 4;
+        if (p.y > canvas.height + 4) p.y = -4;
+        const { r, g, b } = p.color;
+        // soft glow
+        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4);
+        grd.addColorStop(0,   `rgba(${r},${g},${b},${p.alpha})`);
+        grd.addColorStop(1,   `rgba(${r},${g},${b},0)`);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+        // core dot
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(p.alpha * 2.5, 0.35)})`;
+        ctx.fill();
+      });
+      raf = requestAnimationFrame(draw);
+    };
+    draw();
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: "fixed", inset: 0, width: "100%", height: "100%",
+        pointerEvents: "none", zIndex: 1,
+        opacity: 0, animation: "particleFadeIn 2s ease 1.2s forwards",
+      }}
+    />
+  );
+}
+
 export default function Page() {
   const scrollY = useScroll();
   const vh = typeof window !== "undefined" ? window.innerHeight : 900;
@@ -660,8 +744,11 @@ export default function Page() {
 
   return (
     <div style={{ background: "#08080D", minHeight: "100vh", fontFamily: "'Inter', sans-serif", color: "#D8D8E0", overflow: introPhase !== "hero" ? "hidden" : undefined, height: introPhase !== "hero" ? "100vh" : undefined }}>
+      {/* Particle field */}
+      <ParticleField />
+
       {/* Noise texture overlay */}
-      <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, opacity: 0.018, pointerEvents: "none", zIndex: 1, backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')", backgroundRepeat: "repeat", backgroundSize: "256px 256px" }} />
+      <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, opacity: 0.018, pointerEvents: "none", zIndex: 2, backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')", backgroundRepeat: "repeat", backgroundSize: "256px 256px" }} />
 
       {/*  SCROLL PROGRESS BAR  */}
       <div style={{ position: "fixed", top: 0, left: 0, height: 2, background: "linear-gradient(90deg, #2DD4BF, #D4A800)", width: `${scrollPct}%`, zIndex: 200, transition: "width 0.1s", boxShadow: "0 0 8px rgba(45,212,191,0.3)" }} />
