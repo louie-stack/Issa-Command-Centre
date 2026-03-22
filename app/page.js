@@ -1353,7 +1353,7 @@ export default function Page() {
               <Reveal delay={80} style={{ gridColumn: "span 3" }}>
                 <div style={{ borderRadius: 14, overflow: "hidden", position: "relative", height: 320, border: "none", cursor: "pointer" }}>
                   {/* Video - replace src with Desert Palace clip */}
-                  <video autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", transform: "scale(1.18)", opacity: 1 }}>
+                  <video autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", transform: "scale(1.4)", opacity: 1 }}>
                     <source src="/Zombie.mp4" type="video/mp4" />
                   </video>
                   {/* Bottom gradient for text */}
@@ -1361,13 +1361,13 @@ export default function Page() {
                   {/* Rec badge */}
                   <div style={{ position: "absolute", top: 12, left: 14, display: "flex", alignItems: "center", gap: 5 }}>
                     <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#D4A800", animation: "pulse 2s infinite" }} />
-                    <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "rgba(212,168,0,0.4)" }}>DESERT_PALACE.MP4</span>
+                    <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "rgba(212,168,0,0.4)" }}>ZOMBIE.MP4</span>
                   </div>
 
                   {/* Info */}
                   <div style={{ position: "absolute", bottom: 14, left: 14, right: 14 }}>
-                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "rgba(212,168,0,0.5)", marginBottom: 3 }}>MANSA ' SHOT 001</div>
-                    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, fontWeight: 700, color: "#E8E8F0" }}>Desert Palace</div>
+                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "rgba(212,168,0,0.5)", marginBottom: 3 }}>ENDLESS ZOMBIES ' SHOT 001</div>
+                    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, fontWeight: 700, color: "#E8E8F0" }}>Blade Action Scene</div>
                     <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#334", marginTop: 3 }}>2.39:1 ' 24fps ' Runway Gen-3</div>
                   </div>
                 </div>
