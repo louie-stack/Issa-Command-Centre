@@ -891,13 +891,8 @@ export default function Page() {
 
         return (
           <section style={{ position: "relative", height: "350vh", zIndex: 1, background: "#08080D" }}>
-            {/* Background video — fixed so it doesn't break sticky children */}
-            <div style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden" }}>
-              <video autoPlay muted loop playsInline style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.08 }}>
-                <source src="/dark%20city.mp4" type="video/mp4" />
-              </video>
-              <div style={{ position: "absolute", inset: 0, background: "rgba(8,8,13,0.6)" }} />
-            </div>
+            {/* Subtle background texture */}
+            <div style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none", backgroundImage: "radial-gradient(ellipse at 20% 50%, rgba(45,212,191,0.03) 0%, transparent 60%), radial-gradient(ellipse at 80% 50%, rgba(45,212,191,0.02) 0%, transparent 60%)" }} />
             <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", opacity: fadeIn, overflow: "hidden" }}>
 
               {/*  CARD 1: Your agents never sleep  */}
