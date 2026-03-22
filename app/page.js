@@ -1062,7 +1062,7 @@ export default function Page() {
                   {/* Left: Video area */}
                   <div style={{ position: "relative", overflow: "hidden", borderRight: "1px solid rgba(255,255,255,0.03)" }}>
                     <video autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.6 }}>
-                      {/* <source src="/mansa-reel.mp4" type="video/mp4" /> */}
+                      <source src="/mansa-reel.mp4" type="video/mp4" />
                     </video>
                     {/* Placeholder */}
                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(45,212,191,0.06) 0%, rgba(17,17,24,0.95) 50%, rgba(45,212,191,0.03) 100%)" }} />
