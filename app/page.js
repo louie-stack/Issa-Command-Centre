@@ -1061,16 +1061,9 @@ export default function Page() {
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: 360 }}>
                   {/* Left: Video area */}
                   <div style={{ position: "relative", overflow: "hidden", borderRight: "1px solid rgba(255,255,255,0.03)" }}>
-                    <video autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.6 }}>
+                    <video autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 1 }}>
                       <source src="/mansa-reel.mp4" type="video/mp4" />
                     </video>
-                    {/* Placeholder */}
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(45,212,191,0.06) 0%, rgba(17,17,24,0.95) 50%, rgba(45,212,191,0.03) 100%)" }} />
-                    <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 40% 40%, rgba(45,212,191,0.05), transparent 60%)" }} />
-                    {/* Play button */}
-                    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 56, height: 56, borderRadius: "50%", background: "rgba(45,212,191,0.08)", border: "1px solid rgba(45,212,191,0.2)", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(8px)" }}>
-                      <svg width="14" height="16" viewBox="0 0 14 16" fill="#2DD4BF"><polygon points="0,0 14,8 0,16"/></svg>
-                    </div>
                     {/* Rec badge */}
                     <div style={{ position: "absolute", top: 16, left: 16, display: "flex", alignItems: "center", gap: 6 }}>
                       <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#2DD4BF", animation: "pulse 2s infinite" }} />
