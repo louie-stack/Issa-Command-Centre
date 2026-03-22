@@ -55,3 +55,23 @@ html { scroll-behavior: smooth; }
 .deal-row { transition: all 0.3s cubic-bezier(0.16,1,0.3,1) !important; }
 .deal-row:hover { background: rgba(255,255,255,0.015) !important; transform: translateX(4px); }
 .ambient-breathe { animation: breathe 6s ease-in-out infinite; }
+
+@keyframes dataFlow { 0% { stroke-dashoffset: 16; } 100% { stroke-dashoffset: 0; } }
+@keyframes spinReverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+@keyframes nodeFloat1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(4px,-5px); } }
+@keyframes nodeFloat2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-5px,3px); } }
+@keyframes nodeFloat3 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(3px,6px); } }
+@keyframes dashFlow { 0% { stroke-dashoffset: 20; } 100% { stroke-dashoffset: 0; } }
+@keyframes tickHand { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* SVG motion graphics — need transform-box to animate correctly */
+.svg-spin-slow { animation: spin 18s linear infinite; transform-box: fill-box; transform-origin: center; }
+.svg-spin-reverse { animation: spinReverse 13s linear infinite; transform-box: fill-box; transform-origin: center; }
+.svg-tick-hour { animation: tickHand 8s linear infinite; transform-box: view-box; transform-origin: 40px 40px; }
+.svg-tick-minute { animation: tickHand 96s linear infinite; transform-box: view-box; transform-origin: 40px 40px; }
+.svg-node-1 { animation: nodeFloat1 3s ease-in-out infinite; }
+.svg-node-2 { animation: nodeFloat2 3.5s ease-in-out infinite; }
+.svg-node-3 { animation: nodeFloat3 4s ease-in-out infinite; }
+.svg-node-4 { animation: nodeFloat1 4.5s ease-in-out 0.5s infinite; }
+.svg-node-5 { animation: nodeFloat2 5s ease-in-out 1s infinite; }
+.svg-dash-flow { animation: dashFlow 2s linear infinite; }

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useRef } from "react";
 
@@ -804,7 +804,7 @@ export default function Page() {
                 <div onClick={() => {}} className="action-btn" style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "14px 32px", borderRadius: 14, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.07)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", cursor: "pointer", transition: "all 0.3s", boxShadow: "0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)", overflow: "hidden", position: "relative" }}>
                   <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: 1, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)", pointerEvents: "none" }} />
                   <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 14, fontWeight: 600, color: "#E8E8F0", letterSpacing: "0.01em", position: "relative" }}>Meet the team</span>
-                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: "#2DD4BF", position: "relative" }}>→</span>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: "#2DD4BF", position: "relative" }}>â†’</span>
                 </div>
               </div>
             </div>
@@ -823,7 +823,7 @@ export default function Page() {
                       <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#556", marginTop: 2 }}>AI Filmmaker + Creative Director</div>
                     </div>
                   </div>
-                  {/* Agents — glowing dots */}
+                  {/* Agents â€” glowing dots */}
                   <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center", borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                       {[0, 0.3, 0.6].map((d, i) => (
@@ -992,7 +992,7 @@ export default function Page() {
 
           {/* SECTION 1: YOUR DAY */}
           <section style={{ padding: "80px 0 0" }}>
-            <SectionHeader idx="01" badge="YOUR DAY" title="Today's Focus" desc="priorities ' schedule ' quick_actions" right={<div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 14px", borderRadius: 3, border: "1px solid rgba(45,212,191,0.06)" }}><span style={{ fontSize: 16 }}>☀</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, fontWeight: 700 }}>72deg</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445" }}>NYC</span></div>} />
+            <SectionHeader idx="01" badge="YOUR DAY" title="Today's Focus" desc="priorities ' schedule ' quick_actions" right={<div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 14px", borderRadius: 3, border: "1px solid rgba(45,212,191,0.06)" }}><span style={{ fontSize: 16 }}>â˜€</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, fontWeight: 700 }}>72deg</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445" }}>NYC</span></div>} />
             <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: 12 }}>
               <Reveal delay={40} style={{ gridColumn: "span 5" }}>
                 <Card>
@@ -1265,8 +1265,8 @@ export default function Page() {
           <circle cx="40" cy="40" r="36" fill="none" stroke={`${agent.color}20`} strokeWidth="1"/>
           <circle cx="40" cy="40" r="28" fill="none" stroke={`${agent.color}30`} strokeWidth="0.5"/>
           <circle cx="40" cy="40" r="3" fill={agent.color} opacity="0.8"/>
-          <line x1="40" y1="40" x2="40" y2="18" stroke={agent.color} strokeWidth="1.5" strokeLinecap="round" style={{ transformOrigin: "40px 40px", animation: "tickHand 8s linear infinite" }}/>
-          <line x1="40" y1="40" x2="52" y2="40" stroke={agent.color} strokeWidth="1" strokeLinecap="round" style={{ transformOrigin: "40px 40px", animation: "tickHand 96s linear infinite" }}/>
+          <line x1="40" y1="40" x2="40" y2="18" stroke={agent.color} strokeWidth="1.5" strokeLinecap="round" className="svg-tick-hour"/>
+          <line x1="40" y1="40" x2="52" y2="40" stroke={agent.color} strokeWidth="1" strokeLinecap="round" className="svg-tick-minute"/>
           {[0,45,90,135,180,225,270,315].map((deg,i) => { const r=36, rad=deg*Math.PI/180, x1=40+(r-4)*Math.cos(rad), y1=40+(r-4)*Math.sin(rad), x2=40+r*Math.cos(rad), y2=40+r*Math.sin(rad); return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={agent.color} strokeWidth="1" opacity="0.4"/>; })}
         </svg>
       )}
@@ -1283,8 +1283,8 @@ export default function Page() {
       )}
       {ai === 2 && (
         <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="80" height="80" viewBox="0 0 80 80">
-          <circle cx="40" cy="40" r="34" fill="none" stroke={`${agent.color}20`} strokeWidth="1" style={{ animation: "spin 18s linear infinite" }}/>
-          <circle cx="40" cy="40" r="24" fill="none" stroke={`${agent.color}30`} strokeWidth="0.8" style={{ animation: "spinReverse 13s linear infinite" }}/>
+          <circle cx="40" cy="40" r="34" fill="none" stroke={`${agent.color}20`} strokeWidth="1" className="svg-spin-slow"/>
+          <circle cx="40" cy="40" r="24" fill="none" stroke={`${agent.color}30`} strokeWidth="0.8" className="svg-spin-reverse"/>
           <circle cx="40" cy="40" r="10" fill={`${agent.color}15`} stroke={`${agent.color}60`} strokeWidth="1"/>
           <circle cx="40" cy="40" r="4" fill={agent.color} opacity="0.7"/>
           {[0,90,180,270].map((deg,i) => { const rad=deg*Math.PI/180, cx=40+24*Math.cos(rad), cy=40+24*Math.sin(rad); return <circle key={i} cx={cx} cy={cy} r="3" fill={agent.color} opacity="0.6"/>; })}
@@ -1293,9 +1293,9 @@ export default function Page() {
       {ai === 3 && (
         <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="80" height="80" viewBox="0 0 80 80">
           {[{cx:40,cy:20},{cx:20,cy:50},{cx:60,cy:50},{cx:12,cy:28},{cx:68,cy:28}].map((n,i) => (
-            <circle key={i} cx={n.cx} cy={n.cy} r="5" fill={`${agent.color}20`} stroke={agent.color} strokeWidth="1" style={{ animation: `nodeFloat${(i%3)+1} ${3+i*0.5}s ease-in-out infinite` }}/>
+            <circle key={i} cx={n.cx} cy={n.cy} r="5" fill={`${agent.color}20`} stroke={agent.color} strokeWidth="1" className={[`svg-node-1`,`svg-node-2`,`svg-node-3`,`svg-node-4`,`svg-node-5`][i]}/>
           ))}
-          {[[0,1],[0,2],[1,3],[2,4],[1,2]].map(([a,b],i) => { const nodes=[{cx:40,cy:20},{cx:20,cy:50},{cx:60,cy:50},{cx:12,cy:28},{cx:68,cy:28}]; return <line key={i} x1={nodes[a].cx} y1={nodes[a].cy} x2={nodes[b].cx} y2={nodes[b].cy} stroke={`${agent.color}30`} strokeWidth="0.8" strokeDasharray="3 3" style={{ animation: "dashFlow 2s linear infinite" }}/>; })}
+          {[[0,1],[0,2],[1,3],[2,4],[1,2]].map(([a,b],i) => { const nodes=[{cx:40,cy:20},{cx:20,cy:50},{cx:60,cy:50},{cx:12,cy:28},{cx:68,cy:28}]; return <line key={i} x1={nodes[a].cx} y1={nodes[a].cy} x2={nodes[b].cx} y2={nodes[b].cy} stroke={`${agent.color}30`} strokeWidth="0.8" strokeDasharray="3 3" className="svg-dash-flow"/>; })}
         </svg>
       )}
       <div style={{ position: "absolute", top: 12, left: 12, display: "flex", alignItems: "center", gap: 5 }}>
@@ -1442,4 +1442,5 @@ export default function Page() {
     </div>
   );
 }
+
 
