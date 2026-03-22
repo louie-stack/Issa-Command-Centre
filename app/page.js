@@ -1353,12 +1353,9 @@ export default function Page() {
               <Reveal delay={80} style={{ gridColumn: "span 3" }}>
                 <div style={{ borderRadius: 14, overflow: "hidden", position: "relative", minHeight: 260, border: "none", cursor: "pointer" }}>
                   {/* Video - replace src with Desert Palace clip */}
-                  <video autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.5 }}>
-                    {/* <source src="/desert-palace.mp4" type="video/mp4" /> */}
+                  <video autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 1 }}>
+                    <source src="/Zombie.mp4" type="video/mp4" />
                   </video>
-                  {/* Placeholder gradient */}
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(26,16,5,0.9) 0%, rgba(10,26,22,0.9) 50%, rgba(17,17,24,0.95) 100%)" }} />
-                  <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 40% 40%, rgba(212,168,0,0.04), transparent 60%)" }} />
                   {/* Bottom gradient for text */}
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 40%, rgba(17,17,24,0.9) 100%)" }} />
                   {/* Rec badge */}
@@ -1366,10 +1363,7 @@ export default function Page() {
                     <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#D4A800", animation: "pulse 2s infinite" }} />
                     <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "rgba(212,168,0,0.4)" }}>DESERT_PALACE.MP4</span>
                   </div>
-                  {/* Play button */}
-                  <div style={{ position: "absolute", top: "45%", left: "50%", transform: "translate(-50%,-50%)", width: 40, height: 40, borderRadius: "50%", background: "rgba(212,168,0,0.06)", border: "1px solid rgba(212,168,0,0.15)", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(6px)" }}>
-                    <svg width="10" height="12" viewBox="0 0 10 12" fill="#D4A800"><polygon points="0,0 10,6 0,12"/></svg>
-                  </div>
+
                   {/* Info */}
                   <div style={{ position: "absolute", bottom: 14, left: 14, right: 14 }}>
                     <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "rgba(212,168,0,0.5)", marginBottom: 3 }}>MANSA ' SHOT 001</div>
