@@ -23,6 +23,12 @@ const agentsData = [
   { name: "Lumen", role: "Color + Grade", task: "Standby", g: "#F59E0B", progress: 0 },
   { name: "Synthetix", role: "Research Intel", task: "Offline", g: "#64748B", progress: 0 },
 ];
+const agentsEnhanced = [
+  { name: "Chronos", role: "CHIEF OF STAFF", desc: "Compiling morning brief and scheduling pipeline tasks", color: "#2DD4BF", glowColor: "#2DD4BF", statusColor: "#2DD4BF", progress: 72 },
+  { name: "Script-V", role: "CONTENT PIPELINE", desc: "Generating Mansa shot list and scene compositions", color: "#F97316", glowColor: "#F97316", statusColor: "#F97316", progress: 45 },
+  { name: "Lumen", role: "COLOR + GRADE", desc: "Color grading, visual tone matching and frame polish", color: "#D4A800", glowColor: "#D4A800", statusColor: "#445", progress: 0 },
+  { name: "Synthetix", role: "RESEARCH INTEL", desc: "Market research, competitor intel and deal analysis", color: "#8CA0C8", glowColor: "#8CA0C8", statusColor: "#445", progress: 0 },
+];
 const contentQueue = [
   { project: "Mansa", prompt: "Desert palace, wide establishing shot, golden hour", status: "Queued", tool: "Runway" },
   { project: "Mansa", prompt: "Warrior council chamber, low angle, torchlight", status: "Queued", tool: "MidJourney" },
@@ -424,33 +430,33 @@ function SectionHeader({ badge, idx, title, desc, right }) {
 function Card({ children, label, style = {} }) {
   const [h, setH] = useState(false);
   return (
-    <div className="card-hover" onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
+    <div
+      className="card-hover"
+      onMouseEnter={() => setH(true)}
+      onMouseLeave={() => setH(false)}
       style={{
-        borderRadius: 12, padding: 22, position: "relative",
-        background: `rgba(255,255,255,${h ? 0.025 : 0.012})`,
-        border: `1px solid rgba(255,255,255,${h ? 0.05 : 0.02})`,
-        backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
-        cursor: "pointer", height: "100%", ...style,
+        borderRadius: 14,
+        padding: 22,
+        position: "relative",
+        overflow: "hidden",
+        background: "rgba(255,255,255,0.045)",
+        border: `1px solid rgba(255,255,255,${h ? 0.1 : 0.06})`,
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        boxShadow: `0 4px 24px rgba(0,0,0,0.2)${h ? ", inset 0 1px 0 rgba(255,255,255,0.06)" : ""}`,
+        cursor: "pointer",
+        height: "100%",
+        ...style,
       }}>
-      {/* Ambient glow */}
-      <div style={{
-        position: "absolute", top: "-40%", left: "5%", right: "5%", height: "70%",
-        background: "radial-gradient(ellipse at 50% 100%, rgba(45,212,191,0.08) 0%, transparent 65%)",
-        opacity: h ? 1 : 0, transition: "opacity 0.5s", pointerEvents: "none",
-      }} />
-      {/* Shimmer line on hover */}
-      <div style={{
-        position: "absolute", top: 0, width: "40%", height: "100%",
-        background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.04), transparent)",
-        pointerEvents: "none", left: "-100%",
-        animation: h ? "shimmer 1.5s ease-out" : "none",
-      }} />
-      {/* Top edge highlight */}
-      <div style={{
-        position: "absolute", top: 0, left: "8%", right: "8%", height: 1,
-        background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.12), transparent)",
-        opacity: h ? 1 : 0.15, transition: "opacity 0.4s",
-      }} />
+      {/* Effects clipping container */}
+      <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
+        {/* Ambient glow */}
+        <div style={{ position: "absolute", top: "-40%", left: 0, right: 0, height: "70%", background: "radial-gradient(ellipse at 50% 100%, rgba(45,212,191,0.08) 0%, transparent 65%)", opacity: h ? 1 : 0, transition: "opacity 0.5s" }} />
+        {/* Shimmer line on hover */}
+        <div style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.04), transparent)", left: "-100%", animation: h ? "shimmer 1.5s ease-out" : "none" }} />
+        {/* Top edge highlight */}
+        <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: 1, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent)", opacity: h ? 1 : 0.15, transition: "opacity 0.4s" }} />
+      </div>
       {/* Corner brackets */}
       <svg style={{ position: "absolute", top: 0, left: 0, width: 14, height: 14, pointerEvents: "none", transition: "opacity 0.3s" }} viewBox="0 0 14 14"><line x1="0" y1="0" x2="10" y2="0" stroke="#2DD4BF" strokeWidth="0.6" opacity={h ? 0.5 : 0.08} /><line x1="0" y1="0" x2="0" y2="10" stroke="#2DD4BF" strokeWidth="0.6" opacity={h ? 0.5 : 0.08} /></svg>
       <svg style={{ position: "absolute", top: 0, right: 0, width: 14, height: 14, pointerEvents: "none", transition: "opacity 0.3s" }} viewBox="0 0 14 14"><line x1="4" y1="0" x2="14" y2="0" stroke="#2DD4BF" strokeWidth="0.6" opacity={h ? 0.5 : 0.08} /><line x1="14" y1="0" x2="14" y2="10" stroke="#2DD4BF" strokeWidth="0.6" opacity={h ? 0.5 : 0.08} /></svg>
@@ -466,7 +472,7 @@ function AmbientCell({ title, subtitle, g1, g2, accent, style = {} }) {
   return (
     <div onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
       style={{ borderRadius: 12, overflow: "hidden", position: "relative", cursor: "pointer", border: `1px solid rgba(255,255,255,${h ? 0.06 : 0.04})`, transition: "all 0.4s", height: "100%", ...style }}>
-      <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${g1}, ${g2}, #111118)` }} />
+      <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${g1}, ${g2}, #08080D)` }} />
       <div style={{ position: "absolute", top: 0, left: "20%", right: "20%", height: 80, background: `radial-gradient(ellipse at 50% 0%, ${accent}12, transparent)`, opacity: h ? 1 : 0.4, transition: "opacity 0.6s" }} />
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 40%, rgba(17,17,24,0.85) 100%)" }} />
       <div style={{ position: "absolute", top: 10, left: 12, fontFamily: "'Space Mono', monospace", fontSize: 7, color: `${accent}20` }}>REC  00:00:12:04</div>
@@ -546,12 +552,12 @@ function ChatCard({ visible }) {
       "--glow-color": "rgba(45,212,191,0.1)",
       position: "absolute", width: "92%", maxWidth: 760,
       borderRadius: 28, overflow: "hidden",
-      background: "rgba(255,255,255,0.02)",
+      background: "rgba(255,255,255,0.045)",
       backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
       transform: `translateY(${visible ? 0 : 80}px) scale(${visible ? 1 : 0.95})`,
       opacity: visible ? 1 : 0,
       transition: "all 0.6s cubic-bezier(0.16,1,0.3,1)",
-      boxShadow: `0 40px 100px rgba(0,0,0,0.6), 0 0 60px rgba(45,212,191,${visible ? 0.06 : 0}), inset 0 0 80px 30px #111118`,
+      boxShadow: `0 40px 100px rgba(0,0,0,0.6), 0 0 60px rgba(45,212,191,${visible ? 0.06 : 0}), inset 0 0 80px 30px #08080D, inset 0 1px 0 rgba(255,255,255,0.06)`,
       zIndex: 1, display: "flex", flexDirection: "column", maxHeight: "85vh",
     }}>
       <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: "35%", background: "radial-gradient(ellipse at 50% 0%, rgba(45,212,191,0.07), transparent)", pointerEvents: "none" }} />
@@ -651,8 +657,9 @@ export default function Page() {
   const greeting = now.getHours() < 12 ? "morning" : now.getHours() < 18 ? "afternoon" : "evening";
 
   return (
-    <div style={{ background: "#111118", minHeight: "100vh", fontFamily: "'Inter', sans-serif", color: "#D8D8E0", overflow: introPhase !== "hero" ? "hidden" : undefined, height: introPhase !== "hero" ? "100vh" : undefined }}>
-
+    <div style={{ background: "#08080D", minHeight: "100vh", fontFamily: "'Inter', sans-serif", color: "#D8D8E0", overflow: introPhase !== "hero" ? "hidden" : undefined, height: introPhase !== "hero" ? "100vh" : undefined }}>
+      {/* Noise texture overlay */}
+      <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, opacity: 0.018, pointerEvents: "none", zIndex: 1, backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')", backgroundRepeat: "repeat", backgroundSize: "256px 256px" }} />
 
       {/*  SCROLL PROGRESS BAR  */}
       <div style={{ position: "fixed", top: 0, left: 0, height: 2, background: "linear-gradient(90deg, #2DD4BF, #D4A800)", width: `${scrollPct}%`, zIndex: 200, transition: "width 0.1s", boxShadow: "0 0 8px rgba(45,212,191,0.3)" }} />
@@ -660,7 +667,7 @@ export default function Page() {
       {/*  INTRO OVERLAY  */}
       <div style={{
         position: "fixed", inset: 0, zIndex: introPhase === "hero" ? -1 : 200,
-        background: "#111118",
+        background: "#08080D",
         display: "flex", alignItems: "center", justifyContent: "center",
         opacity: introPhase === "hero" ? 0 : 1,
         transition: "opacity 0.8s ease",
@@ -722,7 +729,7 @@ export default function Page() {
 
       {/* NAV " hidden during intro */}
       <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "0 44px", background: "rgba(17,17,24,0.65)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)", borderBottom: "1px dashed rgba(255,255,255,0.08)", opacity: introPhase === "hero" ? 1 : 0, transform: introPhase === "hero" ? "translateY(0)" : "translateY(-20px)", transition: "opacity 0.4s, transform 0.4s" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", height: 54, width: "100%" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", height: 54, maxWidth: 1440, margin: "0 auto", width: "100%" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
             <img src={PROFILE_IMG} alt="Issa" style={{ width: 30, height: 30, borderRadius: "50%", objectFit: "cover", border: "1.5px solid rgba(45,212,191,0.25)" }} />
             <div>
@@ -745,10 +752,10 @@ export default function Page() {
       </nav>
 
       {/*  HERO  */}
-      <section style={{ position: "relative", height: "100vh", background: "#111118", overflow: "hidden" }}>
+      <section style={{ position: "relative", height: "100vh", background: "#08080D", overflow: "hidden" }}>
         <div style={{ position: "relative", width: "100%", height: "100vh" }}>
           {/* BG */}
-          <div style={{ position: "absolute", inset: 0, background: "#111118" }} />
+          <div style={{ position: "absolute", inset: 0, background: "#08080D" }} />
           {/* 3D Particle Globe */}
           <HeroCanvas />
           {/* Vignette so text reads over animation */}
@@ -794,9 +801,10 @@ export default function Page() {
 
               {/* CTA */}
               <div style={{ animation: introPhase === "hero" ? "heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s both" : "none", opacity: introPhase === "hero" ? undefined : 0, marginTop: 32 }}>
-                <div onClick={() => {}} className="action-btn" style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "14px 32px", borderRadius: 14, border: "1px solid rgba(45,212,191,0.12)", background: "rgba(255,255,255,0.04)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", cursor: "pointer", transition: "all 0.3s", boxShadow: "0 4px 24px rgba(0,0,0,0.2)" }}>
-                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 14, fontWeight: 600, color: "#E8E8F0", letterSpacing: "0.01em" }}>Meet the team</span>
-                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: "#2DD4BF" }}>-&gt;</span>
+                <div onClick={() => {}} className="action-btn" style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "14px 32px", borderRadius: 14, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.07)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", cursor: "pointer", transition: "all 0.3s", boxShadow: "0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)", overflow: "hidden", position: "relative" }}>
+                  <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: 1, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)", pointerEvents: "none" }} />
+                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 14, fontWeight: 600, color: "#E8E8F0", letterSpacing: "0.01em", position: "relative" }}>Meet the team</span>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: "#2DD4BF", position: "relative" }}>→</span>
                 </div>
               </div>
             </div>
@@ -805,38 +813,48 @@ export default function Page() {
           {/* Bottom data strip */}
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 3 }}>
             <div style={{ animation: introPhase === "hero" ? "heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.6s both" : "none", opacity: introPhase === "hero" ? undefined : 0 }}>
-              <div style={{ borderTop: "1px dashed rgba(255,255,255,0.06)", padding: "18px 60px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                {/* Issa profile */}
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <img src={PROFILE_IMG} alt="" style={{ width: 28, height: 28, borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(255,255,255,0.08)" }} />
-                  <div>
-                    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, fontWeight: 700, color: "#D8D8E0" }}>Issa Sissoko</div>
-                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#556" }}>AI Filmmaker + Creative Director</div>
+              <div style={{ borderTop: "1px dashed rgba(255,255,255,0.06)" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", height: 68 }}>
+                  {/* Issa profile */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center", borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
+                    <img src={PROFILE_IMG} alt="" style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(255,255,255,0.08)" }} />
+                    <div>
+                      <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, fontWeight: 700, color: "#D8D8E0" }}>Issa Sissoko</div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#556", marginTop: 2 }}>AI Filmmaker + Creative Director</div>
+                    </div>
                   </div>
-                </div>
-
-                <div style={{ width: 1, height: 28, borderLeft: "1px dashed rgba(255,255,255,0.06)" }} />
-
-                {/* Agents status */}
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 24, fontWeight: 800, color: "#2DD4BF" }}>3</span>
-                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#556", letterSpacing: "0.08em", lineHeight: 1.3 }}>AGENTS<br/>ONLINE</span>
-                </div>
-
-                <div style={{ width: 1, height: 28, borderLeft: "1px dashed rgba(255,255,255,0.06)" }} />
-
-                {/* Assets */}
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 24, fontWeight: 800, color: "#D4A800" }}>847</span>
-                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#556", letterSpacing: "0.08em", lineHeight: 1.3 }}>ASSETS<br/>GENERATED</span>
-                </div>
-
-                <div style={{ width: 1, height: 28, borderLeft: "1px dashed rgba(255,255,255,0.06)" }} />
-
-                {/* Pipeline */}
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 24, fontWeight: 800, color: "#E8E8F0" }}>$26k</span>
-                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#556", letterSpacing: "0.08em", lineHeight: 1.3 }}>PIPELINE<br/>VALUE</span>
+                  {/* Agents — glowing dots */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center", borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      {[0, 0.3, 0.6].map((d, i) => (
+                        <span key={i} style={{ width: 8, height: 8, borderRadius: "50%", background: "#2DD4BF", boxShadow: "0 0 8px rgba(45,212,191,0.5), 0 0 16px rgba(45,212,191,0.2)", animation: `pulse 2s ease-in-out ${d}s infinite` }} />
+                      ))}
+                      <span style={{ width: 8, height: 8, borderRadius: "50%", background: "rgba(255,255,255,0.06)" }} />
+                    </div>
+                    <div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.1em", lineHeight: 1 }}>AGENTS</div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#2DD4BF", letterSpacing: "0.1em", marginTop: 3, lineHeight: 1 }}>3 ONLINE</div>
+                    </div>
+                  </div>
+                  {/* Assets */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center", borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
+                    <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 26, fontWeight: 800, color: "#D4A800", lineHeight: 1 }}>847</span>
+                    <div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.1em", lineHeight: 1 }}>ASSETS</div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.1em", marginTop: 3, lineHeight: 1 }}>GENERATED</div>
+                    </div>
+                  </div>
+                  {/* Pipeline */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center" }}>
+                    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", lineHeight: 1, display: "flex", alignItems: "baseline" }}>
+                      <span style={{ fontSize: 16, fontWeight: 700, color: "#E8E8F0" }}>$</span>
+                      <span style={{ fontSize: 26, fontWeight: 800, color: "#E8E8F0" }}>26k</span>
+                    </div>
+                    <div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.1em", lineHeight: 1 }}>PIPELINE</div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.1em", marginTop: 3, lineHeight: 1 }}>VALUE</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -868,7 +886,7 @@ export default function Page() {
         };
 
         return (
-          <section style={{ position: "relative", height: "350vh", zIndex: 1, background: "#111118" }}>
+          <section style={{ position: "relative", height: "350vh", zIndex: 1, background: "#08080D" }}>
             <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", opacity: fadeIn, overflow: "hidden" }}>
 
               {/*  CARD 1: Your agents never sleep  */}
@@ -878,19 +896,18 @@ export default function Page() {
                   <div style={{
                     position: "absolute", width: "90%", maxWidth: 720,
                     borderRadius: 28, overflow: "hidden",
-                    borderRadius: 28, overflow: "hidden",
-                    background: "rgba(255,255,255,0.025)",
-                    border: "none",
+                    background: "rgba(255,255,255,0.045)",
+                    border: "1px solid rgba(255,255,255,0.08)",
                     backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
                     transform: `translateY(${-leaving * 150}px) scale(${1 - leaving * 0.08})`,
                     opacity: isActive ? 1 : leaving > 0 ? 1 - leaving : 0,
-                    boxShadow: "0 30px 80px rgba(0,0,0,0.5)",
+                    boxShadow: "0 30px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06)",
                     padding: "72px 56px", textAlign: "center",
                     zIndex: 3,
                   }}>
                     
-                    <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 80% 75% at 50% 50%, transparent 40%, #111118 80%)", pointerEvents: "none", zIndex: 20 }} />
-                    <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: "55%", background: "radial-gradient(ellipse at 50% 0%, rgba(45,212,191,0.07), transparent)", pointerEvents: "none" }} />
+                    <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 80% 75% at 50% 50%, transparent 40%, #08080D 80%)", pointerEvents: "none", zIndex: 20 }} />
+                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "60%", background: "radial-gradient(ellipse at 50% 0%, rgba(45,212,191,0.07), transparent 70%)", pointerEvents: "none" }} />
                     <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#2DD4BF", letterSpacing: "0.12em", marginBottom: 28, position: "relative" }}>STEP 01</div>
                     <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 44, fontWeight: 800, letterSpacing: "-0.03em", color: "#F0F0F5", margin: "0 0 18px 0", lineHeight: 1.15, position: "relative" }}>
                       Your agents <span style={{ color: "#2DD4BF" }}>never sleep.</span>
@@ -915,19 +932,19 @@ export default function Page() {
                   <div style={{
                     position: "absolute", width: "90%", maxWidth: 720,
                     borderRadius: 28, overflow: "hidden",
-                    background: "rgba(255,255,255,0.02)",
-                    border: "none",
+                    background: "rgba(255,255,255,0.045)",
+                    border: "1px solid rgba(255,255,255,0.08)",
                     backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
                     transform: `translateY(${isActive ? 0 : activeIdx < 1 ? 80 : -leaving * 150}px) scale(${isActive ? 1 : activeIdx < 1 ? 0.95 : 1 - leaving * 0.08})`,
                     opacity: isActive ? 1 : leaving > 0 ? 1 - leaving : (activeIdx < 1 ? 0 : 0),
-                    boxShadow: "0 30px 80px rgba(0,0,0,0.5), 0 0 40px rgba(249,115,22,0.03)",
+                    boxShadow: "0 30px 80px rgba(0,0,0,0.5), 0 0 40px rgba(249,115,22,0.03), inset 0 1px 0 rgba(255,255,255,0.06)",
                     padding: "72px 56px", textAlign: "center",
                     zIndex: 2,
                   }}>
                     
                     
-                    <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 80% 75% at 50% 50%, transparent 40%, #111118 80%)", pointerEvents: "none", zIndex: 20 }} />
-                    <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: "55%", background: "radial-gradient(ellipse at 50% 0%, rgba(212,168,0,0.07), transparent)", pointerEvents: "none" }} />
+                    <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 80% 75% at 50% 50%, transparent 40%, #08080D 80%)", pointerEvents: "none", zIndex: 20 }} />
+                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "60%", background: "radial-gradient(ellipse at 50% 0%, rgba(212,168,0,0.07), transparent 70%)", pointerEvents: "none" }} />
                     <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#D4A800", letterSpacing: "0.12em", marginBottom: 28, position: "relative" }}>STEP 02</div>
                     <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 44, fontWeight: 800, letterSpacing: "-0.03em", color: "#F0F0F5", margin: "0 0 18px 0", lineHeight: 1.15, position: "relative" }}>
                       Tell us what you need.<br/><span style={{ color: "#D4A800" }}>We'll execute.</span>
@@ -967,11 +984,11 @@ export default function Page() {
       <Ticker items={["MANSA: EP.1 IN PRODUCTION","CHRONOS ' COMPILING BRIEF","SCRIPT-V ' GENERATING SHOTS","$26K PIPELINE ACTIVE","4 PROJECTS IN MOTION","847 ASSETS GENERATED","COCA-COLA DECK DUE FRIDAY","3 AGENTS ONLINE"]} speed={45} />
 
       {/*  SECTIONS  */}
-      <div style={{ position: "relative", zIndex: 1, background: "#111118" }}>
+      <div style={{ position: "relative", zIndex: 1, background: "#08080D" }}>
         {/* Global scanline + grid " parallax at 0.3x */}
         <div style={{ position: "absolute", inset: 0, opacity: 0.02, backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.04) 2px, rgba(255,255,255,0.04) 4px)", pointerEvents: "none", transform: `translateY(${scrollY * -0.05}px)` }} />
         <div style={{ position: "absolute", inset: 0, opacity: 0.012, backgroundImage: "linear-gradient(rgba(45,212,191,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(45,212,191,0.1) 1px, transparent 1px)", backgroundSize: "140px 140px", pointerEvents: "none", transform: `translateY(${scrollY * -0.08}px)` }} />
-        <div style={{ position: "relative", maxWidth: 1200, margin: "0 auto", padding: "0 44px" }}>
+        <div style={{ position: "relative", maxWidth: 1440, margin: "0 auto", padding: "0 60px" }}>
 
           {/* SECTION 1: YOUR DAY */}
           <section style={{ padding: "80px 0 0" }}>
@@ -1032,9 +1049,11 @@ export default function Page() {
 
             {/*  FEATURED: MANSA  */}
             <Reveal delay={40} parallax={0.2}>
-              <div className="bento-hover" style={{ borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 360, background: "rgba(255,255,255,0.015)", border: "1px solid rgba(45,212,191,0.1)", cursor: "pointer", marginBottom: 24 }}>
-                <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(45,212,191,0.08) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s", pointerEvents: "none" }} />
-                <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 2 }}><div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.06), transparent)", pointerEvents: "none", left: "-100%" }} /></div>
+              <div className="bento-hover" style={{ borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 360, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(45,212,191,0.1)", cursor: "pointer", marginBottom: 24 }}>
+                <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
+                  <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(45,212,191,0.08) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s" }} />
+                  <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.06), transparent)", left: "-100%" }} />
+                </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: 360 }}>
                   {/* Left: Video area */}
                   <div style={{ position: "relative", overflow: "hidden", borderRight: "1px solid rgba(255,255,255,0.03)" }}>
@@ -1068,7 +1087,7 @@ export default function Page() {
                     <div style={{ marginTop: "auto" }}>
                       <div style={{ display: "flex", gap: 1, borderRadius: 12, overflow: "hidden" }}>
                         {[{v:"24",l:"SHOTS"},{v:"6",l:"SCENES"},{v:"72%",l:"COMPLETE"},{v:"Apr 15",l:"TARGET"}].map((s,j)=>(
-                          <div key={j} style={{ flex: 1, background: "rgba(255,255,255,0.015)", padding: "14px 8px", textAlign: "center", borderRight: j<3 ? "1px solid rgba(255,255,255,0.03)" : "none" }}>
+                          <div key={j} style={{ flex: 1, background: "rgba(255,255,255,0.03)", padding: "14px 8px", textAlign: "center", borderRight: j<3 ? "1px solid rgba(255,255,255,0.03)" : "none" }}>
                             <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 16, fontWeight: 800, color: "rgba(45,212,191,0.8)" }}>{s.v}</div>
                             <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 6, color: "#445", marginTop: 3, letterSpacing: "0.1em" }}>{s.l}</div>
                           </div>
@@ -1084,9 +1103,11 @@ export default function Page() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
               {/* COCA-COLA */}
               <Reveal delay={100} parallax={0.25}>
-                <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(255,255,255,0.015)", border: "1px solid rgba(249,115,22,0.08)", cursor: "pointer" }}>
-                  <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(249,115,22,0.07) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s", pointerEvents: "none" }} />
-                  <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 2 }}><div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(249,115,22,0.06), transparent)", pointerEvents: "none", left: "-100%" }} /></div>
+                <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(249,115,22,0.08)", cursor: "pointer" }}>
+                  <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
+                    <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(249,115,22,0.07) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s" }} />
+                    <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(249,115,22,0.06), transparent)", left: "-100%" }} />
+                  </div>
                   <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "55%", background: "radial-gradient(ellipse at 85% 15%, rgba(249,115,22,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
                   <div style={{ position: "relative" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
@@ -1105,9 +1126,11 @@ export default function Page() {
 
               {/* WORKSHOP */}
               <Reveal delay={160} parallax={0.3}>
-                <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(255,255,255,0.015)", border: "1px solid rgba(94,234,212,0.06)", cursor: "pointer" }}>
-                  <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(94,234,212,0.06) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s", pointerEvents: "none" }} />
-                  <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 2 }}><div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(94,234,212,0.05), transparent)", pointerEvents: "none", left: "-100%" }} /></div>
+                <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(94,234,212,0.06)", cursor: "pointer" }}>
+                  <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
+                    <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(94,234,212,0.06) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s" }} />
+                    <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(94,234,212,0.05), transparent)", left: "-100%" }} />
+                  </div>
                   <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "55%", background: "radial-gradient(ellipse at 85% 15%, rgba(94,234,212,0.03) 0%, transparent 70%)", pointerEvents: "none" }} />
                   <div style={{ position: "relative" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
@@ -1126,9 +1149,11 @@ export default function Page() {
 
               {/* FREEPIK */}
               <Reveal delay={220} parallax={0.35}>
-                <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(255,255,255,0.015)", border: "1px solid rgba(45,212,191,0.06)", cursor: "pointer" }}>
-                  <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(45,212,191,0.06) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s", pointerEvents: "none" }} />
-                  <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 2 }}><div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.05), transparent)", pointerEvents: "none", left: "-100%" }} /></div>
+                <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(45,212,191,0.06)", cursor: "pointer" }}>
+                  <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
+                    <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(45,212,191,0.06) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s" }} />
+                    <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.05), transparent)", left: "-100%" }} />
+                  </div>
                   <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "55%", background: "radial-gradient(ellipse at 85% 15%, rgba(45,212,191,0.03) 0%, transparent 70%)", pointerEvents: "none" }} />
                   <div style={{ position: "relative" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
@@ -1158,8 +1183,10 @@ export default function Page() {
             {/* Horizontal flow line with agent nodes */}
             <Reveal delay={60}>
               <div style={{ position: "relative", padding: "40px 0" }}>
-                {/* Connecting dotted line */}
-                <div style={{ position: "absolute", top: 28, left: "8%", right: "8%", borderTop: "1px dashed rgba(255,255,255,0.08)" }} />
+                <svg style={{ position: "absolute", top: 28, left: "8%", right: "8%", width: "84%", height: 4, overflow: "visible" }} viewBox="0 0 1000 4">
+                  <line x1="0" y1="2" x2="1000" y2="2" stroke="rgba(255,255,255,0.06)" strokeWidth="1" strokeDasharray="6 4"/>
+                  <line x1="0" y1="2" x2="1000" y2="2" stroke="rgba(45,212,191,0.15)" strokeWidth="1" strokeDasharray="6 4" style={{ animation: "dataFlow 1.5s linear infinite" }}/>
+                </svg>
 
                 {/* Stage nodes */}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 0, position: "relative" }}>
@@ -1170,15 +1197,24 @@ export default function Page() {
                     { label: "REVIEW", agent: "Lumen", color: "#2DD4BF", count: contentQueue.filter(c=>c.status==="Review").length, desc: "Style and quality check" },
                   ].map((stage, si) => (
                     <div key={si} style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
-                      {/* Node dot */}
-                      <div style={{ width: 14, height: 14, borderRadius: "50%", background: "#111118", border: `2px solid ${stage.color}`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24, position: "relative", zIndex: 1 }}>
-                        <div style={{ width: 6, height: 6, borderRadius: "50%", background: stage.color, boxShadow: `0 0 8px ${stage.color}50` }} />
+                      <div style={{ position: "relative", width: 46, height: 46, marginBottom: 20, zIndex: 1 }}>
+                        <svg style={{ position: "absolute", inset: -4, width: 54, height: 54, animation: "spin 3s linear infinite" }} viewBox="0 0 54 54">
+                          <circle cx="27" cy="27" r="24" fill="none" stroke={`${stage.color}40`} strokeWidth="1" strokeDasharray="20 130" strokeLinecap="round"/>
+                        </svg>
+                        <div style={{ width: 46, height: 46, borderRadius: "50%", background: `${stage.color}0F`, border: `1px solid ${stage.color}33`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          {si === 0 && <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={stage.color} strokeWidth="2" strokeLinecap="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>}
+                          {si === 1 && <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={stage.color} strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>}
+                          {si === 2 && <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={stage.color} strokeWidth="2" strokeLinecap="round"><path d="M12 2v4m0 12v4m10-10h-4M6 12H2"/><path d="M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8m0-11.4l2.8 2.8m5.8 5.8l2.8 2.8"/></svg>}
+                          {si === 3 && <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={stage.color} strokeWidth="2" strokeLinecap="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>}
+                        </div>
                       </div>
 
                       {/* Card */}
-                      <div className="bento-hover" style={{ width: "90%", padding: "20px 18px", borderRadius: 14, border: "none", background: "rgba(255,255,255,0.015)", cursor: "pointer", textAlign: "left", position: "relative", overflow: "hidden" }}>
-                        <div className="bento-glow" style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: "50%", background: `radial-gradient(ellipse at 50% 0%, ${stage.color}10, transparent)`, opacity: 0, transition: "opacity 0.5s", pointerEvents: "none" }} />
-                        <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: `linear-gradient(90deg, transparent, ${stage.color}08, transparent)`, pointerEvents: "none", left: "-100%" }} />
+                      <div className="bento-hover" style={{ width: "90%", padding: "20px 18px", borderRadius: 14, border: "none", background: "rgba(255,255,255,0.03)", cursor: "pointer", textAlign: "left", position: "relative", overflow: "hidden" }}>
+                        <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
+                          <div className="bento-glow" style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: "50%", background: `radial-gradient(ellipse at 50% 0%, ${stage.color}10, transparent)`, opacity: 0, transition: "opacity 0.5s" }} />
+                          <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: `linear-gradient(90deg, transparent, ${stage.color}08, transparent)`, left: "-100%" }} />
+                        </div>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
                           <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.1em", color: stage.color }}>{stage.label}</span>
                           <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 20, fontWeight: 800, color: stage.color }}>{stage.count}</span>
@@ -1219,60 +1255,73 @@ export default function Page() {
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "1px dashed rgba(255,255,255,0.06)" }} />
             
             <SectionHeader idx="03" badge="YOUR AI TEAM" title="Agents" desc="autonomous_agents ' creative_pipeline ' always_building" right={<div style={{ display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: "#D4A800", boxShadow: "0 0 6px rgba(212,168,0,0.4)", animation: "pulse 2s infinite" }} /><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#D4A800" }}>3 ONLINE</span></div>} />
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10 }}>
-              {agentsData.map((a, i) => {
-                const isActive = a.progress > 0;
-                const icons = {
-                  Chronos: <g><circle cx="20" cy="20" r="12" stroke={a.g} strokeWidth="1" opacity="0.35" fill="none"/><path d={`M20 11 V20 L27 24`} stroke={a.g} strokeWidth="1.2" strokeLinecap="round" opacity="0.5"/><circle cx="20" cy="20" r="2" fill={a.g} opacity="0.3"/></g>,
-                  "Script-V": <g><rect x="6" y="8" width="28" height="22" rx="3" stroke={a.g} strokeWidth="1" opacity="0.35" fill="none"/><line x1="6" y1="14" x2="34" y2="14" stroke={a.g} strokeWidth="0.5" opacity="0.2"/><rect x="10" y="18" width="8" height="5" rx="1" fill={a.g} opacity="0.15"/><line x1="21" y1="19" x2="30" y2="19" stroke={a.g} strokeWidth="0.6" opacity="0.2"/><line x1="21" y1="23" x2="27" y2="23" stroke={a.g} strokeWidth="0.6" opacity="0.15"/></g>,
-                  Lumen: <g><circle cx="20" cy="20" r="12" stroke={a.g} strokeWidth="0.8" opacity="0.25" strokeDasharray="3 3" fill="none"/><circle cx="20" cy="20" r="7" stroke={a.g} strokeWidth="1" opacity="0.35" fill="none"/><circle cx="20" cy="20" r="3" fill={a.g} opacity="0.25"/>{[[12,12],[28,12],[12,28],[28,28]].map(([x,y],j)=><line key={j} x1={x} y1={y} x2={x<20?x+3:x-3} y2={y<20?y+3:y-3} stroke={a.g} strokeWidth="0.6" opacity="0.2"/>)}</g>,
-                  Synthetix: <g><circle cx="20" cy="14" r="6" stroke={a.g} strokeWidth="1" opacity="0.3" fill="none"/><path d="M10 32 Q20 25 30 32" stroke={a.g} strokeWidth="1" opacity="0.25" fill="none"/><circle cx="30" cy="12" r="4" stroke={a.g} strokeWidth="0.8" opacity="0.25" fill="none"/><path d="M29 12 L31 12 M30 11 V13" stroke={a.g} strokeWidth="0.6" opacity="0.3"/></g>,
-                };
-                return (
-                  <Reveal key={i} delay={40 + i * 50}>
-                    <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 180, background: "rgba(255,255,255,0.015)", border: `1px solid ${a.g}12`, cursor: "pointer" }}>
-                      <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: `radial-gradient(ellipse at 50% 100%, ${a.g}14, transparent 65%)`, opacity: 0, transition: "opacity 0.5s", pointerEvents: "none" }} />
-                      <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: `linear-gradient(90deg, transparent, ${a.g}0A, transparent)`, pointerEvents: "none", left: "-100%" }} />
-                      <div style={{ position: "absolute", top: 0, right: 0, width: "45%", height: "55%", background: `radial-gradient(ellipse at 85% 15%, ${a.g}08, transparent 70%)`, pointerEvents: "none" }} />
-
-                      <div style={{ position: "relative" }}>
-                        {/* Top row: status + icon */}
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                            <span style={{ width: 6, height: 6, borderRadius: "50%", background: isActive ? a.g : "rgba(255,255,255,0.1)", boxShadow: isActive ? `0 0 8px ${a.g}60` : "none", animation: isActive ? "pulse 2s infinite" : "none" }} />
-                            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.1em", color: isActive ? `${a.g}90` : "#445" }}>{a.role.toUpperCase()}</span>
-                          </div>
-                          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">{icons[a.name]}</svg>
-                        </div>
-
-                        {/* Name + task */}
-                        <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 18, fontWeight: 800, color: "#E8E8F0", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: "-0.01em" }}>{a.name}</h3>
-                        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#556", lineHeight: 1.5, margin: "0 0 16px" }}>{a.task}</p>
-
-                        {/* Progress or status */}
-                        {isActive ? (
-                          <div>
-                            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#445" }}>PROGRESS</span>
-                              <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, fontWeight: 800, color: a.g }}>{a.progress}%</span>
-                            </div>
-                            <div style={{ height: 3, borderRadius: 2, background: "rgba(255,255,255,0.03)" }}>
-                              <div style={{ height: "100%", borderRadius: 2, background: `linear-gradient(90deg, ${a.g}, ${a.g}60)`, width: `${a.progress}%`, position: "relative", transition: "width 1s" }}>
-                                <div style={{ position: "absolute", right: -3, top: -3, width: 9, height: 9, borderRadius: "50%", background: a.g, boxShadow: `0 0 8px ${a.g}80`, border: "2px solid #111118" }} />
-                              </div>
-                            </div>
-                          </div>
-                        ) : (
-                          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                            <div style={{ height: 3, flex: 1, borderRadius: 2, background: "rgba(255,255,255,0.02)" }} />
-                            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#334" }}>STANDBY</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </Reveal>
-                );
-              })}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
+              {agentsEnhanced.map((agent, ai) => (
+  <div key={ai} className="bento-hover" style={{ borderRadius: 16, overflow: "hidden", background: "rgba(255,255,255,0.02)", border: `1px solid ${agent.glowColor}18`, cursor: "pointer" }}>
+    <div style={{ position: "relative", height: 170, overflow: "hidden", background: `linear-gradient(170deg, ${agent.glowColor}28 0%, ${agent.glowColor}0D 45%, rgba(8,8,13,0.98) 100%)` }}>
+      <div style={{ position: "absolute", top: "5%", left: "50%", width: 160, height: 160, borderRadius: "50%", background: `radial-gradient(circle, ${agent.glowColor}1F 0%, transparent 55%)`, filter: "blur(20px)", transform: "translateX(-50%)" }} />
+      {ai === 0 && (
+        <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="80" height="80" viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="36" fill="none" stroke={`${agent.color}20`} strokeWidth="1"/>
+          <circle cx="40" cy="40" r="28" fill="none" stroke={`${agent.color}30`} strokeWidth="0.5"/>
+          <circle cx="40" cy="40" r="3" fill={agent.color} opacity="0.8"/>
+          <line x1="40" y1="40" x2="40" y2="18" stroke={agent.color} strokeWidth="1.5" strokeLinecap="round" style={{ transformOrigin: "40px 40px", animation: "tickHand 8s linear infinite" }}/>
+          <line x1="40" y1="40" x2="52" y2="40" stroke={agent.color} strokeWidth="1" strokeLinecap="round" style={{ transformOrigin: "40px 40px", animation: "tickHand 96s linear infinite" }}/>
+          {[0,45,90,135,180,225,270,315].map((deg,i) => { const r=36, rad=deg*Math.PI/180, x1=40+(r-4)*Math.cos(rad), y1=40+(r-4)*Math.sin(rad), x2=40+r*Math.cos(rad), y2=40+r*Math.sin(rad); return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={agent.color} strokeWidth="1" opacity="0.4"/>; })}
+        </svg>
+      )}
+      {ai === 1 && (
+        <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="80" height="80" viewBox="0 0 80 80">
+          {[[8,8,28,28],[44,8,28,28],[8,44,28,28],[44,44,28,28]].map(([x,y,w,h],i) => (
+            <g key={i}>
+              <rect x={x} y={y} width={w} height={h} rx="4" fill={`${agent.color}10`} stroke={`${agent.color}40`} strokeWidth="0.8"/>
+              <line x1={x+5} y1={y+8} x2={x+w-5} y2={y+8} stroke={agent.color} strokeWidth="0.7" opacity="0.5"/>
+              <line x1={x+5} y1={y+14} x2={x+w-10} y2={y+14} stroke={agent.color} strokeWidth="0.7" opacity="0.3"/>
+            </g>
+          ))}
+        </svg>
+      )}
+      {ai === 2 && (
+        <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="80" height="80" viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="34" fill="none" stroke={`${agent.color}20`} strokeWidth="1" style={{ animation: "spin 18s linear infinite" }}/>
+          <circle cx="40" cy="40" r="24" fill="none" stroke={`${agent.color}30`} strokeWidth="0.8" style={{ animation: "spinReverse 13s linear infinite" }}/>
+          <circle cx="40" cy="40" r="10" fill={`${agent.color}15`} stroke={`${agent.color}60`} strokeWidth="1"/>
+          <circle cx="40" cy="40" r="4" fill={agent.color} opacity="0.7"/>
+          {[0,90,180,270].map((deg,i) => { const rad=deg*Math.PI/180, cx=40+24*Math.cos(rad), cy=40+24*Math.sin(rad); return <circle key={i} cx={cx} cy={cy} r="3" fill={agent.color} opacity="0.6"/>; })}
+        </svg>
+      )}
+      {ai === 3 && (
+        <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="80" height="80" viewBox="0 0 80 80">
+          {[{cx:40,cy:20},{cx:20,cy:50},{cx:60,cy:50},{cx:12,cy:28},{cx:68,cy:28}].map((n,i) => (
+            <circle key={i} cx={n.cx} cy={n.cy} r="5" fill={`${agent.color}20`} stroke={agent.color} strokeWidth="1" style={{ animation: `nodeFloat${(i%3)+1} ${3+i*0.5}s ease-in-out infinite` }}/>
+          ))}
+          {[[0,1],[0,2],[1,3],[2,4],[1,2]].map(([a,b],i) => { const nodes=[{cx:40,cy:20},{cx:20,cy:50},{cx:60,cy:50},{cx:12,cy:28},{cx:68,cy:28}]; return <line key={i} x1={nodes[a].cx} y1={nodes[a].cy} x2={nodes[b].cx} y2={nodes[b].cy} stroke={`${agent.color}30`} strokeWidth="0.8" strokeDasharray="3 3" style={{ animation: "dashFlow 2s linear infinite" }}/>; })}
+        </svg>
+      )}
+      <div style={{ position: "absolute", top: 12, left: 12, display: "flex", alignItems: "center", gap: 5 }}>
+        <span style={{ width: 5, height: 5, borderRadius: "50%", background: agent.statusColor }} />
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: agent.color, letterSpacing: "0.06em" }}>{agent.role}</span>
+      </div>
+    </div>
+    <div style={{ padding: "18px 18px 16px" }}>
+      <h4 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 17, fontWeight: 800, color: "#E8E8F0", marginBottom: 4 }}>{agent.name}</h4>
+      <p style={{ fontSize: 12, color: "#667", lineHeight: 1.5, marginBottom: 14, minHeight: 36 }}>{agent.desc}</p>
+      {agent.progress > 0 ? (
+        <div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#445" }}>ACTIVE</span>
+            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: agent.color }}>{agent.progress}%</span>
+          </div>
+          <div style={{ height: 2, background: "rgba(255,255,255,0.06)", borderRadius: 2 }}>
+            <div style={{ height: "100%", width: `${agent.progress}%`, background: agent.color, borderRadius: 2, boxShadow: `0 0 6px ${agent.color}60` }} />
+          </div>
+        </div>
+      ) : (
+        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#334", letterSpacing: "0.1em" }}>STANDBY</div>
+      )}
+    </div>
+  </div>
+))}
             </div>
           </section>
 
@@ -1372,7 +1421,7 @@ export default function Page() {
 
         {/* FOOTER */}
         <footer style={{ padding: "48px 0 28px", marginTop: 80 }}>
-          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 44px" }}>
+          <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 60px" }}>
             <div style={{ height: 1, background: "linear-gradient(90deg, rgba(45,212,191,0.12), rgba(45,212,191,0.03), rgba(249,115,22,0.03), rgba(249,115,22,0.08))", marginBottom: 20 }} />
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
