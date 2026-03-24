@@ -181,7 +181,7 @@ export default function AgentsPage() {
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            objectPosition: "center 25%",
+            objectPosition: "center 10%",
             animation: "slowZoom 25s ease-in-out infinite alternate",
           }}
         />
@@ -578,7 +578,7 @@ export default function AgentsPage() {
                 background: `linear-gradient(155deg, rgba(${a.rgb},0.06) 0%, rgba(${a.rgb},0.015) 30%, rgba(8,8,13,0.98) 100%)`,
                 border: `1px solid rgba(${a.rgb},0.04)`,
                 transition: "all 0.4s",
-                minHeight: 540,
+                height: 420,
                 overflow: "hidden",
               }}
             >
@@ -609,8 +609,9 @@ export default function AgentsPage() {
                 style={{
                   position: "relative",
                   zIndex: 2,
-                  maxHeight: "100%",
-                  maxWidth: "100%",
+                  height: "100%",
+                  maxHeight: 420,
+                  width: "100%",
                   objectFit: "contain",
                   filter: `drop-shadow(0 0 30px rgba(${a.rgb},0.12))`,
                   transition: "filter 0.4s",
