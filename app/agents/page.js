@@ -593,6 +593,8 @@ export default function AgentsPage() {
               {/* Left + right edge fades only */}
               <div style={{ position: "absolute", top: 0, left: 0, width: "25%", height: "100%", background: "linear-gradient(90deg, #000 0%, transparent 100%)", zIndex: 2, pointerEvents: "none" }} />
               <div style={{ position: "absolute", top: 0, right: 0, width: "25%", height: "100%", background: "linear-gradient(270deg, #000 0%, transparent 100%)", zIndex: 2, pointerEvents: "none" }} />
+              {/* Bottom fade only */}
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "30%", background: "linear-gradient(0deg, #000 0%, transparent 100%)", zIndex: 3, pointerEvents: "none" }} />
 
               {/* Agent colour glow underneath */}
               <div style={{
