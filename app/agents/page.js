@@ -125,7 +125,7 @@ export default function AgentsPage() {
   return (
     <div
       style={{
-        background: "#08080D",
+        background: "#000",
         minHeight: "100vh",
         color: "#E8E8F0",
         fontFamily: "'Inter', sans-serif",
@@ -190,7 +190,7 @@ export default function AgentsPage() {
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(0deg, #08080D 0%, rgba(8,8,13,0.4) 50%, rgba(8,8,13,0.6) 100%)",
+              "linear-gradient(0deg, #000 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.6) 100%)",
             pointerEvents: "none",
           }}
         />
@@ -199,7 +199,7 @@ export default function AgentsPage() {
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(90deg, #08080D 0%, transparent 20%, transparent 80%, #08080D 100%)",
+              "linear-gradient(90deg, #000 0%, transparent 20%, transparent 80%, #000 100%)",
             pointerEvents: "none",
           }}
         />
@@ -594,13 +594,9 @@ export default function AgentsPage() {
                 }}
               />
 
-              {/* Edge fades — blend video into page */}
-              <div style={{ position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
-                background: `radial-gradient(ellipse 85% 90% at 50% 50%, transparent 40%, #08080D 100%)`
-              }} />
-              {/* Extra top + bottom fades */}
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "25%", background: "linear-gradient(180deg, #08080D 0%, transparent 100%)", zIndex: 3, pointerEvents: "none" }} />
-              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "20%", background: "linear-gradient(0deg, #08080D 0%, transparent 100%)", zIndex: 3, pointerEvents: "none" }} />
+              {/* Left + right edge fades only */}
+              <div style={{ position: "absolute", top: 0, left: 0, width: "25%", height: "100%", background: "linear-gradient(90deg, #000 0%, transparent 100%)", zIndex: 2, pointerEvents: "none" }} />
+              <div style={{ position: "absolute", top: 0, right: 0, width: "25%", height: "100%", background: "linear-gradient(270deg, #000 0%, transparent 100%)", zIndex: 2, pointerEvents: "none" }} />
 
               {/* Agent colour glow underneath */}
               <div style={{
