@@ -264,8 +264,8 @@ export default function AgentsPage() {
           zIndex: 2,
           display: "flex",
           flexDirection: "column",
-          height: "calc(100vh - 54px - 300px)",
-          minHeight: 0,
+          height: "calc(100vh - 354px)",
+          overflow: "hidden",
         }}
       >
         {/* ═══ AGENT SELECT TABS ═══ */}
@@ -343,21 +343,16 @@ export default function AgentsPage() {
             transform: trans ? "translateY(6px)" : "translateY(0)",
             transition: "all 0.25s cubic-bezier(0.16,1,0.3,1)",
             flex: 1,
-            display: "flex",
-            minHeight: 0,
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gridTemplateRows: "1fr",
+            gap: 48,
+            overflow: "hidden",
+            height: "100%",
           }}
         >
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 48,
-              flex: 1,
-              minHeight: 0,
-            }}
-          >
             {/* LEFT — Info panel */}
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", overflowY: "auto", paddingTop: 32, paddingBottom: 32 }}>
+            <div style={{ overflowY: "auto", paddingTop: 32, paddingBottom: 32, display: "flex", flexDirection: "column", justifyContent: "center" }}>
               {/* Role + Status */}
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
                 <span
@@ -576,7 +571,7 @@ export default function AgentsPage() {
             </div>
 
             {/* RIGHT — Character */}
-            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "center", height: "100%" }}>
+            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "center", overflow: "hidden" }}>
             <div
               style={{
                 position: "relative",
@@ -617,7 +612,6 @@ export default function AgentsPage() {
 
             </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
