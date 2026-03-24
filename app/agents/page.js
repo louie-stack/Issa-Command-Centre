@@ -262,6 +262,9 @@ export default function AgentsPage() {
           padding: "0 60px",
           position: "relative",
           zIndex: 2,
+          display: "flex",
+          flexDirection: "column",
+          height: "calc(100vh - 54px - 300px)",
         }}
       >
         {/* ═══ AGENT SELECT TABS ═══ */}
@@ -337,6 +340,8 @@ export default function AgentsPage() {
             opacity: trans ? 0 : 1,
             transform: trans ? "translateY(6px)" : "translateY(0)",
             transition: "all 0.25s cubic-bezier(0.16,1,0.3,1)",
+            flex: 1,
+            display: "flex",
           }}
         >
           <div
@@ -344,12 +349,12 @@ export default function AgentsPage() {
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               gap: 48,
-              paddingTop: 40,
-              paddingBottom: 48,
+              flex: 1,
+              alignItems: "start",
             }}
           >
             {/* LEFT — Info panel */}
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", overflowY: "auto", paddingTop: 32, paddingBottom: 32 }}>
               {/* Role + Status */}
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
                 <span
@@ -568,7 +573,7 @@ export default function AgentsPage() {
             </div>
 
             {/* RIGHT — Character */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
             <div
               style={{
                 position: "relative",
@@ -606,37 +611,7 @@ export default function AgentsPage() {
                 filter: "blur(30px)", zIndex: 0, pointerEvents: "none", transition: "background 0.4s",
               }} />
 
-              {/* Rank watermark */}
-              <span
-                style={{
-                  position: "absolute",
-                  bottom: 16,
-                  right: 20,
-                  ...jk,
-                  fontSize: 64,
-                  fontWeight: 800,
-                  color: `rgba(${a.rgb},0.03)`,
-                  lineHeight: 1,
-                  zIndex: 4,
-                }}
-              >
-                {a.rank}
-              </span>
 
-              {/* Model badge */}
-              <span
-                style={{
-                  position: "absolute",
-                  top: 16,
-                  right: 16,
-                  ...mo,
-                  fontSize: 7,
-                  color: `rgba(${a.rgb},0.2)`,
-                  zIndex: 4,
-                }}
-              >
-                {a.model}
-              </span>
             </div>
             </div>
           </div>
