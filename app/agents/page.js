@@ -564,7 +564,7 @@ export default function AgentsPage() {
             </div>
 
             {/* RIGHT — Character */}
-            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "center", height: 620, overflow: "hidden" }}>
+            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "center", height: 780, overflow: "hidden" }}>
             <div
               style={{
                 position: "relative",
