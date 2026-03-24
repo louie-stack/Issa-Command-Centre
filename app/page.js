@@ -715,7 +715,11 @@ export default function Page() {
   const vh = typeof window !== "undefined" ? window.innerHeight : 900;
   const heroP = Math.min(1, scrollY / (vh * 0.5));
   const [scrolled, setScrolled] = useState(false);
-  const [introPhase, setIntroPhase] = useState("text"); // text -> explode -> hero
+  const [introPhase, setIntroPhase] = useState(() => {
+    // Skip intro if already played this session
+    if (typeof window !== "undefined" && sessionStorage.getItem("introPlayed")) return "hero";
+    return "text";
+  }); // text -> explode -> hero
   const [scrollPct, setScrollPct] = useState(0);
   useEffect(() => { setScrolled(scrollY > 50); }, [scrollY]);
 
@@ -729,11 +733,16 @@ export default function Page() {
     return () => window.removeEventListener("scroll", h);
   }, []);
 
-  // Intro sequence timing
+  // Intro sequence timing — only plays once per session
   useEffect(() => {
+    if (sessionStorage.getItem("introPlayed")) return; // already ran, stay in hero
     window.scrollTo(0, 0);
     const t1 = setTimeout(() => setIntroPhase("explode"), 2000);
-    const t2 = setTimeout(() => { setIntroPhase("hero"); window.scrollTo(0, 0); }, 3200);
+    const t2 = setTimeout(() => {
+      setIntroPhase("hero");
+      sessionStorage.setItem("introPlayed", "1");
+      window.scrollTo(0, 0);
+    }, 3200);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
