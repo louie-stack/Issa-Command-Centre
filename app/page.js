@@ -826,9 +826,7 @@ export default function Page() {
       </div>
 
       {/* NAV */}
-      <div style={{ opacity: introPhase === "hero" ? 1 : 0, transform: introPhase === "hero" ? "translateY(0)" : "translateY(-20px)", transition: "opacity 0.4s, transform 0.4s", pointerEvents: introPhase === "hero" ? "auto" : "none" }}>
-        <Nav />
-      </div>
+      <Nav />
 
       {/*  HERO  */}
       <section style={{ position: "relative", height: "100vh", background: "#08080D", overflow: "hidden" }}>
