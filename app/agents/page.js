@@ -574,15 +574,12 @@ export default function AgentsPage() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                borderRadius: 20,
-                background: `linear-gradient(155deg, rgba(${a.rgb},0.06) 0%, rgba(${a.rgb},0.015) 30%, rgba(8,8,13,0.98) 100%)`,
-                border: `1px solid rgba(${a.rgb},0.04)`,
                 transition: "all 0.4s",
                 height: 420,
                 overflow: "hidden",
               }}
             >
-              {/* Ambient glow */}
+              {/* Ambient glow behind video */}
               <div
                 style={{
                   position: "absolute",
@@ -591,10 +588,11 @@ export default function AgentsPage() {
                   width: "70%",
                   height: "70%",
                   borderRadius: "50%",
-                  background: `radial-gradient(circle, rgba(${a.rgb},0.07) 0%, transparent 55%)`,
-                  filter: "blur(40px)",
+                  background: `radial-gradient(circle, rgba(${a.rgb},0.12) 0%, transparent 65%)`,
+                  filter: "blur(50px)",
                   transform: "translateX(-50%)",
                   transition: "background 0.4s",
+                  zIndex: 1,
                 }}
               />
 
@@ -613,24 +611,19 @@ export default function AgentsPage() {
                   maxHeight: 420,
                   width: "100%",
                   objectFit: "contain",
-                  filter: `drop-shadow(0 0 30px rgba(${a.rgb},0.12))`,
                   transition: "filter 0.4s",
                 }}
               />
 
-              {/* Bottom fade */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  height: "15%",
-                  background: "linear-gradient(0deg, rgba(8,8,13,0.95) 0%, transparent 100%)",
-                  zIndex: 3,
-                  pointerEvents: "none",
-                }}
-              />
+              {/* Edge fades — dissolve video into page background */}
+              {/* Left */}
+              <div style={{ position: "absolute", top: 0, left: 0, width: "18%", height: "100%", background: "linear-gradient(90deg, #08080D 0%, transparent 100%)", zIndex: 3, pointerEvents: "none" }} />
+              {/* Right */}
+              <div style={{ position: "absolute", top: 0, right: 0, width: "18%", height: "100%", background: "linear-gradient(270deg, #08080D 0%, transparent 100%)", zIndex: 3, pointerEvents: "none" }} />
+              {/* Top */}
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "15%", background: "linear-gradient(180deg, #08080D 0%, transparent 100%)", zIndex: 3, pointerEvents: "none" }} />
+              {/* Bottom */}
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "22%", background: "linear-gradient(0deg, #08080D 0%, transparent 100%)", zIndex: 3, pointerEvents: "none" }} />
 
               {/* Rank watermark */}
               <span
