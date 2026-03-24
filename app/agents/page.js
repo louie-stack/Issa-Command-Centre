@@ -608,9 +608,7 @@ export default function AgentsPage() {
                   position: "relative",
                   zIndex: 2,
                   height: "100%",
-                  maxHeight: 420,
-                  width: "100%",
-                  objectFit: "contain",
+                  width: "auto",
                   transition: "filter 0.4s",
                 }}
               />
