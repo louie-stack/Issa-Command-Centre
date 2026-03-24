@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
+import Nav from "../components/Nav";
 
 const priorities = [
   "Review Mansa storyboard feedback from Hoyt",
@@ -816,31 +816,10 @@ export default function Page() {
         )}
       </div>
 
-      {/* NAV " hidden during intro */}
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "0 44px", background: "rgba(17,17,24,0.65)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)", borderBottom: "1px dashed rgba(255,255,255,0.08)", opacity: introPhase === "hero" ? 1 : 0, transform: introPhase === "hero" ? "translateY(0)" : "translateY(-20px)", transition: "opacity 0.4s, transform 0.4s" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", height: 54, maxWidth: 1440, margin: "0 auto", width: "100%" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
-            <img src={PROFILE_IMG} alt="Issa" style={{ width: 30, height: 30, borderRadius: "50%", objectFit: "cover", border: "1.5px solid rgba(45,212,191,0.25)" }} />
-            <div>
-              <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, fontWeight: 700 }}>ISSA</div>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#445" }}>COMMAND CENTRE</div>
-            </div>
-          </div>
-          <div style={{ display: "flex", gap: 1 }}>
-            {navPages.map((p, i) => (
-              <Link key={i} href={navRoutes[p]} style={{ textDecoration: "none" }}>
-                <div className={i > 0 ? "nav-link" : ""} style={{ padding: "5px 12px", borderRadius: 2, cursor: "pointer", background: i === 0 ? "rgba(45,212,191,0.05)" : "transparent", border: i === 0 ? "1px solid rgba(45,212,191,0.1)" : "1px solid transparent" }}>
-                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: i === 0 ? "#2DD4BF" : "#556" }}>{p}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#334" }}>{tStr} EST</span>
-            <div style={{ width: 28, height: 28, borderRadius: 3, background: "rgba(45,212,191,0.06)", border: "1px solid rgba(45,212,191,0.12)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 8, fontWeight: 800, color: "#2DD4BF" }}>IS</div>
-          </div>
-        </div>
-      </nav>
+      {/* NAV */}
+      <div style={{ opacity: introPhase === "hero" ? 1 : 0, transform: introPhase === "hero" ? "translateY(0)" : "translateY(-20px)", transition: "opacity 0.4s, transform 0.4s", pointerEvents: introPhase === "hero" ? "auto" : "none" }}>
+        <Nav />
+      </div>
 
       {/*  HERO  */}
       <section style={{ position: "relative", height: "100vh", background: "#08080D", overflow: "hidden" }}>

@@ -1,13 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useState } from "react";
+import Nav from "../../components/Nav";
 
 const mo = { fontFamily: "'Space Mono', monospace" };
 const jk = { fontFamily: "'Plus Jakarta Sans', sans-serif" };
 
-const navPages = ["Dashboard", "Projects", "Agents", "Pipeline", "Deals", "Workshops"];
-const navRoutes = { Dashboard: "/", Projects: "/projects", Agents: "/agents", Pipeline: "#", Deals: "#", Workshops: "#" };
-const PROFILE_IMG = "/agents/issa-profile.png";
+
 
 const agents = [
   {
@@ -110,18 +108,7 @@ const agents = [
 export default function AgentsPage() {
   const [sel, setSel] = useState(0);
   const [trans, setTrans] = useState(false);
-  const [tStr, setTStr] = useState("");
   const a = agents[sel];
-
-  useEffect(() => {
-    function tick() {
-      const now = new Date();
-      setTStr(now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true }));
-    }
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
 
   function pick(i) {
     if (i === sel) return;
@@ -152,31 +139,7 @@ export default function AgentsPage() {
         @keyframes slowFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
       `}</style>
 
-      {/* ═══ NAV ═══ */}
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "0 44px", background: "rgba(17,17,24,0.65)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)", borderBottom: "1px dashed rgba(255,255,255,0.08)" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", height: 54, maxWidth: 1440, margin: "0 auto", width: "100%" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
-            <img src={PROFILE_IMG} alt="Issa" style={{ width: 30, height: 30, borderRadius: "50%", objectFit: "cover", border: "1.5px solid rgba(45,212,191,0.25)" }} />
-            <div>
-              <div style={{ ...jk, fontSize: 12, fontWeight: 700 }}>ISSA</div>
-              <div style={{ ...mo, fontSize: 7, color: "#445" }}>COMMAND CENTRE</div>
-            </div>
-          </div>
-          <div style={{ display: "flex", gap: 1 }}>
-            {navPages.map((p, i) => (
-              <Link key={i} href={navRoutes[p]} style={{ textDecoration: "none" }}>
-                <div className={i !== 2 ? "nav-link" : ""} style={{ padding: "5px 12px", borderRadius: 2, cursor: "pointer", background: i === 2 ? "rgba(45,212,191,0.05)" : "transparent", border: i === 2 ? "1px solid rgba(45,212,191,0.1)" : "1px solid transparent" }}>
-                  <span style={{ ...mo, fontSize: 10, color: i === 2 ? "#2DD4BF" : "#556" }}>{p}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span style={{ ...mo, fontSize: 9, color: "#334" }}>{tStr}</span>
-            <div style={{ width: 28, height: 28, borderRadius: 3, background: "rgba(45,212,191,0.06)", border: "1px solid rgba(45,212,191,0.12)", display: "flex", alignItems: "center", justifyContent: "center", ...jk, fontSize: 8, fontWeight: 800, color: "#2DD4BF" }}>IS</div>
-          </div>
-        </div>
-      </nav>
+      <Nav />
 
       {/* Noise */}
       <div
