@@ -265,6 +265,7 @@ export default function AgentsPage() {
           display: "flex",
           flexDirection: "column",
           height: "calc(100vh - 54px - 300px)",
+          minHeight: 0,
         }}
       >
         {/* ═══ AGENT SELECT TABS ═══ */}
@@ -273,6 +274,7 @@ export default function AgentsPage() {
             display: "grid",
             gridTemplateColumns: "repeat(4, 1fr)",
             borderBottom: "1px dashed rgba(255,255,255,0.06)",
+            flexShrink: 0,
           }}
         >
           {agents.map((ag, i) => {
@@ -342,6 +344,7 @@ export default function AgentsPage() {
             transition: "all 0.25s cubic-bezier(0.16,1,0.3,1)",
             flex: 1,
             display: "flex",
+            minHeight: 0,
           }}
         >
           <div
@@ -350,7 +353,7 @@ export default function AgentsPage() {
               gridTemplateColumns: "1fr 1fr",
               gap: 48,
               flex: 1,
-              alignItems: "start",
+              minHeight: 0,
             }}
           >
             {/* LEFT — Info panel */}
@@ -573,16 +576,16 @@ export default function AgentsPage() {
             </div>
 
             {/* RIGHT — Character */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "center", height: "100%" }}>
             <div
               style={{
                 position: "relative",
-                width: 300,
+                height: "100%",
                 overflow: "hidden",
                 flexShrink: 0,
               }}
             >
-              {/* Character video — natural portrait height */}
+              {/* Character video — fills full height, natural width */}
               <video
                 key={a.video}
                 src={a.video}
@@ -592,8 +595,8 @@ export default function AgentsPage() {
                 playsInline
                 style={{
                   display: "block",
-                  width: "100%",
-                  height: "auto",
+                  height: "100%",
+                  width: "auto",
                   position: "relative",
                   zIndex: 1,
                 }}
