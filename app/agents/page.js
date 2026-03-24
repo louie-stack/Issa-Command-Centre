@@ -568,15 +568,15 @@ export default function AgentsPage() {
             </div>
 
             {/* RIGHT — Character */}
+            {/* Outer centres the portrait video card in the right column */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
             <div
               style={{
                 position: "relative",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "all 0.4s",
-                height: 420,
+                width: 280,
                 overflow: "hidden",
+                borderRadius: 8,
+                flexShrink: 0,
               }}
             >
               {/* Ambient glow behind video */}
@@ -585,18 +585,19 @@ export default function AgentsPage() {
                   position: "absolute",
                   top: "20%",
                   left: "50%",
-                  width: "70%",
-                  height: "70%",
+                  width: "80%",
+                  height: "60%",
                   borderRadius: "50%",
-                  background: `radial-gradient(circle, rgba(${a.rgb},0.12) 0%, transparent 65%)`,
-                  filter: "blur(50px)",
+                  background: `radial-gradient(circle, rgba(${a.rgb},0.15) 0%, transparent 65%)`,
+                  filter: "blur(40px)",
                   transform: "translateX(-50%)",
                   transition: "background 0.4s",
                   zIndex: 1,
+                  pointerEvents: "none",
                 }}
               />
 
-              {/* Character video */}
+              {/* Character video — natural portrait height */}
               <video
                 key={a.video}
                 src={a.video}
@@ -605,23 +606,13 @@ export default function AgentsPage() {
                 muted
                 playsInline
                 style={{
+                  display: "block",
+                  width: "100%",
+                  height: "auto",
                   position: "relative",
                   zIndex: 2,
-                  height: "100%",
-                  width: "auto",
-                  transition: "filter 0.4s",
                 }}
               />
-
-              {/* Edge fades — dissolve video into page background */}
-              {/* Left */}
-              <div style={{ position: "absolute", top: 0, left: 0, width: "18%", height: "100%", background: "linear-gradient(90deg, #08080D 0%, transparent 100%)", zIndex: 3, pointerEvents: "none" }} />
-              {/* Right */}
-              <div style={{ position: "absolute", top: 0, right: 0, width: "18%", height: "100%", background: "linear-gradient(270deg, #08080D 0%, transparent 100%)", zIndex: 3, pointerEvents: "none" }} />
-              {/* Top */}
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "15%", background: "linear-gradient(180deg, #08080D 0%, transparent 100%)", zIndex: 3, pointerEvents: "none" }} />
-              {/* Bottom */}
-              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "22%", background: "linear-gradient(0deg, #08080D 0%, transparent 100%)", zIndex: 3, pointerEvents: "none" }} />
 
               {/* Rank watermark */}
               <span
@@ -654,6 +645,7 @@ export default function AgentsPage() {
               >
                 {a.model}
               </span>
+            </div>
             </div>
           </div>
         </div>
