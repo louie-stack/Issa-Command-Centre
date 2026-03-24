@@ -259,13 +259,9 @@ export default function AgentsPage() {
         style={{
           maxWidth: 1440,
           margin: "0 auto",
-          padding: "0 60px",
+          padding: "0 60px 60px",
           position: "relative",
           zIndex: 2,
-          display: "flex",
-          flexDirection: "column",
-          height: "calc(100vh - 354px)",
-          overflow: "hidden",
         }}
       >
         {/* ═══ AGENT SELECT TABS ═══ */}
@@ -342,17 +338,14 @@ export default function AgentsPage() {
             opacity: trans ? 0 : 1,
             transform: trans ? "translateY(6px)" : "translateY(0)",
             transition: "all 0.25s cubic-bezier(0.16,1,0.3,1)",
-            flex: 1,
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
-            gridTemplateRows: "1fr",
             gap: 48,
-            overflow: "hidden",
-            height: "100%",
+            alignItems: "start",
           }}
         >
             {/* LEFT — Info panel */}
-            <div style={{ overflowY: "auto", paddingTop: 32, paddingBottom: 32, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div style={{ paddingTop: 40, paddingBottom: 40 }}>
               {/* Role + Status */}
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
                 <span
@@ -571,7 +564,7 @@ export default function AgentsPage() {
             </div>
 
             {/* RIGHT — Character */}
-            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "center", overflow: "hidden" }}>
+            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "center", height: 620, overflow: "hidden" }}>
             <div
               style={{
                 position: "relative",
