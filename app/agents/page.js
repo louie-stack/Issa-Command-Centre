@@ -31,7 +31,7 @@ const agents = [
       { task: "Schedule Freepik sync", project: "Freepik", pct: null },
     ],
     img: "/agents/chronos.png",
-    video: "/agents/chronos-select.webm",
+    video: "/Chronos Character Vid.mp4",
   },
   {
     id: "scriptv",
@@ -56,7 +56,7 @@ const agents = [
       { task: "Brand deck — 12 slides", project: "Freepik", pct: 80 },
     ],
     img: "/agents/scriptv.png",
-    video: "/agents/scriptv-select.webm",
+    video: "/SCRIPT-V Character Vid.mp4",
   },
   {
     id: "lumen",
@@ -80,7 +80,7 @@ const agents = [
       { task: "Snow truck — flagged cold", project: "Coca-Cola", pct: null },
     ],
     img: "/agents/lumen.png",
-    video: "/agents/lumen-select.webm",
+    video: "/LUMEN Character Vid.mp4",
   },
   {
     id: "synthetix",
@@ -101,7 +101,7 @@ const agents = [
     apis: ["Search API", "Perplexity", "SEC Filings", "Crunchbase"],
     queue: [],
     img: "/agents/synthetix.png",
-    video: "/agents/synthetix-select.webm",
+    video: "/SYNTHETIX Character Vid.mp4",
   },
 ];
 
@@ -175,7 +175,7 @@ export default function AgentsPage() {
       {/* ═══ HERO BANNER ═══ */}
       <div style={{ position: "relative", width: "100%", height: 300, overflow: "hidden", marginTop: 54 }}>
         <img
-          src="/agents/team-banner.png"
+          src="/team-banner.png"
           alt="Agent team"
           style={{
             width: "100%",
@@ -598,17 +598,20 @@ export default function AgentsPage() {
                 }}
               />
 
-              {/* Character image */}
-              <img
-                src={a.img}
-                alt={a.name}
+              {/* Character video */}
+              <video
+                key={a.video}
+                src={a.video}
+                autoPlay
+                loop
+                muted
+                playsInline
                 style={{
                   position: "relative",
                   zIndex: 2,
                   maxHeight: "100%",
                   maxWidth: "100%",
                   objectFit: "contain",
-                  animation: "slowFloat 6s ease-in-out infinite",
                   filter: `drop-shadow(0 0 30px rgba(${a.rgb},0.12))`,
                   transition: "filter 0.4s",
                 }}
