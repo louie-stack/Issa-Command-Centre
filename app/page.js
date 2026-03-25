@@ -944,9 +944,6 @@ export default function Page() {
         </div>
       </section>
 
-      {/*  TICKER  */}
-      <Ticker items={["MANSA: EP.1 IN PRODUCTION","CHRONOS ' COMPILING BRIEF","SCRIPT-V ' GENERATING SHOTS","$26K PIPELINE ACTIVE","4 PROJECTS IN MOTION","847 ASSETS GENERATED","COCA-COLA DECK DUE FRIDAY","3 AGENTS ONLINE"]} speed={45} />
-
       {/*  SECTIONS  */}
       <div style={{ position: "relative", zIndex: 1, background: "#08080D" }}>
         {/* Global scanline + grid " parallax at 0.3x */}
