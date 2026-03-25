@@ -97,7 +97,9 @@ function RevenueSlide({ slide, active }) {
   const circ = 2 * Math.PI * 92;
   return (
     <div style={{ display: active ? "flex" : "none", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "100%", height: "100%", position: "absolute", inset: 0 }}>
-      <div style={{ position: "relative", width: 220, height: 220 }}>
+      <div style={{ position: "relative", width: 220, height: 220, borderRadius: "50%", boxShadow: `0 0 40px rgba(${rgb},0.25), 0 0 100px rgba(${rgb},0.12), 0 0 180px rgba(${rgb},0.06)` }}>
+        {/* Backlit glow layer */}
+        <div style={{ position: "absolute", inset: -30, borderRadius: "50%", background: `radial-gradient(circle, rgba(${rgb},0.12) 0%, rgba(${rgb},0.04) 40%, transparent 70%)`, pointerEvents: "none", filter: "blur(8px)" }} />
         <svg width="220" height="220" viewBox="0 0 220 220" style={{ position: "absolute", inset: 0 }}>
           <circle cx="110" cy="110" r="106" fill="none" stroke={`rgba(${rgb},0.04)`} strokeWidth="0.5" />
           <circle cx="110" cy="110" r="92" fill="none" stroke={`rgba(${rgb},0.07)`} strokeWidth="5" strokeLinecap="round" />
