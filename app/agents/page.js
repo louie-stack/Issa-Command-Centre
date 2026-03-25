@@ -572,13 +572,14 @@ export default function AgentsPage() {
             </div>
 
             {/* RIGHT — Character */}
-            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "center", height: 780, overflow: "hidden" }}>
+            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "center", height: 780, overflow: "hidden", background: "#000" }}>
             <div
               style={{
                 position: "relative",
                 height: "100%",
                 overflow: "hidden",
                 flexShrink: 0,
+                background: "#000",
               }}
             >
               {/* Character video — fills full height, natural width */}
@@ -599,8 +600,8 @@ export default function AgentsPage() {
               />
 
               {/* Left + right edge fades only */}
-              <div style={{ position: "absolute", top: 0, left: 0, width: "25%", height: "100%", background: "linear-gradient(90deg, #000 0%, transparent 100%)", zIndex: 2, pointerEvents: "none" }} />
-              <div style={{ position: "absolute", top: 0, right: 0, width: "25%", height: "100%", background: "linear-gradient(270deg, #000 0%, transparent 100%)", zIndex: 2, pointerEvents: "none" }} />
+              <div style={{ position: "absolute", top: 0, left: 0, width: "30%", height: "100%", background: "linear-gradient(90deg, #000 0%, transparent 100%)", zIndex: 2, pointerEvents: "none" }} />
+              <div style={{ position: "absolute", top: 0, right: 0, width: "10%", height: "100%", background: "linear-gradient(270deg, #000 0%, transparent 100%)", zIndex: 2, pointerEvents: "none" }} />
               {/* Bottom fade only */}
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "30%", background: "linear-gradient(0deg, #000 0%, transparent 100%)", zIndex: 3, pointerEvents: "none" }} />
 
