@@ -730,6 +730,8 @@ export default function Page() {
   const [scrolled, setScrolled] = useState(false);
   const [introPhase, setIntroPhase] = useState("text"); // text -> explode -> hero
   const [scrollPct, setScrollPct] = useState(0);
+  const [selectedPriority, setSelectedPriority] = useState(null);
+  const [selectedMeeting, setSelectedMeeting] = useState(null);
   useEffect(() => { setScrolled(scrollY > 50); }, [scrollY]);
 
   useEffect(() => {
@@ -976,12 +978,15 @@ export default function Page() {
                     <svg width="8" height="8" viewBox="0 0 8 8"><line x1="4" y1="0" x2="4" y2="8" stroke="#2DD4BF" strokeWidth="0.5" opacity="0.5"/><line x1="0" y1="4" x2="8" y2="4" stroke="#2DD4BF" strokeWidth="0.5" opacity="0.5"/></svg>
                     PRIORITIES
                   </div>
-                  {priorities.map((p, i) => (
-                    <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 12 }}>
-                      <div style={{ width: 24, height: 24, borderRadius: 3, flexShrink: 0, background: "rgba(45,212,191,0.04)", border: "1px solid rgba(45,212,191,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#2DD4BF" }}>0{i + 1}</div>
-                      <span style={{ fontSize: 13, color: "#889", fontWeight: 500, lineHeight: 1.5 }}>{p}</span>
-                    </div>
-                  ))}
+                  {priorities.map((p, i) => {
+                    const sel = selectedPriority === i;
+                    return (
+                      <div key={i} onClick={() => setSelectedPriority(sel ? null : i)} className="action-btn" style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 8, padding: "8px 10px", borderRadius: 8, cursor: "pointer", background: sel ? "rgba(45,212,191,0.06)" : "rgba(45,212,191,0.01)", border: `1px solid rgba(45,212,191,${sel ? 0.2 : 0.04})`, transition: "all 0.2s" }}>
+                        <div style={{ width: 24, height: 24, borderRadius: 3, flexShrink: 0, background: sel ? "rgba(45,212,191,0.12)" : "rgba(45,212,191,0.04)", border: `1px solid rgba(45,212,191,${sel ? 0.3 : 0.1})`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#2DD4BF", transition: "all 0.2s" }}>0{i + 1}</div>
+                        <span style={{ fontSize: 13, color: sel ? "#C8D8D6" : "#889", fontWeight: 500, lineHeight: 1.5, transition: "color 0.2s" }}>{p}</span>
+                      </div>
+                    );
+                  })}
                 </Card>
               </Reveal>
               <Reveal delay={80} style={{ gridColumn: "span 4" }}>
@@ -990,17 +995,20 @@ export default function Page() {
                     <svg width="8" height="8" viewBox="0 0 8 8"><line x1="4" y1="0" x2="4" y2="8" stroke="#D4A800" strokeWidth="0.5" opacity="0.5"/><line x1="0" y1="4" x2="8" y2="4" stroke="#D4A800" strokeWidth="0.5" opacity="0.5"/></svg>
                     SCHEDULE
                   </div>
-                  {meetings.map((m, i) => (
-                    <div key={i} style={{ padding: "11px 12px", borderRadius: 3, background: "rgba(255,255,255,0.01)", border: "1px solid rgba(255,255,255,0.03)", marginBottom: 8 }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <div>
-                          <div style={{ fontSize: 13, fontWeight: 600 }}>{m.title}</div>
-                          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445", marginTop: 2 }}>{m.dur}</div>
+                  {meetings.map((m, i) => {
+                    const sel = selectedMeeting === i;
+                    return (
+                      <div key={i} onClick={() => setSelectedMeeting(sel ? null : i)} className="action-btn" style={{ padding: "11px 12px", borderRadius: 8, background: sel ? "rgba(212,168,0,0.06)" : "rgba(212,168,0,0.01)", border: `1px solid rgba(212,168,0,${sel ? 0.2 : 0.04})`, marginBottom: 8, cursor: "pointer", transition: "all 0.2s" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                          <div>
+                            <div style={{ fontSize: 13, fontWeight: 600, color: sel ? "#E8D97A" : "#E8E8F0", transition: "color 0.2s" }}>{m.title}</div>
+                            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445", marginTop: 2 }}>{m.dur}</div>
+                          </div>
+                          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: "#D4A800", fontWeight: 600 }}>[{m.time}]</span>
                         </div>
-                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: "#D4A800", fontWeight: 600 }}>[{m.time}]</span>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </Card>
               </Reveal>
               <Reveal delay={120} style={{ gridColumn: "span 3" }}>
