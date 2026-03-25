@@ -25,10 +25,10 @@ const agentsData = [
   { name: "Synthetix", role: "Research Intel", task: "Offline", g: "#64748B", progress: 0 },
 ];
 const agentsEnhanced = [
-  { name: "Chronos", role: "CHIEF OF STAFF", desc: "Compiling morning brief and scheduling pipeline tasks", color: "#2DD4BF", glowColor: "#2DD4BF", statusColor: "#2DD4BF", progress: 72 },
-  { name: "Script-V", role: "CONTENT PIPELINE", desc: "Generating Mansa shot list and scene compositions", color: "#F97316", glowColor: "#F97316", statusColor: "#F97316", progress: 45 },
-  { name: "Lumen", role: "COLOR + GRADE", desc: "Color grading, visual tone matching and frame polish", color: "#D4A800", glowColor: "#D4A800", statusColor: "#445", progress: 0 },
-  { name: "Synthetix", role: "RESEARCH INTEL", desc: "Market research, competitor intel and deal analysis", color: "#8CA0C8", glowColor: "#8CA0C8", statusColor: "#445", progress: 0 },
+  { name: "Chronos", role: "CHIEF OF STAFF", desc: "Compiling morning brief and scheduling pipeline tasks", color: "#2DD4BF", glowColor: "#2DD4BF", statusColor: "#2DD4BF", rgb: "45,212,191", progress: 72 },
+  { name: "Script-V", role: "CONTENT PIPELINE", desc: "Generating Mansa shot list and scene compositions", color: "#F97316", glowColor: "#F97316", statusColor: "#F97316", rgb: "249,115,22", progress: 45 },
+  { name: "Lumen", role: "COLOR + GRADE", desc: "Color grading, visual tone matching and frame polish", color: "#D4A800", glowColor: "#D4A800", statusColor: "#445", rgb: "212,168,0", progress: 0 },
+  { name: "Synthetix", role: "RESEARCH INTEL", desc: "Market research, competitor intel and deal analysis", color: "#8CA0C8", glowColor: "#8CA0C8", statusColor: "#445", rgb: "140,160,200", progress: 0 },
 ];
 const contentQueue = [
   { project: "Mansa", prompt: "Desert palace, wide establishing shot, golden hour", status: "Queued", tool: "Runway" },
@@ -429,7 +429,7 @@ function SectionHeader({ badge, idx, title, desc, right }) {
   );
 }
 
-function Card({ children, label, style = {} }) {
+function Card({ children, label, color = "45,212,191", style = {} }) {
   const [h, setH] = useState(false);
   return (
     <div
@@ -442,17 +442,17 @@ function Card({ children, label, style = {} }) {
         position: "relative",
         overflow: "hidden",
         background: "rgba(6,12,16,0.97)",
-        border: `1px solid rgba(45,212,191,${h ? 0.3 : 0.18})`,
+        border: `1px solid rgba(${color},${h ? 0.3 : 0.18})`,
         boxShadow: h
-          ? "0 0 0 1px rgba(45,212,191,0.1), 0 0 24px rgba(45,212,191,0.18), 0 0 70px rgba(45,212,191,0.09), 0 20px 40px rgba(0,0,0,0.55), inset 0 0 40px rgba(45,212,191,0.05)"
-          : "0 0 0 1px rgba(45,212,191,0.05), 0 0 16px rgba(45,212,191,0.1), 0 0 50px rgba(45,212,191,0.05), 0 12px 32px rgba(0,0,0,0.45), inset 0 0 30px rgba(45,212,191,0.03)",
+          ? `0 0 0 1px rgba(${color},0.1), 0 0 24px rgba(${color},0.18), 0 0 70px rgba(${color},0.09), 0 20px 40px rgba(0,0,0,0.55), inset 0 0 40px rgba(${color},0.05)`
+          : `0 0 0 1px rgba(${color},0.05), 0 0 16px rgba(${color},0.1), 0 0 50px rgba(${color},0.05), 0 12px 32px rgba(0,0,0,0.45), inset 0 0 30px rgba(${color},0.03)`,
         transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)",
         cursor: "pointer",
         height: "100%",
         ...style,
       }}>
       {/* Interior radial glow — backlit from top */}
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse 90% 60% at 50% 0%, rgba(45,212,191,${h ? 0.1 : 0.06}) 0%, transparent 70%)`, transition: "opacity 0.4s" }} />
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse 90% 60% at 50% 0%, rgba(${color},${h ? 0.1 : 0.06}) 0%, transparent 70%)`, transition: "opacity 0.4s" }} />
       <div style={{ position: "relative" }}>{children}</div>
     </div>
   );
@@ -624,12 +624,15 @@ function ParticleField() {
     const ctx = canvas.getContext("2d");
     let raf;
     const COLORS = [
-      { r: 45,  g: 212, b: 191 }, // teal
       { r: 45,  g: 212, b: 191 },
       { r: 45,  g: 212, b: 191 },
-      { r: 212, g: 168, b: 0   }, // gold
+      { r: 45,  g: 212, b: 191 },
+      { r: 45,  g: 212, b: 191 },
       { r: 212, g: 168, b: 0   },
-      { r: 140, g: 160, b: 200 }, // slate
+      { r: 212, g: 168, b: 0   },
+      { r: 249, g: 115, b: 22  },
+      { r: 140, g: 160, b: 200 },
+      { r: 94,  g: 234, b: 212 },
     ];
     const resize = () => {
       canvas.width  = window.innerWidth;
@@ -637,47 +640,67 @@ function ParticleField() {
     };
     resize();
     window.addEventListener("resize", resize);
-    const N = 55;
+    const N = 110;
     const particles = Array.from({ length: N }, () => {
       const c = COLORS[Math.floor(Math.random() * COLORS.length)];
+      const large = Math.random() < 0.12;
       return {
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
-        r: 0.6 + Math.random() * 1.6,
-        vx: (Math.random() - 0.5) * 0.18,
-        vy: (Math.random() - 0.5) * 0.18,
-        baseAlpha: 0.04 + Math.random() * 0.12,
+        r: large ? 1.5 + Math.random() * 2 : 0.5 + Math.random() * 1.2,
+        vx: (Math.random() - 0.5) * (large ? 0.08 : 0.22),
+        vy: (Math.random() - 0.5) * (large ? 0.08 : 0.22),
+        baseAlpha: large ? 0.18 + Math.random() * 0.22 : 0.08 + Math.random() * 0.16,
         alpha: 0,
         phase: Math.random() * Math.PI * 2,
-        speed: 0.003 + Math.random() * 0.006,
+        speed: 0.002 + Math.random() * 0.005,
         color: c,
+        large,
       };
     });
+    const LINK_DIST = 140;
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const t = performance.now() * 0.001;
       particles.forEach(p => {
         p.phase += p.speed;
-        p.alpha = p.baseAlpha * (0.5 + 0.5 * Math.sin(p.phase));
+        p.alpha = p.baseAlpha * (0.55 + 0.45 * Math.sin(p.phase));
         p.x += p.vx;
         p.y += p.vy;
-        if (p.x < -4) p.x = canvas.width  + 4;
-        if (p.x > canvas.width  + 4) p.x = -4;
-        if (p.y < -4) p.y = canvas.height + 4;
-        if (p.y > canvas.height + 4) p.y = -4;
+        if (p.x < -8) p.x = canvas.width  + 8;
+        if (p.x > canvas.width  + 8) p.x = -8;
+        if (p.y < -8) p.y = canvas.height + 8;
+        if (p.y > canvas.height + 8) p.y = -8;
+      });
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const a = particles[i], b = particles[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < LINK_DIST) {
+            const lineAlpha = (1 - dist / LINK_DIST) * 0.06 * Math.min(a.alpha, b.alpha) * 8;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = `rgba(${a.color.r},${a.color.g},${a.color.b},${lineAlpha})`;
+            ctx.lineWidth = 0.4;
+            ctx.stroke();
+          }
+        }
+      }
+      particles.forEach(p => {
         const { r, g, b } = p.color;
-        // soft glow
-        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4);
-        grd.addColorStop(0,   `rgba(${r},${g},${b},${p.alpha})`);
-        grd.addColorStop(1,   `rgba(${r},${g},${b},0)`);
+        const glowR = p.r * (p.large ? 7 : 5);
+        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowR);
+        grd.addColorStop(0, `rgba(${r},${g},${b},${p.alpha * 0.7})`);
+        grd.addColorStop(0.4, `rgba(${r},${g},${b},${p.alpha * 0.2})`);
+        grd.addColorStop(1, `rgba(${r},${g},${b},0)`);
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, glowR, 0, Math.PI * 2);
         ctx.fillStyle = grd;
         ctx.fill();
-        // core dot
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(p.alpha * 2.5, 0.35)})`;
+        ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(p.alpha * 3, 0.7)})`;
         ctx.fill();
       });
       raf = requestAnimationFrame(draw);
@@ -694,7 +717,7 @@ function ParticleField() {
       style={{
         position: "fixed", inset: 0, width: "100%", height: "100%",
         pointerEvents: "none", zIndex: 1,
-        opacity: 0, animation: "particleFadeIn 2s ease 1.2s forwards",
+        opacity: 0, animation: "particleFadeIn 2.5s ease 0.5s forwards",
       }}
     />
   );
@@ -960,7 +983,7 @@ export default function Page() {
                 </Card>
               </Reveal>
               <Reveal delay={80} style={{ gridColumn: "span 4" }}>
-                <Card>
+                <Card color="212,168,0">
                   <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#D4A800", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}>
                     <svg width="8" height="8" viewBox="0 0 8 8"><line x1="4" y1="0" x2="4" y2="8" stroke="#D4A800" strokeWidth="0.5" opacity="0.5"/><line x1="0" y1="4" x2="8" y2="4" stroke="#D4A800" strokeWidth="0.5" opacity="0.5"/></svg>
                     SCHEDULE
@@ -1193,7 +1216,7 @@ export default function Page() {
             <SectionHeader idx="03" badge="YOUR AI TEAM" title="Agents" desc="autonomous_agents ' creative_pipeline ' always_building" right={<div style={{ display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: "#D4A800", boxShadow: "0 0 6px rgba(212,168,0,0.4)", animation: "pulse 2s infinite" }} /><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#D4A800" }}>3 ONLINE</span></div>} />
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
               {agentsEnhanced.map((agent, ai) => (
-  <div key={ai} className="bento-hover" style={{ borderRadius: 16, overflow: "hidden", background: "rgba(6,12,16,0.97)", border: `1px solid rgba(45,212,191,0.2)`, boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer" }}>
+  <div key={ai} className="bento-hover" style={{ borderRadius: 16, overflow: "hidden", background: "rgba(6,12,16,0.97)", border: `1px solid rgba(${agent.rgb},0.22)`, boxShadow: `0 0 16px rgba(${agent.rgb},0.14), 0 0 50px rgba(${agent.rgb},0.07), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${agent.rgb},0.05)`, cursor: "pointer" }}>
     <div style={{ position: "relative", height: 170, overflow: "hidden", background: `linear-gradient(170deg, ${agent.glowColor}28 0%, ${agent.glowColor}0D 45%, rgba(8,8,13,0.98) 100%)` }}>
       <div style={{ position: "absolute", top: "5%", left: "50%", width: 160, height: 160, borderRadius: "50%", background: `radial-gradient(circle, ${agent.glowColor}1F 0%, transparent 55%)`, filter: "blur(20px)", transform: "translateX(-50%)" }} />
       {ai === 0 && (
