@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState } from "react";
 import Nav from "../../components/Nav";
 
@@ -25,7 +25,7 @@ export default function ProjectsPage() {
   const proj = projects[activeProject];
 
   return (
-    <div style={{ background: "#08080D", minHeight: "100vh", color: "#E8E8F0", fontFamily: "'Inter', sans-serif", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden" }}>
+    <div style={{  minHeight: "100vh", color: "#E8E8F0", fontFamily: "'Inter', sans-serif", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden" }}>
       <div style={{ height: 54, flexShrink: 0 }} />
       <div style={{ display: "flex", flex: 1, position: "relative" }}>
       <div style={{ position: "absolute", top: -80, left: "30%", width: 500, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(45,212,191,0.03) 0%, transparent 60%)", filter: "blur(60px)", pointerEvents: "none", animation: "breathe 8s ease-in-out infinite" }} />

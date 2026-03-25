@@ -156,7 +156,7 @@ export default function BusinessPage() {
   const next = () => setSlide((slide + 1) % slides.length);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#08080D", color: "#E8E8F0", paddingTop: 54 }}>
+    <div style={{ minHeight: "100vh",  color: "#E8E8F0", paddingTop: 54 }}>
       <Nav />
       <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 44px", position: "relative" }}>
 

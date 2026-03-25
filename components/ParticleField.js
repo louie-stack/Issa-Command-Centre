@@ -35,7 +35,7 @@ export default function ParticleField() {
         r: large ? 1.4 + Math.random() * 1.6 : 0.5 + Math.random() * 1.1,
         vx: (Math.random() - 0.5) * (large ? 0.55 : 0.9),
         vy: (Math.random() - 0.5) * (large ? 0.55 : 0.9),
-        baseAlpha: large ? 0.16 + Math.random() * 0.12 : 0.07 + Math.random() * 0.1,
+        baseAlpha: large ? 0.08 + Math.random() * 0.07 : 0.03 + Math.random() * 0.05,
         alpha: 0,
         phase: Math.random() * Math.PI * 2,
         speed: 0.003 + Math.random() * 0.006,
@@ -101,7 +101,7 @@ export default function ParticleField() {
       ref={canvasRef}
       style={{
         position: "fixed", inset: 0, width: "100%", height: "100%",
-        pointerEvents: "none", zIndex: 5,
+        pointerEvents: "none", zIndex: 0,
         opacity: 0, animation: "particleFadeIn 2.5s ease 0.5s forwards",
       }}
     />

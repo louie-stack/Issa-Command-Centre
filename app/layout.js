@@ -9,11 +9,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body style={{ background: "#08080D", position: "relative" }}>
+      <body style={{ background: "#08080D" }}>
         <ParticleField />
-        <div style={{ position: "relative", zIndex: 1 }}>
-          {children}
-        </div>
+        {children}
       </body>
     </html>
   );
