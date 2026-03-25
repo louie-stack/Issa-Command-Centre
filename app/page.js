@@ -25,10 +25,10 @@ const agentsData = [
   { name: "Synthetix", role: "Research Intel", task: "Offline", g: "#64748B", progress: 0 },
 ];
 const agentsEnhanced = [
-  { name: "Chronos", role: "CHIEF OF STAFF", desc: "Compiling morning brief and scheduling pipeline tasks", color: "#2DD4BF", glowColor: "#2DD4BF", statusColor: "#2DD4BF", rgb: "45,212,191", progress: 72, video: "/Chronos%20Character%20Vid.mp4" },
-  { name: "Script-V", role: "CONTENT PIPELINE", desc: "Generating Mansa shot list and scene compositions", color: "#F97316", glowColor: "#F97316", statusColor: "#F97316", rgb: "249,115,22", progress: 45, video: "/SCRIPT-V%20Character%20Vid.mp4" },
-  { name: "Lumen", role: "COLOR + GRADE", desc: "Color grading, visual tone matching and frame polish", color: "#D4A800", glowColor: "#D4A800", statusColor: "#445", rgb: "212,168,0", progress: 0, video: "/LUMEN%20Character%20Vid.mp4" },
-  { name: "Synthetix", role: "RESEARCH INTEL", desc: "Market research, competitor intel and deal analysis", color: "#8CA0C8", glowColor: "#8CA0C8", statusColor: "#445", rgb: "140,160,200", progress: 0, video: "/SYNTHETIX%20Character%20Vid.mp4" },
+  { name: "Chronos", role: "CHIEF OF STAFF", desc: "Compiling morning brief and scheduling pipeline tasks", color: "#2DD4BF", glowColor: "#2DD4BF", statusColor: "#2DD4BF", rgb: "45,212,191", progress: 72, video: "/Chronos%20Character%20Vid.mp4", agentId: "chronos" },
+  { name: "Script-V", role: "CONTENT PIPELINE", desc: "Generating Mansa shot list and scene compositions", color: "#F97316", glowColor: "#F97316", statusColor: "#F97316", rgb: "249,115,22", progress: 45, video: "/SCRIPT-V%20Character%20Vid.mp4", agentId: "scriptv" },
+  { name: "Lumen", role: "COLOR + GRADE", desc: "Color grading, visual tone matching and frame polish", color: "#D4A800", glowColor: "#D4A800", statusColor: "#445", rgb: "212,168,0", progress: 0, video: "/LUMEN%20Character%20Vid.mp4", agentId: "lumen" },
+  { name: "Synthetix", role: "RESEARCH INTEL", desc: "Market research, competitor intel and deal analysis", color: "#8CA0C8", glowColor: "#8CA0C8", statusColor: "#445", rgb: "140,160,200", progress: 0, video: "/SYNTHETIX%20Character%20Vid.mp4", agentId: "synthetix" },
 ];
 const contentQueue = [
   { project: "Mansa", prompt: "Desert palace, wide establishing shot, golden hour", status: "Queued", tool: "Runway" },
@@ -891,7 +891,7 @@ export default function Page() {
 
               {/* CTA */}
               <div style={{ animation: introPhase === "hero" ? "heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s both" : "none", opacity: introPhase === "hero" ? undefined : 0, marginTop: 32 }}>
-                <div onClick={() => {}} className="action-btn" style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "14px 32px", borderRadius: 14, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.07)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", cursor: "pointer", transition: "all 0.3s", boxShadow: "0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)", overflow: "hidden", position: "relative" }}>
+                <div onClick={() => window.location.href = "/agents"} className="action-btn" style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "14px 32px", borderRadius: 14, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.07)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", cursor: "pointer", transition: "all 0.3s", boxShadow: "0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)", overflow: "hidden", position: "relative" }}>
                   <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: 1, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)", pointerEvents: "none" }} />
                   <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 14, fontWeight: 600, color: "#E8E8F0", letterSpacing: "0.01em", position: "relative" }}>Meet the team</span>
                   <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: "#2DD4BF", position: "relative" }}>{"\u2192"}</span>
@@ -1219,6 +1219,7 @@ export default function Page() {
   <div key={ai} className="bento-hover"
     onMouseEnter={e => e.currentTarget.querySelector("video")?.play()}
     onMouseLeave={e => { const v = e.currentTarget.querySelector("video"); if (v) { v.pause(); v.currentTime = 0; } }}
+    onClick={() => window.location.href = `/agents#${agent.agentId}`}
     style={{ borderRadius: 16, overflow: "hidden", background: "rgba(6,12,16,0.97)", border: `1px solid rgba(${agent.rgb},0.22)`, boxShadow: `0 0 16px rgba(${agent.rgb},0.14), 0 0 50px rgba(${agent.rgb},0.07), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${agent.rgb},0.05)`, cursor: "pointer" }}>
     <div style={{ position: "relative", height: 170, overflow: "hidden", background: "#06080D" }}>
       {/* Agent character video — plays on hover only */}
