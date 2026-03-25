@@ -134,6 +134,7 @@ export default function AgentsPage() {
   return (
     <div
       style={{
+        background: "#08080D",
         minHeight: "100vh",
         color: "#E8E8F0",
         fontFamily: "'Inter', sans-serif",
