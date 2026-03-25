@@ -464,6 +464,27 @@ function MeetingItem({ meeting: m, sel, onSelect }) {
   );
 }
 
+function WorkshopItem({ workshop: w, sel, onSelect }) {
+  const [h, setH] = useState(false);
+  const active = sel || h;
+  return (
+    <div
+      onClick={onSelect}
+      onMouseEnter={() => setH(true)}
+      onMouseLeave={() => setH(false)}
+      style={{ padding: "11px 12px", borderRadius: 8, background: active ? "rgba(45,212,191,0.06)" : "transparent", border: `1px solid rgba(45,212,191,${active ? 0.22 : 0.04})`, marginBottom: 8, cursor: "pointer", transform: h && !sel ? "translateY(-2px)" : "none", boxShadow: active ? "0 0 12px rgba(45,212,191,0.08)" : "none", transition: "all 0.2s cubic-bezier(0.16,1,0.3,1)" }}>
+      <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 5, color: active ? "#C8E8E4" : "#E8E8F0", transition: "color 0.2s" }}>{w.name}</div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: 8 }}>
+          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445" }}>{w.date}</span>
+          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445" }}>{w.format}</span>
+        </div>
+        <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, fontWeight: 700, color: "#2DD4BF" }}>{w.reg}<span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445", marginLeft: 4 }}>reg</span></span>
+      </div>
+    </div>
+  );
+}
+
 function Card({ children, label, color = "45,212,191", style = {} }) {
   const [h, setH] = useState(false);
   return (
@@ -767,6 +788,7 @@ export default function Page() {
   const [scrollPct, setScrollPct] = useState(0);
   const [selectedPriority, setSelectedPriority] = useState(null);
   const [selectedMeeting, setSelectedMeeting] = useState(null);
+  const [selectedWorkshop, setSelectedWorkshop] = useState(null);
   useEffect(() => { setScrolled(scrollY > 50); }, [scrollY]);
 
   useEffect(() => {
@@ -1342,16 +1364,7 @@ export default function Page() {
                 <Card>
                   <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#2DD4BF", marginBottom: 14 }}>+ WORKSHOP PIPELINE</div>
                   {workshopsData.map((w, i) => (
-                    <div key={i} style={{ padding: "11px 12px", borderRadius: 3, background: "rgba(255,255,255,0.008)", border: "1px solid rgba(255,255,255,0.025)", marginBottom: 8 }}>
-                      <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 5 }}>{w.name}</div>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <div style={{ display: "flex", gap: 8 }}>
-                          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445" }}>{w.date}</span>
-                          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445" }}>{w.format}</span>
-                        </div>
-                        <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, fontWeight: 700, color: "#2DD4BF" }}>{w.reg}<span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445", marginLeft: 4 }}>reg</span></span>
-                      </div>
-                    </div>
+                    <WorkshopItem key={i} workshop={w} sel={selectedWorkshop === i} onSelect={() => setSelectedWorkshop(selectedWorkshop === i ? null : i)} />
                   ))}
                 </Card>
               </Reveal>
