@@ -498,17 +498,17 @@ function Card({ children, label, color = "45,212,191", style = {} }) {
         position: "relative",
         overflow: "hidden",
         background: "rgba(6,12,16,0.97)",
-        border: `1px solid rgba(${color},${h ? 0.3 : 0.18})`,
+        border: `1px solid rgba(${color},${h ? 0.45 : 0.28})`,
         boxShadow: h
-          ? `0 0 0 1px rgba(${color},0.1), 0 0 24px rgba(${color},0.18), 0 0 70px rgba(${color},0.09), 0 20px 40px rgba(0,0,0,0.55), inset 0 0 40px rgba(${color},0.05)`
-          : `0 0 0 1px rgba(${color},0.05), 0 0 16px rgba(${color},0.1), 0 0 50px rgba(${color},0.05), 0 12px 32px rgba(0,0,0,0.45), inset 0 0 30px rgba(${color},0.03)`,
+          ? `0 0 0 1px rgba(${color},0.18), 0 0 30px rgba(${color},0.35), 0 0 90px rgba(${color},0.18), 0 20px 40px rgba(0,0,0,0.6), inset 0 0 50px rgba(${color},0.1)`
+          : `0 0 0 1px rgba(${color},0.1), 0 0 20px rgba(${color},0.2), 0 0 60px rgba(${color},0.1), 0 12px 32px rgba(0,0,0,0.45), inset 0 0 40px rgba(${color},0.06)`,
         transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)",
         cursor: "pointer",
         height: "100%",
         ...style,
       }}>
       {/* Interior radial glow — backlit from top */}
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse 90% 60% at 50% 0%, rgba(${color},${h ? 0.1 : 0.06}) 0%, transparent 70%)`, transition: "opacity 0.4s" }} />
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse 90% 60% at 50% 0%, rgba(${color},${h ? 0.16 : 0.1}) 0%, transparent 70%)`, transition: "opacity 0.4s" }} />
       <div style={{ position: "relative" }}>{children}</div>
     </div>
   );
@@ -1276,7 +1276,7 @@ export default function Page() {
     onMouseEnter={e => e.currentTarget.querySelector("video")?.play()}
     onMouseLeave={e => { const v = e.currentTarget.querySelector("video"); if (v) { v.pause(); v.currentTime = 0; } }}
     onClick={() => window.location.href = `/agents#${agent.agentId}`}
-    style={{ borderRadius: 16, overflow: "hidden", background: "rgba(6,12,16,0.97)", border: `1px solid rgba(${agent.rgb},0.22)`, boxShadow: `0 0 16px rgba(${agent.rgb},0.14), 0 0 50px rgba(${agent.rgb},0.07), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${agent.rgb},0.05)`, cursor: "pointer" }}>
+    style={{ borderRadius: 16, overflow: "hidden", background: "rgba(6,12,16,0.97)", border: `1px solid rgba(${agent.rgb},0.32)`, boxShadow: `0 0 22px rgba(${agent.rgb},0.22), 0 0 60px rgba(${agent.rgb},0.12), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 40px rgba(${agent.rgb},0.08)`, cursor: "pointer", transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)" }}>
     <div style={{ position: "relative", height: 170, overflow: "hidden", background: "#06080D" }}>
       {/* Agent character video — plays on hover only */}
       <video
