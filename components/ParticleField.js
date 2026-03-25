@@ -1,13 +1,27 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 export default function ParticleField() {
+  const pathname = usePathname();
   const canvasRef = useRef(null);
+
+  // Don't render on agents page
+  if (pathname === "/agents") return null;
+
+  return <ParticleCanvas />;
+}
+
+function ParticleCanvas() {
+  const canvasRef = useRef(null);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     let raf;
+    let lastTime = null;
+
     const COLORS = [
       { r: 45,  g: 212, b: 191 },
       { r: 45,  g: 212, b: 191 },
@@ -19,12 +33,14 @@ export default function ParticleField() {
       { r: 140, g: 160, b: 200 },
       { r: 94,  g: 234, b: 212 },
     ];
+
     const resize = () => {
       canvas.width  = window.innerWidth;
       canvas.height = window.innerHeight;
     };
     resize();
     window.addEventListener("resize", resize);
+
     const N = 70;
     const particles = Array.from({ length: N }, () => {
       const c = COLORS[Math.floor(Math.random() * COLORS.length)];
@@ -33,8 +49,9 @@ export default function ParticleField() {
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
         r: large ? 1.4 + Math.random() * 1.6 : 0.5 + Math.random() * 1.1,
-        vx: (Math.random() - 0.5) * (large ? 0.55 : 0.9),
-        vy: (Math.random() - 0.5) * (large ? 0.55 : 0.9),
+        // Speed in px/s — decoupled from frame rate
+        vx: (Math.random() - 0.5) * (large ? 28 : 50),
+        vy: (Math.random() - 0.5) * (large ? 28 : 50),
         baseAlpha: large ? 0.08 + Math.random() * 0.07 : 0.03 + Math.random() * 0.05,
         alpha: 0,
         phase: Math.random() * Math.PI * 2,
@@ -43,19 +60,27 @@ export default function ParticleField() {
         large,
       };
     });
+
     const LINK_DIST = 100;
-    const draw = () => {
+
+    const draw = (timestamp) => {
+      if (lastTime === null) lastTime = timestamp;
+      const dt = Math.min((timestamp - lastTime) / 1000, 0.05); // seconds, capped at 50ms
+      lastTime = timestamp;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
       particles.forEach(p => {
         p.phase += p.speed;
         p.alpha = p.baseAlpha * (0.55 + 0.45 * Math.sin(p.phase));
-        p.x += p.vx;
-        p.y += p.vy;
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
         if (p.x < -8) p.x = canvas.width  + 8;
         if (p.x > canvas.width  + 8) p.x = -8;
         if (p.y < -8) p.y = canvas.height + 8;
         if (p.y > canvas.height + 8) p.y = -8;
       });
+
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const a = particles[i], b = particles[j];
@@ -72,13 +97,14 @@ export default function ParticleField() {
           }
         }
       }
+
       particles.forEach(p => {
         const { r, g, b } = p.color;
         const glowR = p.r * (p.large ? 7 : 5);
         const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowR);
-        grd.addColorStop(0, `rgba(${r},${g},${b},${p.alpha * 0.7})`);
+        grd.addColorStop(0,   `rgba(${r},${g},${b},${p.alpha * 0.7})`);
         grd.addColorStop(0.4, `rgba(${r},${g},${b},${p.alpha * 0.2})`);
-        grd.addColorStop(1, `rgba(${r},${g},${b},0)`);
+        grd.addColorStop(1,   `rgba(${r},${g},${b},0)`);
         ctx.beginPath();
         ctx.arc(p.x, p.y, glowR, 0, Math.PI * 2);
         ctx.fillStyle = grd;
@@ -88,14 +114,17 @@ export default function ParticleField() {
         ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(p.alpha * 3, 0.7)})`;
         ctx.fill();
       });
+
       raf = requestAnimationFrame(draw);
     };
-    draw();
+
+    raf = requestAnimationFrame(draw);
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
     };
   }, []);
+
   return (
     <canvas
       ref={canvasRef}
