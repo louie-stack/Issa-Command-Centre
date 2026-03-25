@@ -789,6 +789,18 @@ export default function Page() {
   const [selectedPriority, setSelectedPriority] = useState(null);
   const [selectedMeeting, setSelectedMeeting] = useState(null);
   const [selectedWorkshop, setSelectedWorkshop] = useState(null);
+
+  // Returns onMouseEnter/onMouseLeave handlers that intensify a card's own-colour glow on hover
+  const hoverGlow = (rgb, restBorder, restShadow) => ({
+    onMouseEnter: e => {
+      e.currentTarget.style.boxShadow = `0 0 35px rgba(${rgb},0.38), 0 0 90px rgba(${rgb},0.18), 0 20px 50px rgba(0,0,0,0.6), inset 0 0 50px rgba(${rgb},0.1)`;
+      e.currentTarget.style.borderColor = `rgba(${rgb},0.5)`;
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.boxShadow = restShadow;
+      e.currentTarget.style.borderColor = restBorder;
+    },
+  });
   useEffect(() => { setScrolled(scrollY > 50); }, [scrollY]);
 
   useEffect(() => {
@@ -1079,7 +1091,7 @@ export default function Page() {
 
             {/*  FEATURED: MANSA  */}
             <Reveal delay={40} parallax={0.2}>
-              <div className="bento-hover" style={{ borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 360, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(45,212,191,0.2)", boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer", marginBottom: 24 }}>
+              <div className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.2)","0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)")} style={{ borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 360, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(45,212,191,0.2)", boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer", marginBottom: 24 }}>
                 <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
                   <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(45,212,191,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                 </div>
@@ -1125,7 +1137,7 @@ export default function Page() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
               {/* COCA-COLA */}
               <Reveal delay={100} parallax={0.25}>
-                <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(249,115,22,0.18)", boxShadow: "0 0 16px rgba(249,115,22,0.12), 0 0 50px rgba(249,115,22,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.04)", cursor: "pointer" }}>
+                <div className="bento-hover" {...hoverGlow("249,115,22","rgba(249,115,22,0.18)","0 0 16px rgba(249,115,22,0.12), 0 0 50px rgba(249,115,22,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.04)")} style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(249,115,22,0.18)", boxShadow: "0 0 16px rgba(249,115,22,0.12), 0 0 50px rgba(249,115,22,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.04)", cursor: "pointer" }}>
                   <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
                     <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(249,115,22,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                   </div>
@@ -1146,7 +1158,7 @@ export default function Page() {
 
               {/* WORKSHOP */}
               <Reveal delay={160} parallax={0.3}>
-                <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(94,234,212,0.15)", boxShadow: "0 0 16px rgba(94,234,212,0.12), 0 0 50px rgba(94,234,212,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(94,234,212,0.04)", cursor: "pointer" }}>
+                <div className="bento-hover" {...hoverGlow("94,234,212","rgba(94,234,212,0.15)","0 0 16px rgba(94,234,212,0.12), 0 0 50px rgba(94,234,212,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(94,234,212,0.04)")} style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(94,234,212,0.15)", boxShadow: "0 0 16px rgba(94,234,212,0.12), 0 0 50px rgba(94,234,212,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(94,234,212,0.04)", cursor: "pointer" }}>
                   <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
                     <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(94,234,212,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                   </div>
@@ -1167,7 +1179,7 @@ export default function Page() {
 
               {/* FREEPIK */}
               <Reveal delay={220} parallax={0.35}>
-                <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(45,212,191,0.2)", boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer" }}>
+                <div className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.2)","0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)")} style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(45,212,191,0.2)", boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer" }}>
                   <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
                     <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(45,212,191,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                   </div>
@@ -1226,7 +1238,8 @@ export default function Page() {
                       </div>
 
                       {/* Card */}
-                      <div className="bento-hover" style={{ width: "90%", padding: "20px 18px", borderRadius: 14, border: `1px solid rgba(${stage.color.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(',')},0.2)`, background: "rgba(6,12,16,0.97)", boxShadow: `0 0 16px rgba(${stage.color.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(',')},0.12), 0 0 50px rgba(${stage.color.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(',')},0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${stage.color.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(',')},0.04)`, cursor: "pointer", textAlign: "left", position: "relative", overflow: "hidden" }}>
+                      {(() => { const rgb = stage.color.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(','); const restShadow = `0 0 16px rgba(${rgb},0.12), 0 0 50px rgba(${rgb},0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${rgb},0.04)`; return (
+                      <div className="bento-hover" {...hoverGlow(rgb,`rgba(${rgb},0.2)`,restShadow)} style={{ width: "90%", padding: "20px 18px", borderRadius: 14, border: `1px solid rgba(${rgb},0.2)`, background: "rgba(6,12,16,0.97)", boxShadow: restShadow, cursor: "pointer", textAlign: "left", position: "relative", overflow: "hidden" }}>
                         <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
                           <div className="bento-glow" style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse 90% 65% at 50% 0%, rgba(${stage.color.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(',')},0.1) 0%, transparent 70%)`, opacity: 0.6, transition: "opacity 0.5s" }} />
                         </div>
@@ -1240,6 +1253,7 @@ export default function Page() {
                           <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445" }}>{stage.agent}</span>
                         </div>
                       </div>
+                    ); })()}
                     </div>
                   ))}
                 </div>
@@ -1250,7 +1264,7 @@ export default function Page() {
             <Reveal delay={120}>
               <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
                 {contentQueue.map((item, i) => (
-                  <div key={i} className="bento-hover" style={{ padding: "14px 16px", borderRadius: 10, border: "1px solid rgba(45,212,191,0.15)", background: "rgba(6,12,16,0.97)", boxShadow: "0 0 16px rgba(45,212,191,0.08), 0 0 50px rgba(45,212,191,0.04), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.03)", cursor: "pointer", position: "relative", overflow: "hidden" }}>
+                  <div key={i} className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.15)","0 0 16px rgba(45,212,191,0.08), 0 0 50px rgba(45,212,191,0.04), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.03)")} style={{ padding: "14px 16px", borderRadius: 10, border: "1px solid rgba(45,212,191,0.15)", background: "rgba(6,12,16,0.97)", boxShadow: "0 0 16px rgba(45,212,191,0.08), 0 0 50px rgba(45,212,191,0.04), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.03)", cursor: "pointer", position: "relative", overflow: "hidden" }}>
                     <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#AAB", lineHeight: 1.4, marginBottom: 8 }}>{item.prompt}</div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
