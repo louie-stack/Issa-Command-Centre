@@ -134,12 +134,10 @@ export default function AgentsPage() {
   return (
     <div
       style={{
-        background: "#000",
         minHeight: "100vh",
         color: "#E8E8F0",
         fontFamily: "'Inter', sans-serif",
         position: "relative",
-        overflow: "hidden",
       }}
     >
       <style>{`
