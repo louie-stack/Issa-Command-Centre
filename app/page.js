@@ -429,6 +429,41 @@ function SectionHeader({ badge, idx, title, desc, right }) {
   );
 }
 
+function PriorityItem({ idx, text, sel, onSelect }) {
+  const [h, setH] = useState(false);
+  const active = sel || h;
+  return (
+    <div
+      onClick={onSelect}
+      onMouseEnter={() => setH(true)}
+      onMouseLeave={() => setH(false)}
+      style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 8, padding: "8px 10px", borderRadius: 8, cursor: "pointer", background: active ? "rgba(45,212,191,0.06)" : "transparent", border: `1px solid rgba(45,212,191,${active ? 0.22 : 0.04})`, transform: h && !sel ? "translateY(-2px)" : "none", boxShadow: active ? "0 0 12px rgba(45,212,191,0.08)" : "none", transition: "all 0.2s cubic-bezier(0.16,1,0.3,1)" }}>
+      <div style={{ width: 24, height: 24, borderRadius: 3, flexShrink: 0, background: active ? "rgba(45,212,191,0.12)" : "rgba(45,212,191,0.04)", border: `1px solid rgba(45,212,191,${active ? 0.3 : 0.1})`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#2DD4BF", transition: "all 0.2s" }}>0{idx + 1}</div>
+      <span style={{ fontSize: 13, color: active ? "#C8E8E4" : "#889", fontWeight: 500, lineHeight: 1.5, transition: "color 0.2s" }}>{text}</span>
+    </div>
+  );
+}
+
+function MeetingItem({ meeting: m, sel, onSelect }) {
+  const [h, setH] = useState(false);
+  const active = sel || h;
+  return (
+    <div
+      onClick={onSelect}
+      onMouseEnter={() => setH(true)}
+      onMouseLeave={() => setH(false)}
+      style={{ padding: "11px 12px", borderRadius: 8, background: active ? "rgba(212,168,0,0.07)" : "transparent", border: `1px solid rgba(212,168,0,${active ? 0.22 : 0.04})`, marginBottom: 8, cursor: "pointer", transform: h && !sel ? "translateY(-2px)" : "none", boxShadow: active ? "0 0 12px rgba(212,168,0,0.1)" : "none", transition: "all 0.2s cubic-bezier(0.16,1,0.3,1)" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div>
+          <div style={{ fontSize: 13, fontWeight: 600, color: active ? "#F0DC82" : "#E8E8F0", transition: "color 0.2s" }}>{m.title}</div>
+          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445", marginTop: 2 }}>{m.dur}</div>
+        </div>
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: "#D4A800", fontWeight: 600 }}>[{m.time}]</span>
+      </div>
+    </div>
+  );
+}
+
 function Card({ children, label, color = "45,212,191", style = {} }) {
   const [h, setH] = useState(false);
   return (
@@ -981,10 +1016,7 @@ export default function Page() {
                   {priorities.map((p, i) => {
                     const sel = selectedPriority === i;
                     return (
-                      <div key={i} onClick={() => setSelectedPriority(sel ? null : i)} className="action-btn" style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 8, padding: "8px 10px", borderRadius: 8, cursor: "pointer", background: sel ? "rgba(45,212,191,0.06)" : "rgba(45,212,191,0.01)", border: `1px solid rgba(45,212,191,${sel ? 0.2 : 0.04})`, transition: "all 0.2s" }}>
-                        <div style={{ width: 24, height: 24, borderRadius: 3, flexShrink: 0, background: sel ? "rgba(45,212,191,0.12)" : "rgba(45,212,191,0.04)", border: `1px solid rgba(45,212,191,${sel ? 0.3 : 0.1})`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#2DD4BF", transition: "all 0.2s" }}>0{i + 1}</div>
-                        <span style={{ fontSize: 13, color: sel ? "#C8D8D6" : "#889", fontWeight: 500, lineHeight: 1.5, transition: "color 0.2s" }}>{p}</span>
-                      </div>
+                      <PriorityItem key={i} idx={i} text={p} sel={sel} onSelect={() => setSelectedPriority(sel ? null : i)} />
                     );
                   })}
                 </Card>
@@ -998,15 +1030,7 @@ export default function Page() {
                   {meetings.map((m, i) => {
                     const sel = selectedMeeting === i;
                     return (
-                      <div key={i} onClick={() => setSelectedMeeting(sel ? null : i)} className="action-btn" style={{ padding: "11px 12px", borderRadius: 8, background: sel ? "rgba(212,168,0,0.06)" : "rgba(212,168,0,0.01)", border: `1px solid rgba(212,168,0,${sel ? 0.2 : 0.04})`, marginBottom: 8, cursor: "pointer", transition: "all 0.2s" }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                          <div>
-                            <div style={{ fontSize: 13, fontWeight: 600, color: sel ? "#E8D97A" : "#E8E8F0", transition: "color 0.2s" }}>{m.title}</div>
-                            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445", marginTop: 2 }}>{m.dur}</div>
-                          </div>
-                          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: "#D4A800", fontWeight: 600 }}>[{m.time}]</span>
-                        </div>
-                      </div>
+                      <MeetingItem key={i} meeting={m} sel={sel} onSelect={() => setSelectedMeeting(sel ? null : i)} />
                     );
                   })}
                 </Card>
