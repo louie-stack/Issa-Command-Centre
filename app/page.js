@@ -441,28 +441,18 @@ function Card({ children, label, style = {} }) {
         padding: 22,
         position: "relative",
         overflow: "hidden",
-        background: "rgba(255,255,255,0.045)",
-        border: `1px solid rgba(255,255,255,${h ? 0.1 : 0.06})`,
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-        boxShadow: `0 4px 24px rgba(0,0,0,0.2)${h ? ", inset 0 1px 0 rgba(255,255,255,0.06)" : ""}`,
+        background: "rgba(6,12,16,0.97)",
+        border: `1px solid rgba(45,212,191,${h ? 0.3 : 0.18})`,
+        boxShadow: h
+          ? "0 0 0 1px rgba(45,212,191,0.1), 0 0 24px rgba(45,212,191,0.18), 0 0 70px rgba(45,212,191,0.09), 0 20px 40px rgba(0,0,0,0.55), inset 0 0 40px rgba(45,212,191,0.05)"
+          : "0 0 0 1px rgba(45,212,191,0.05), 0 0 16px rgba(45,212,191,0.1), 0 0 50px rgba(45,212,191,0.05), 0 12px 32px rgba(0,0,0,0.45), inset 0 0 30px rgba(45,212,191,0.03)",
+        transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)",
         cursor: "pointer",
         height: "100%",
         ...style,
       }}>
-      {/* Effects clipping container */}
-      <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
-        {/* Ambient glow */}
-        <div style={{ position: "absolute", top: "-40%", left: 0, right: 0, height: "70%", background: "radial-gradient(ellipse at 50% 100%, rgba(45,212,191,0.08) 0%, transparent 65%)", opacity: h ? 1 : 0, transition: "opacity 0.5s" }} />
-
-        {/* Top edge highlight */}
-        <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: 1, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent)", opacity: h ? 1 : 0.15, transition: "opacity 0.4s" }} />
-      </div>
-      {/* Corner brackets */}
-      <svg style={{ position: "absolute", top: 0, left: 0, width: 14, height: 14, pointerEvents: "none", transition: "opacity 0.3s" }} viewBox="0 0 14 14"><line x1="0" y1="0" x2="10" y2="0" stroke="#2DD4BF" strokeWidth="0.6" opacity={h ? 0.5 : 0.08} /><line x1="0" y1="0" x2="0" y2="10" stroke="#2DD4BF" strokeWidth="0.6" opacity={h ? 0.5 : 0.08} /></svg>
-      <svg style={{ position: "absolute", top: 0, right: 0, width: 14, height: 14, pointerEvents: "none", transition: "opacity 0.3s" }} viewBox="0 0 14 14"><line x1="4" y1="0" x2="14" y2="0" stroke="#2DD4BF" strokeWidth="0.6" opacity={h ? 0.5 : 0.08} /><line x1="14" y1="0" x2="14" y2="10" stroke="#2DD4BF" strokeWidth="0.6" opacity={h ? 0.5 : 0.08} /></svg>
-      <svg style={{ position: "absolute", bottom: 0, left: 0, width: 14, height: 14, pointerEvents: "none", transition: "opacity 0.3s" }} viewBox="0 0 14 14"><line x1="0" y1="14" x2="10" y2="14" stroke="#2DD4BF" strokeWidth="0.6" opacity={h ? 0.3 : 0.04} /><line x1="0" y1="4" x2="0" y2="14" stroke="#2DD4BF" strokeWidth="0.6" opacity={h ? 0.3 : 0.04} /></svg>
-      <svg style={{ position: "absolute", bottom: 0, right: 0, width: 14, height: 14, pointerEvents: "none", transition: "opacity 0.3s" }} viewBox="0 0 14 14"><line x1="4" y1="14" x2="14" y2="14" stroke="#2DD4BF" strokeWidth="0.6" opacity={h ? 0.3 : 0.04} /><line x1="14" y1="4" x2="14" y2="14" stroke="#2DD4BF" strokeWidth="0.6" opacity={h ? 0.3 : 0.04} /></svg>
+      {/* Interior radial glow — backlit from top */}
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse 90% 60% at 50% 0%, rgba(45,212,191,${h ? 0.1 : 0.06}) 0%, transparent 70%)`, transition: "opacity 0.4s" }} />
       <div style={{ position: "relative" }}>{children}</div>
     </div>
   );
@@ -1010,10 +1000,9 @@ export default function Page() {
 
             {/*  FEATURED: MANSA  */}
             <Reveal delay={40} parallax={0.2}>
-              <div className="bento-hover" style={{ borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 360, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(45,212,191,0.1)", cursor: "pointer", marginBottom: 24 }}>
+              <div className="bento-hover" style={{ borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 360, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(45,212,191,0.2)", boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer", marginBottom: 24 }}>
                 <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
-                  <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(45,212,191,0.08) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s" }} />
-                  <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.06), transparent)", left: "-100%" }} />
+                  <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(45,212,191,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: 360 }}>
                   {/* Left: Video area */}
@@ -1057,12 +1046,10 @@ export default function Page() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
               {/* COCA-COLA */}
               <Reveal delay={100} parallax={0.25}>
-                <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(249,115,22,0.08)", cursor: "pointer" }}>
+                <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(249,115,22,0.18)", boxShadow: "0 0 16px rgba(249,115,22,0.12), 0 0 50px rgba(249,115,22,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.04)", cursor: "pointer" }}>
                   <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
-                    <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(249,115,22,0.07) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s" }} />
-                    <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(249,115,22,0.06), transparent)", left: "-100%" }} />
+                    <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(249,115,22,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                   </div>
-                  <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "55%", background: "radial-gradient(ellipse at 85% 15%, rgba(249,115,22,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
                   <div style={{ position: "relative" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                       <Pill t="REVIEW" c="#F59E0B" />
@@ -1080,12 +1067,10 @@ export default function Page() {
 
               {/* WORKSHOP */}
               <Reveal delay={160} parallax={0.3}>
-                <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(94,234,212,0.06)", cursor: "pointer" }}>
+                <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(94,234,212,0.15)", boxShadow: "0 0 16px rgba(94,234,212,0.12), 0 0 50px rgba(94,234,212,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(94,234,212,0.04)", cursor: "pointer" }}>
                   <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
-                    <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(94,234,212,0.06) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s" }} />
-                    <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(94,234,212,0.05), transparent)", left: "-100%" }} />
+                    <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(94,234,212,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                   </div>
-                  <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "55%", background: "radial-gradient(ellipse at 85% 15%, rgba(94,234,212,0.03) 0%, transparent 70%)", pointerEvents: "none" }} />
                   <div style={{ position: "relative" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                       <Pill t="CONCEPT" c="#5EEAD4" />
@@ -1103,12 +1088,10 @@ export default function Page() {
 
               {/* FREEPIK */}
               <Reveal delay={220} parallax={0.35}>
-                <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(45,212,191,0.06)", cursor: "pointer" }}>
+                <div className="bento-hover" style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(45,212,191,0.2)", boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer" }}>
                   <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
-                    <div className="bento-glow" style={{ position: "absolute", top: "-30%", left: "10%", right: "10%", height: "60%", background: "radial-gradient(ellipse at 50% 100%, rgba(45,212,191,0.06) 0%, transparent 65%)", opacity: 0, transition: "opacity 0.5s" }} />
-                    <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.05), transparent)", left: "-100%" }} />
+                    <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(45,212,191,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                   </div>
-                  <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "55%", background: "radial-gradient(ellipse at 85% 15%, rgba(45,212,191,0.03) 0%, transparent 70%)", pointerEvents: "none" }} />
                   <div style={{ position: "relative" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                       <Pill t="IN PRODUCTION" c="#2DD4BF" />
@@ -1164,10 +1147,9 @@ export default function Page() {
                       </div>
 
                       {/* Card */}
-                      <div className="bento-hover" style={{ width: "90%", padding: "20px 18px", borderRadius: 14, border: "none", background: "rgba(255,255,255,0.03)", cursor: "pointer", textAlign: "left", position: "relative", overflow: "hidden" }}>
+                      <div className="bento-hover" style={{ width: "90%", padding: "20px 18px", borderRadius: 14, border: `1px solid rgba(${stage.color.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(',')},0.2)`, background: "rgba(6,12,16,0.97)", boxShadow: `0 0 16px rgba(${stage.color.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(',')},0.12), 0 0 50px rgba(${stage.color.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(',')},0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${stage.color.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(',')},0.04)`, cursor: "pointer", textAlign: "left", position: "relative", overflow: "hidden" }}>
                         <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
-                          <div className="bento-glow" style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: "50%", background: `radial-gradient(ellipse at 50% 0%, ${stage.color}10, transparent)`, opacity: 0, transition: "opacity 0.5s" }} />
-                          <div className="bento-shine" style={{ position: "absolute", top: 0, width: "40%", height: "100%", background: `linear-gradient(90deg, transparent, ${stage.color}08, transparent)`, left: "-100%" }} />
+                          <div className="bento-glow" style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse 90% 65% at 50% 0%, rgba(${stage.color.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(',')},0.1) 0%, transparent 70%)`, opacity: 0.6, transition: "opacity 0.5s" }} />
                         </div>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
                           <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.1em", color: stage.color }}>{stage.label}</span>
@@ -1189,7 +1171,7 @@ export default function Page() {
             <Reveal delay={120}>
               <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
                 {contentQueue.map((item, i) => (
-                  <div key={i} className="bento-hover" style={{ padding: "14px 16px", borderRadius: 10, border: "none", background: "rgba(255,255,255,0.01)", cursor: "pointer" }}>
+                  <div key={i} className="bento-hover" style={{ padding: "14px 16px", borderRadius: 10, border: "1px solid rgba(45,212,191,0.15)", background: "rgba(6,12,16,0.97)", boxShadow: "0 0 16px rgba(45,212,191,0.08), 0 0 50px rgba(45,212,191,0.04), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.03)", cursor: "pointer", position: "relative", overflow: "hidden" }}>
                     <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#AAB", lineHeight: 1.4, marginBottom: 8 }}>{item.prompt}</div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
@@ -1211,7 +1193,7 @@ export default function Page() {
             <SectionHeader idx="03" badge="YOUR AI TEAM" title="Agents" desc="autonomous_agents ' creative_pipeline ' always_building" right={<div style={{ display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: "#D4A800", boxShadow: "0 0 6px rgba(212,168,0,0.4)", animation: "pulse 2s infinite" }} /><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#D4A800" }}>3 ONLINE</span></div>} />
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
               {agentsEnhanced.map((agent, ai) => (
-  <div key={ai} className="bento-hover" style={{ borderRadius: 16, overflow: "hidden", background: "rgba(255,255,255,0.02)", border: `1px solid ${agent.glowColor}18`, cursor: "pointer" }}>
+  <div key={ai} className="bento-hover" style={{ borderRadius: 16, overflow: "hidden", background: "rgba(6,12,16,0.97)", border: `1px solid rgba(45,212,191,0.2)`, boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer" }}>
     <div style={{ position: "relative", height: 170, overflow: "hidden", background: `linear-gradient(170deg, ${agent.glowColor}28 0%, ${agent.glowColor}0D 45%, rgba(8,8,13,0.98) 100%)` }}>
       <div style={{ position: "absolute", top: "5%", left: "50%", width: 160, height: 160, borderRadius: "50%", background: `radial-gradient(circle, ${agent.glowColor}1F 0%, transparent 55%)`, filter: "blur(20px)", transform: "translateX(-50%)" }} />
       {ai === 0 && (
