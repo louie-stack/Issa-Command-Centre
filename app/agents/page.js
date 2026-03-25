@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Nav from "../../components/Nav";
 
 const mo = { fontFamily: "'Space Mono', monospace" };
@@ -108,6 +108,15 @@ const agents = [
 export default function AgentsPage() {
   const [sel, setSel] = useState(0);
   const [trans, setTrans] = useState(false);
+
+  // On mount, read the URL hash and jump to the matching agent
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "").toLowerCase();
+    if (hash) {
+      const idx = agents.findIndex(a => a.id === hash);
+      if (idx !== -1) setSel(idx);
+    }
+  }, []);
   const a = agents[sel];
 
   function pick(i) {
