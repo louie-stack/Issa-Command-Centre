@@ -1027,8 +1027,6 @@ export default function Page() {
 
       {/*  SECTIONS  */}
       <div style={{ position: "relative", zIndex: 1, background: "#08080D" }}>
-        {/* Particle field — absolute, behind all content */}
-        <ParticleField />
         {/* Global scanline + grid " parallax at 0.3x */}
         <div style={{ position: "absolute", inset: 0, opacity: 0.02, backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.04) 2px, rgba(255,255,255,0.04) 4px)", pointerEvents: "none", transform: `translateY(${scrollY * -0.05}px)` }} />
         <div style={{ position: "absolute", inset: 0, opacity: 0.012, backgroundImage: "linear-gradient(rgba(45,212,191,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(45,212,191,0.1) 1px, transparent 1px)", backgroundSize: "140px 140px", pointerEvents: "none", transform: `translateY(${scrollY * -0.08}px)` }} />
