@@ -456,7 +456,7 @@ function MeetingItem({ meeting: m, sel, onSelect }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
           <div style={{ fontSize: 13, fontWeight: 600, color: active ? "#F0DC82" : "#E8E8F0", transition: "color 0.2s" }}>{m.title}</div>
-          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445", marginTop: 2 }}>{m.dur}</div>
+          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445", marginTop: 2, fontSize: 11 }}>{m.dur}</div>
         </div>
         <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: "#D4A800", fontWeight: 600 }}>[{m.time}]</span>
       </div>
@@ -981,15 +981,15 @@ export default function Page() {
                       <span style={{ width: 8, height: 8, borderRadius: "50%", background: "rgba(255,255,255,0.06)" }} />
                     </div>
                     <div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.1em", lineHeight: 1 }}>AGENTS</div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#2DD4BF", letterSpacing: "0.1em", marginTop: 3, lineHeight: 1 }}>3 ONLINE</div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#667", letterSpacing: "0.1em", lineHeight: 1 }}>AGENTS</div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#2DD4BF", letterSpacing: "0.1em", marginTop: 3, lineHeight: 1 }}>3 ONLINE</div>
                     </div>
                   </div>
                   {/* Assets */}
                   <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center", borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
                     <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 26, fontWeight: 800, color: "#D4A800", lineHeight: 1 }}>847</span>
                     <div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.1em", lineHeight: 1 }}>ASSETS</div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#667", letterSpacing: "0.1em", lineHeight: 1 }}>ASSETS</div>
                       <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.1em", marginTop: 3, lineHeight: 1 }}>GENERATED</div>
                     </div>
                   </div>
@@ -1000,7 +1000,7 @@ export default function Page() {
                       <span style={{ fontSize: 26, fontWeight: 800, color: "#E8E8F0" }}>26k</span>
                     </div>
                     <div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.1em", lineHeight: 1 }}>PIPELINE</div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#667", letterSpacing: "0.1em", lineHeight: 1 }}>PIPELINE</div>
                       <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.1em", marginTop: 3, lineHeight: 1 }}>VALUE</div>
                     </div>
                   </div>
@@ -1092,7 +1092,7 @@ export default function Page() {
                     {/* Rec badge */}
                     <div style={{ position: "absolute", top: 16, left: 16, display: "flex", alignItems: "center", gap: 6 }}>
                       <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#2DD4BF", animation: "pulse 2s infinite" }} />
-                      <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "rgba(45,212,191,0.5)" }}>MANSA_EP1_REEL.MP4</span>
+                      <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "rgba(45,212,191,0.5)" }}>MANSA_EP1_REEL.MP4</span>
                     </div>
                     <div style={{ position: "absolute", bottom: 16, left: 16, fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#334" }}>2.39:1 ' 24fps ' AMISSA STUDIOS</div>
                   </div>
@@ -1103,7 +1103,7 @@ export default function Page() {
                       <Pill t="FEATURED" c="#2DD4BF" />
                       <Pill t="IN PRODUCTION" c="#2DD4BF" />
                     </div>
-                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445", letterSpacing: "0.08em", marginBottom: 8 }}>PERSONAL IP ' EPISODE 1</div>
+                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#445", letterSpacing: "0.08em", marginBottom: 8 }}>PERSONAL IP ' EPISODE 1</div>
                     <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 26, fontWeight: 800, color: "#F0F0F5", margin: "0 0 10px", letterSpacing: "-0.02em" }}>Mansa: Whispers of the Wind</h3>
                     <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#556", lineHeight: 1.6, margin: "0 0 24px" }}>African historical epic. Full storyboard pipeline from script to first-frame prompts, motion direction, and camera language. Collaborating with Hoyt Dwyer.</p>
                     <div style={{ marginTop: "auto" }}>
@@ -1231,7 +1231,7 @@ export default function Page() {
                           <div className="bento-glow" style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse 90% 65% at 50% 0%, rgba(${stage.color.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(',')},0.1) 0%, transparent 70%)`, opacity: 0.6, transition: "opacity 0.5s" }} />
                         </div>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-                          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.1em", color: stage.color }}>{stage.label}</span>
+                          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, letterSpacing: "0.1em", color: stage.color }}>{stage.label}</span>
                           <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 20, fontWeight: 800, color: stage.color }}>{stage.count}</span>
                         </div>
                         <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#556", lineHeight: 1.5, margin: "0 0 14px" }}>{stage.desc}</p>
@@ -1331,8 +1331,8 @@ export default function Page() {
                         <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, fontWeight: 700 }}>{d.val}</span>
                       </div>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445" }}>{d.type}</span>
-                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: riskC[d.risk], padding: "2px 8px", borderRadius: 2, background: `${riskC[d.risk]}08`, border: `1px solid ${riskC[d.risk]}15` }}>IP'{d.risk.toUpperCase()}</span>
+                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#445" }}>{d.type}</span>
+                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: riskC[d.risk], padding: "2px 8px", borderRadius: 2, background: `${riskC[d.risk]}08`, border: `1px solid ${riskC[d.risk]}15` }}>IP'{d.risk.toUpperCase()}</span>
                       </div>
                     </div>
                   ))}
@@ -1375,7 +1375,7 @@ export default function Page() {
                     {[{ v: 12, l: "PROJECTS", c: "#2DD4BF" }, { v: 847, l: "ASSETS GENERATED", c: "#2DD4BF" }, { v: 3, l: "AGENTS ONLINE", c: "#D4A800" }].map((s, i) => (
                       <div key={i} style={{ textAlign: "center", padding: "24px 16px", borderRight: i < 2 ? "1px solid rgba(255,255,255,0.03)" : "none" }}>
                         <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32, fontWeight: 700, color: s.c, lineHeight: 1 }}><Counter to={s.v} /></div>
-                        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.12em", color: "#445", marginTop: 8 }}>{s.l}</div>
+                        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, letterSpacing: "0.12em", color: "#445", marginTop: 8 }}>{s.l}</div>
                       </div>
                     ))}
                   </div>
@@ -1383,7 +1383,7 @@ export default function Page() {
                   <div style={{ display: "flex", justifyContent: "center", gap: 10, padding: "14px 20px" }}>
                     <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#334", marginRight: 4 }}>CPP</span>
                     {[{ l: "Google DeepMind", c: "#2DD4BF" }, { l: "Luma AI", c: "#D4A800" }, { l: "Hailuo", c: "#F59E0B" }, { l: "Haiper", c: "#2DD4BF" }].map((b, i) => (
-                      <span key={i} className="pill-hover" style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, padding: "4px 12px", borderRadius: 20, color: b.c, background: `${b.c}08`, border: `1px solid ${b.c}15`, display: "inline-flex", alignItems: "center", gap: 6 }}>
+                      <span key={i} className="pill-hover" style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, padding: "4px 12px", borderRadius: 20, color: b.c, background: `${b.c}08`, border: `1px solid ${b.c}15`, display: "inline-flex", alignItems: "center", gap: 6 }}>
                         <span style={{ width: 5, height: 5, borderRadius: "50%", background: b.c, boxShadow: `0 0 4px ${b.c}40` }} />{b.l}
                       </span>
                     ))}
@@ -1403,10 +1403,10 @@ export default function Page() {
                 <svg width="12" height="12" viewBox="0 0 12 12"><line x1="6" y1="0" x2="6" y2="12" stroke="#2DD4BF" strokeWidth="0.6" opacity="0.3"/><line x1="0" y1="6" x2="12" y2="6" stroke="#2DD4BF" strokeWidth="0.6" opacity="0.3"/></svg>
                 <div>
                   <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, fontWeight: 700 }}>ISSA SISSOKO</div>
-                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#334", marginTop: 2 }}>Amissa Studios [LLC] ' Command Centre [V1.0]</div>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#334", marginTop: 2 }}>Amissa Studios [LLC] ' Command Centre [V1.0]</div>
                 </div>
               </div>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#223", textAlign: "right", lineHeight: 1.8 }}>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#223", textAlign: "right", lineHeight: 1.8 }}>
                 40.7128N 74.0060W<br/>
                 2026
               </div>
