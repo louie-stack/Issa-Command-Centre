@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Nav from "../../components/Nav";
 
 const mono = { fontFamily: "'Space Mono', monospace" };
 const jakarta = { fontFamily: "'Plus Jakarta Sans', sans-serif" };
@@ -154,6 +155,7 @@ export default function BusinessPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#08080D", color: "#E8E8F0", paddingTop: 54 }}>
+      <Nav />
       <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 44px", position: "relative" }}>
 
         {/* PAGE HEADER */}
