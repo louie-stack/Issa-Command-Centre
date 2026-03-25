@@ -640,20 +640,20 @@ function ParticleField() {
     };
     resize();
     window.addEventListener("resize", resize);
-    const N = 38;
+    const N = 70;
     const particles = Array.from({ length: N }, () => {
       const c = COLORS[Math.floor(Math.random() * COLORS.length)];
       const large = Math.random() < 0.15;
       return {
         x: Math.random() * window.innerWidth,
         y: Math.random() * (canvas.height || 3000),
-        r: large ? 1.2 + Math.random() * 1.4 : 0.4 + Math.random() * 0.9,
-        vx: (Math.random() - 0.5) * (large ? 0.05 : 0.12),
-        vy: (Math.random() - 0.5) * (large ? 0.05 : 0.12),
-        baseAlpha: large ? 0.12 + Math.random() * 0.14 : 0.05 + Math.random() * 0.1,
+        r: large ? 1.4 + Math.random() * 1.6 : 0.5 + Math.random() * 1.1,
+        vx: (Math.random() - 0.5) * (large ? 0.18 : 0.38),
+        vy: (Math.random() - 0.5) * (large ? 0.18 : 0.38),
+        baseAlpha: large ? 0.28 + Math.random() * 0.22 : 0.14 + Math.random() * 0.18,
         alpha: 0,
         phase: Math.random() * Math.PI * 2,
-        speed: 0.001 + Math.random() * 0.003,
+        speed: 0.003 + Math.random() * 0.006,
         color: c,
         large,
       };
