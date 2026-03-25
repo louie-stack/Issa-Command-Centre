@@ -33,7 +33,7 @@ html { scroll-behavior: smooth; }
 .card-hover { transition: all 0.4s cubic-bezier(0.16,1,0.3,1) !important; }
 .card-hover:hover { transform: translateY(-5px) scale(1.014) !important; }
 .bento-hover { transition: all 0.5s cubic-bezier(0.16,1,0.3,1) !important; overflow: hidden; position: relative; }
-.bento-hover:hover { transform: translateY(-6px) scale(1.016) !important; box-shadow: 0 0 35px rgba(45,212,191,0.32), 0 0 100px rgba(45,212,191,0.16), 0 20px 50px rgba(0,0,0,0.6) !important; }
+.bento-hover:hover { transform: translateY(-6px) scale(1.016) !important; }
 .bento-hover:hover .bento-glow { opacity: 1 !important; }
 .nav-link { transition: all 0.3s cubic-bezier(0.16,1,0.3,1); position: relative; }
 .nav-link:hover { color: #2DD4BF !important; transform: translateY(-1px); }
