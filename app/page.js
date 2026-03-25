@@ -25,10 +25,10 @@ const agentsData = [
   { name: "Synthetix", role: "Research Intel", task: "Offline", g: "#64748B", progress: 0 },
 ];
 const agentsEnhanced = [
-  { name: "Chronos", role: "CHIEF OF STAFF", desc: "Compiling morning brief and scheduling pipeline tasks", color: "#2DD4BF", glowColor: "#2DD4BF", statusColor: "#2DD4BF", rgb: "45,212,191", progress: 72 },
-  { name: "Script-V", role: "CONTENT PIPELINE", desc: "Generating Mansa shot list and scene compositions", color: "#F97316", glowColor: "#F97316", statusColor: "#F97316", rgb: "249,115,22", progress: 45 },
-  { name: "Lumen", role: "COLOR + GRADE", desc: "Color grading, visual tone matching and frame polish", color: "#D4A800", glowColor: "#D4A800", statusColor: "#445", rgb: "212,168,0", progress: 0 },
-  { name: "Synthetix", role: "RESEARCH INTEL", desc: "Market research, competitor intel and deal analysis", color: "#8CA0C8", glowColor: "#8CA0C8", statusColor: "#445", rgb: "140,160,200", progress: 0 },
+  { name: "Chronos", role: "CHIEF OF STAFF", desc: "Compiling morning brief and scheduling pipeline tasks", color: "#2DD4BF", glowColor: "#2DD4BF", statusColor: "#2DD4BF", rgb: "45,212,191", progress: 72, video: "/Chronos%20Character%20Vid.mp4" },
+  { name: "Script-V", role: "CONTENT PIPELINE", desc: "Generating Mansa shot list and scene compositions", color: "#F97316", glowColor: "#F97316", statusColor: "#F97316", rgb: "249,115,22", progress: 45, video: "/SCRIPT-V%20Character%20Vid.mp4" },
+  { name: "Lumen", role: "COLOR + GRADE", desc: "Color grading, visual tone matching and frame polish", color: "#D4A800", glowColor: "#D4A800", statusColor: "#445", rgb: "212,168,0", progress: 0, video: "/LUMEN%20Character%20Vid.mp4" },
+  { name: "Synthetix", role: "RESEARCH INTEL", desc: "Market research, competitor intel and deal analysis", color: "#8CA0C8", glowColor: "#8CA0C8", statusColor: "#445", rgb: "140,160,200", progress: 0, video: "/SYNTHETIX%20Character%20Vid.mp4" },
 ];
 const contentQueue = [
   { project: "Mansa", prompt: "Desert palace, wide establishing shot, golden hour", status: "Queued", tool: "Runway" },
@@ -1217,54 +1217,20 @@ export default function Page() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
               {agentsEnhanced.map((agent, ai) => (
   <div key={ai} className="bento-hover" style={{ borderRadius: 16, overflow: "hidden", background: "rgba(6,12,16,0.97)", border: `1px solid rgba(${agent.rgb},0.22)`, boxShadow: `0 0 16px rgba(${agent.rgb},0.14), 0 0 50px rgba(${agent.rgb},0.07), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${agent.rgb},0.05)`, cursor: "pointer" }}>
-    <div style={{ position: "relative", height: 170, overflow: "hidden", background: `linear-gradient(170deg, ${agent.glowColor}28 0%, ${agent.glowColor}0D 45%, rgba(8,8,13,0.98) 100%)` }}>
-      <div style={{ position: "absolute", top: "5%", left: "50%", width: 160, height: 160, borderRadius: "50%", background: `radial-gradient(circle, ${agent.glowColor}1F 0%, transparent 55%)`, filter: "blur(20px)", transform: "translateX(-50%)" }} />
-      {ai === 0 && (
-        <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="80" height="80" viewBox="0 0 80 80">
-          <circle cx="40" cy="40" r="36" fill="none" stroke={`${agent.color}20`} strokeWidth="1"/>
-          <circle cx="40" cy="40" r="28" fill="none" stroke={`${agent.color}30`} strokeWidth="0.5"/>
-          <circle cx="40" cy="40" r="3" fill={agent.color} opacity="0.8"/>
-          <line x1="40" y1="40" x2="40" y2="18" stroke={agent.color} strokeWidth="1.5" strokeLinecap="round" className="svg-tick-hour"/>
-          <line x1="40" y1="40" x2="52" y2="40" stroke={agent.color} strokeWidth="1" strokeLinecap="round" className="svg-tick-minute"/>
-          {[0,45,90,135,180,225,270,315].map((deg,i) => { const r=36, rad=deg*Math.PI/180, x1=40+(r-4)*Math.cos(rad), y1=40+(r-4)*Math.sin(rad), x2=40+r*Math.cos(rad), y2=40+r*Math.sin(rad); return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={agent.color} strokeWidth="1" opacity="0.4"/>; })}
-        </svg>
-      )}
-      {ai === 1 && (
-        <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", overflow: "visible" }} width="80" height="80" viewBox="0 0 80 80">
-          <defs><clipPath id="board-clip"><rect x="6" y="6" width="68" height="68"/></clipPath></defs>
-          {[[8,8,28,28],[44,8,28,28],[8,44,28,28],[44,44,28,28]].map(([x,y,w,h],i) => (
-            <g key={i} className={`svg-panel-${i}`}>
-              <rect x={x} y={y} width={w} height={h} rx="4" fill={`${agent.color}10`} stroke={`${agent.color}40`} strokeWidth="0.8"/>
-              <line x1={x+5} y1={y+8} x2={x+w-5} y2={y+8} stroke={agent.color} strokeWidth="0.7" opacity="0.6"/>
-              <line x1={x+5} y1={y+14} x2={x+w-10} y2={y+14} stroke={agent.color} strokeWidth="0.7" opacity="0.35"/>
-              <line x1={x+5} y1={y+20} x2={x+w-8} y2={y+20} stroke={agent.color} strokeWidth="0.7" opacity="0.2"/>
-            </g>
-          ))}
-          <g clipPath="url(#board-clip)">
-            <rect className="svg-scan" x="6" y="6" width="8" height="68" fill={`${agent.color}18`} rx="2"/>
-          </g>
-        </svg>
-      )}
-      {ai === 2 && (
-        <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="80" height="80" viewBox="0 0 80 80">
-          <circle cx="40" cy="40" r="34" fill="none" stroke={`${agent.color}40`} strokeWidth="1" strokeDasharray="18 8 4 8" strokeLinecap="round" className="svg-spin-slow"/>
-          <circle cx="40" cy="40" r="24" fill="none" stroke={`${agent.color}50`} strokeWidth="1.5" strokeDasharray="10 6 2 6" strokeLinecap="round" className="svg-spin-reverse"/>
-          <circle cx="40" cy="40" r="10" fill={`${agent.color}15`} stroke={`${agent.color}60`} strokeWidth="1"/>
-          <circle cx="40" cy="40" r="4" fill={agent.color} opacity="0.7"/>
-          {[0,90,180,270].map((deg,i) => { const rad=deg*Math.PI/180, cx=40+24*Math.cos(rad), cy=40+24*Math.sin(rad); return <circle key={i} cx={cx} cy={cy} r="3" fill={agent.color} opacity="0.6"/>; })}
-        </svg>
-      )}
-      {ai === 3 && (
-        <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="80" height="80" viewBox="0 0 80 80">
-          {[{cx:40,cy:20},{cx:20,cy:50},{cx:60,cy:50},{cx:12,cy:28},{cx:68,cy:28}].map((n,i) => (
-            <circle key={i} cx={n.cx} cy={n.cy} r="5" fill={`${agent.color}20`} stroke={agent.color} strokeWidth="1" className={[`svg-node-1`,`svg-node-2`,`svg-node-3`,`svg-node-4`,`svg-node-5`][i]}/>
-          ))}
-          {[[0,1],[0,2],[1,3],[2,4],[1,2]].map(([a,b],i) => { const nodes=[{cx:40,cy:20},{cx:20,cy:50},{cx:60,cy:50},{cx:12,cy:28},{cx:68,cy:28}]; return <line key={i} x1={nodes[a].cx} y1={nodes[a].cy} x2={nodes[b].cx} y2={nodes[b].cy} stroke={`${agent.color}30`} strokeWidth="0.8" strokeDasharray="3 3" className="svg-dash-flow"/>; })}
-        </svg>
-      )}
-      <div style={{ position: "absolute", top: 12, left: 12, display: "flex", alignItems: "center", gap: 5 }}>
+    <div style={{ position: "relative", height: 170, overflow: "hidden", background: "#06080D" }}>
+      {/* Agent character video */}
+      <video
+        autoPlay muted loop playsInline
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
+      >
+        <source src={agent.video} type="video/mp4" />
+      </video>
+      {/* Subtle colour-tinted gradient overlay — keeps the card feel */}
+      <div style={{ position: "absolute", inset: 0, background: `linear-gradient(180deg, rgba(${agent.rgb},0.08) 0%, transparent 40%, rgba(6,8,13,0.7) 100%)`, pointerEvents: "none" }} />
+      {/* Role badge */}
+      <div style={{ position: "absolute", top: 12, left: 12, display: "flex", alignItems: "center", gap: 5, zIndex: 2 }}>
         <span style={{ width: 5, height: 5, borderRadius: "50%", background: agent.statusColor }} />
-        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: agent.color, letterSpacing: "0.06em" }}>{agent.role}</span>
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: agent.color, letterSpacing: "0.06em", textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>{agent.role}</span>
       </div>
     </div>
     <div style={{ padding: "18px 18px 16px" }}>
