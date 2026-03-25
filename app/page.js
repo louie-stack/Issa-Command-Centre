@@ -479,7 +479,7 @@ function WorkshopItem({ workshop: w, sel, onSelect }) {
           <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445" }}>{w.date}</span>
           <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445" }}>{w.format}</span>
         </div>
-        <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, fontWeight: 700, color: "#2DD4BF" }}>{w.reg}<span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445", marginLeft: 4 }}>reg</span></span>
+        <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, fontWeight: 700, color: "#2DD4BF" }}>{w.reg}<span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#445", marginLeft: 4 }}>reg</span></span>
       </div>
     </div>
   );
@@ -527,7 +527,7 @@ function AmbientCell({ title, subtitle, g1, g2, accent, style = {} }) {
         <svg width="10" height="12" viewBox="0 0 10 12" fill={accent}><polygon points="0,0 10,6 0,12"/></svg>
       </div>
       <div style={{ position: "absolute", bottom: 12, left: 14 }}>
-        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: `${accent}50`, marginBottom: 2 }}>{subtitle}</div>
+        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: `${accent}50`, marginBottom: 2 }}>{subtitle}</div>
         <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, fontWeight: 600 }}>{title}</div>
       </div>
     </div>
@@ -618,7 +618,7 @@ function ChatCard({ visible }) {
         </div>
         <div>
           <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 15, fontWeight: 700, color: "#E8E8F0" }}>Just start talking.</div>
-          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#556" }}>4 agents standing by</div>
+          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#556" }}>4 agents standing by</div>
         </div>
         <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 4 }}>
           {[1,1,1,0].map((on,j) => <span key={j} style={{ width: 4, height: 4, borderRadius: "50%", background: on ? "#2DD4BF" : "rgba(255,255,255,0.06)", boxShadow: on ? "0 0 5px rgba(45,212,191,0.4)" : "none" }} />)}
@@ -638,7 +638,7 @@ function ChatCard({ visible }) {
             <div style={{ width: 22, height: 22, borderRadius: 7, background: `rgba(${m.color},0.06)`, border: `1px solid rgba(${m.color},0.1)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 7, fontWeight: 800, color: `rgba(${m.color},0.8)`, flexShrink: 0 }}>{m.name}</div>
             <div style={{ padding: "9px 14px", borderRadius: "14px 14px 14px 4px", background: `rgba(${m.color},0.03)`, border: `1px solid rgba(${m.color},0.05)`, maxWidth: "75%" }}>
               <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#889", lineHeight: 1.5 }}>{m.text}</div>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#445", marginTop: 3 }}>{m.agent} / {m.time}</div>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445", marginTop: 3 }}>{m.agent} / {m.time}</div>
             </div>
           </div>
         ))}
@@ -921,7 +921,7 @@ export default function Page() {
             <div style={{ display: "flex", justifyContent: "center", paddingTop: 90, animation: introPhase === "hero" ? "heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.05s both" : "none", opacity: introPhase === "hero" ? undefined : 0 }}>
               <div onClick={() => {}} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "7px 16px", borderRadius: 30, border: "1px dashed rgba(45,212,191,0.15)", background: "rgba(255,255,255,0.02)", backdropFilter: "blur(8px)", cursor: "pointer", transition: "all 0.3s" }}>
                 <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#2DD4BF", boxShadow: "0 0 6px rgba(45,212,191,0.4)", flexShrink: 0, display: "inline-block" }} />
-                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#AAB", letterSpacing: "0.04em", lineHeight: 1 }}>4 Active Projects</span>
+                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#AAB", letterSpacing: "0.04em", lineHeight: 1 }}>4 Active Projects</span>
                 <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#2DD4BF", lineHeight: 1 }}>-&gt;</span>
               </div>
             </div>
@@ -969,7 +969,7 @@ export default function Page() {
                     <img src={PROFILE_IMG} alt="" style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(255,255,255,0.08)" }} />
                     <div>
                       <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, fontWeight: 700, color: "#D8D8E0" }}>Issa Sissoko</div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#556", marginTop: 2 }}>AI Filmmaker + Creative Director</div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#556", marginTop: 2 }}>AI Filmmaker + Creative Director</div>
                     </div>
                   </div>
                   {/* Agents - glowing dots */}
@@ -1094,7 +1094,7 @@ export default function Page() {
                       <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#2DD4BF", animation: "pulse 2s infinite" }} />
                       <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "rgba(45,212,191,0.5)" }}>MANSA_EP1_REEL.MP4</span>
                     </div>
-                    <div style={{ position: "absolute", bottom: 16, left: 16, fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#334" }}>2.39:1 ' 24fps ' AMISSA STUDIOS</div>
+                    <div style={{ position: "absolute", bottom: 16, left: 16, fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#334" }}>2.39:1 ' 24fps ' AMISSA STUDIOS</div>
                   </div>
 
                   {/* Right: Info */}
@@ -1136,7 +1136,7 @@ export default function Page() {
                     </div>
                     <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 15, fontWeight: 800, color: "#E8E8F0", margin: "20px 0 6px", textTransform: "uppercase" }}>Coca-Cola Holiday</h3>
                     <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#556", lineHeight: 1.5, margin: "0 0 14px" }}>Brand campaign. Script interpretation, visual storytelling. Awaiting client review.</p>
-                    <div style={{ display: "flex", gap: 12, fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445" }}>
+                    <div style={{ display: "flex", gap: 12, fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#445" }}>
                       <span><span style={{ color: "#F97316", fontWeight: 700, fontSize: 13 }}>12</span> frames</span>
                       <span>Mar 28</span>
                     </div>
@@ -1157,7 +1157,7 @@ export default function Page() {
                     </div>
                     <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 15, fontWeight: 800, color: "#E8E8F0", margin: "20px 0 6px", textTransform: "uppercase" }}>AI Workshop Series</h3>
                     <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#556", lineHeight: 1.5, margin: "0 0 14px" }}>Teaching creators to harness AI. Practical, hands-on sessions.</p>
-                    <div style={{ display: "flex", gap: 12, fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445" }}>
+                    <div style={{ display: "flex", gap: 12, fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#445" }}>
                       <span><span style={{ color: "#5EEAD4", fontWeight: 700, fontSize: 13 }}>24</span> registered</span>
                       <span>May 01</span>
                     </div>
@@ -1178,7 +1178,7 @@ export default function Page() {
                     </div>
                     <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 15, fontWeight: 800, color: "#E8E8F0", margin: "20px 0 6px", textTransform: "uppercase" }}>Freepik AI Templates</h3>
                     <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#556", lineHeight: 1.5, margin: "0 0 14px" }}>AI creative consultant deliverables. Scalable template system.</p>
-                    <div style={{ display: "flex", gap: 12, fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445" }}>
+                    <div style={{ display: "flex", gap: 12, fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#445" }}>
                       <span><span style={{ color: "#2DD4BF", fontWeight: 700, fontSize: 13 }}>4</span> templates</span>
                       <span>Mar 31</span>
                     </div>
@@ -1237,7 +1237,7 @@ export default function Page() {
                         <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#556", lineHeight: 1.5, margin: "0 0 14px" }}>{stage.desc}</p>
                         <div style={{ display: "flex", alignItems: "center", gap: 6, paddingTop: 10, borderTop: "1px solid rgba(255,255,255,0.03)" }}>
                           <span style={{ width: 4, height: 4, borderRadius: "50%", background: stage.color, opacity: 0.6 }} />
-                          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#445" }}>{stage.agent}</span>
+                          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445" }}>{stage.agent}</span>
                         </div>
                       </div>
                     </div>
@@ -1255,9 +1255,9 @@ export default function Page() {
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
                         <span style={{ width: 4, height: 4, borderRadius: "50%", background: item.project === "Mansa" ? "#2DD4BF" : "#F97316" }} />
-                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: item.project === "Mansa" ? "#2DD4BF" : "#F97316" }}>{item.project}</span>
+                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: item.project === "Mansa" ? "#2DD4BF" : "#F97316" }}>{item.project}</span>
                       </div>
-                      <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#334" }}>{item.tool}</span>
+                      <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#334" }}>{item.tool}</span>
                     </div>
                   </div>
                 ))}
@@ -1290,7 +1290,7 @@ export default function Page() {
       {/* Role badge */}
       <div style={{ position: "absolute", top: 12, left: 12, display: "flex", alignItems: "center", gap: 5, zIndex: 2 }}>
         <span style={{ width: 5, height: 5, borderRadius: "50%", background: agent.statusColor }} />
-        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: agent.color, letterSpacing: "0.06em", textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>{agent.role}</span>
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: agent.color, letterSpacing: "0.06em", textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>{agent.role}</span>
       </div>
     </div>
     <div style={{ padding: "18px 18px 16px" }}>
@@ -1299,15 +1299,15 @@ export default function Page() {
       {agent.progress > 0 ? (
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#445" }}>ACTIVE</span>
-            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: agent.color }}>{agent.progress}%</span>
+            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445" }}>ACTIVE</span>
+            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: agent.color }}>{agent.progress}%</span>
           </div>
           <div style={{ height: 2, background: "rgba(255,255,255,0.06)", borderRadius: 2 }}>
             <div style={{ height: "100%", width: `${agent.progress}%`, background: agent.color, borderRadius: 2, boxShadow: `0 0 6px ${agent.color}60` }} />
           </div>
         </div>
       ) : (
-        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#334", letterSpacing: "0.1em" }}>STANDBY</div>
+        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#334", letterSpacing: "0.1em" }}>STANDBY</div>
       )}
     </div>
   </div>
@@ -1349,14 +1349,14 @@ export default function Page() {
                   {/* Rec badge */}
                   <div style={{ position: "absolute", top: 12, left: 14, display: "flex", alignItems: "center", gap: 5 }}>
                     <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#D4A800", animation: "pulse 2s infinite" }} />
-                    <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "rgba(212,168,0,0.4)" }}>ZOMBIE.MP4</span>
+                    <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "rgba(212,168,0,0.4)" }}>ZOMBIE.MP4</span>
                   </div>
 
                   {/* Info */}
                   <div style={{ position: "absolute", bottom: 14, left: 14, right: 14 }}>
-                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "rgba(212,168,0,0.5)", marginBottom: 3 }}>ENDLESS ZOMBIES ' SHOT 001</div>
+                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "rgba(212,168,0,0.5)", marginBottom: 3 }}>ENDLESS ZOMBIES ' SHOT 001</div>
                     <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, fontWeight: 700, color: "#E8E8F0" }}>Blade Action Scene</div>
-                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#334", marginTop: 3 }}>2.39:1 ' 24fps ' Runway Gen-3</div>
+                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#334", marginTop: 3 }}>2.39:1 ' 24fps ' Runway Gen-3</div>
                   </div>
                 </div>
               </Reveal>
