@@ -1216,11 +1216,14 @@ export default function Page() {
             <SectionHeader idx="03" badge="YOUR AI TEAM" title="Agents" desc="autonomous_agents ' creative_pipeline ' always_building" right={<div style={{ display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: "#D4A800", boxShadow: "0 0 6px rgba(212,168,0,0.4)", animation: "pulse 2s infinite" }} /><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#D4A800" }}>3 ONLINE</span></div>} />
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
               {agentsEnhanced.map((agent, ai) => (
-  <div key={ai} className="bento-hover" style={{ borderRadius: 16, overflow: "hidden", background: "rgba(6,12,16,0.97)", border: `1px solid rgba(${agent.rgb},0.22)`, boxShadow: `0 0 16px rgba(${agent.rgb},0.14), 0 0 50px rgba(${agent.rgb},0.07), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${agent.rgb},0.05)`, cursor: "pointer" }}>
+  <div key={ai} className="bento-hover"
+    onMouseEnter={e => e.currentTarget.querySelector("video")?.play()}
+    onMouseLeave={e => { const v = e.currentTarget.querySelector("video"); if (v) { v.pause(); v.currentTime = 0; } }}
+    style={{ borderRadius: 16, overflow: "hidden", background: "rgba(6,12,16,0.97)", border: `1px solid rgba(${agent.rgb},0.22)`, boxShadow: `0 0 16px rgba(${agent.rgb},0.14), 0 0 50px rgba(${agent.rgb},0.07), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${agent.rgb},0.05)`, cursor: "pointer" }}>
     <div style={{ position: "relative", height: 170, overflow: "hidden", background: "#06080D" }}>
-      {/* Agent character video */}
+      {/* Agent character video — plays on hover only */}
       <video
-        autoPlay muted loop playsInline
+        muted loop playsInline
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
       >
         <source src={agent.video} type="video/mp4" />
