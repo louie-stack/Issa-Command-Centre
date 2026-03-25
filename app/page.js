@@ -635,30 +635,30 @@ function ParticleField() {
       { r: 94,  g: 234, b: 212 },
     ];
     const resize = () => {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width  = canvas.parentElement ? canvas.parentElement.offsetWidth  : window.innerWidth;
+      canvas.height = canvas.parentElement ? canvas.parentElement.offsetHeight : window.innerHeight;
     };
     resize();
     window.addEventListener("resize", resize);
-    const N = 110;
+    const N = 38;
     const particles = Array.from({ length: N }, () => {
       const c = COLORS[Math.floor(Math.random() * COLORS.length)];
-      const large = Math.random() < 0.12;
+      const large = Math.random() < 0.15;
       return {
         x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        r: large ? 1.5 + Math.random() * 2 : 0.5 + Math.random() * 1.2,
-        vx: (Math.random() - 0.5) * (large ? 0.08 : 0.22),
-        vy: (Math.random() - 0.5) * (large ? 0.08 : 0.22),
-        baseAlpha: large ? 0.18 + Math.random() * 0.22 : 0.08 + Math.random() * 0.16,
+        y: Math.random() * (canvas.height || 3000),
+        r: large ? 1.2 + Math.random() * 1.4 : 0.4 + Math.random() * 0.9,
+        vx: (Math.random() - 0.5) * (large ? 0.05 : 0.12),
+        vy: (Math.random() - 0.5) * (large ? 0.05 : 0.12),
+        baseAlpha: large ? 0.12 + Math.random() * 0.14 : 0.05 + Math.random() * 0.1,
         alpha: 0,
         phase: Math.random() * Math.PI * 2,
-        speed: 0.002 + Math.random() * 0.005,
+        speed: 0.001 + Math.random() * 0.003,
         color: c,
         large,
       };
     });
-    const LINK_DIST = 140;
+    const LINK_DIST = 100;
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach(p => {
@@ -715,9 +715,9 @@ function ParticleField() {
     <canvas
       ref={canvasRef}
       style={{
-        position: "fixed", inset: 0, width: "100%", height: "100%",
-        pointerEvents: "none", zIndex: 10,
-        opacity: 0, animation: "particleFadeIn 2.5s ease 0.5s forwards",
+        position: "absolute", inset: 0, width: "100%", height: "100%",
+        pointerEvents: "none", zIndex: 0,
+        opacity: 0, animation: "particleFadeIn 3s ease 0.8s forwards",
       }}
     />
   );
@@ -767,7 +767,7 @@ export default function Page() {
   return (
     <div style={{ background: "#08080D", minHeight: "100vh", fontFamily: "'Inter', sans-serif", color: "#D8D8E0", overflow: introPhase !== "hero" ? "hidden" : undefined, height: introPhase !== "hero" ? "100vh" : undefined }}>
       {/* Particle field */}
-      <ParticleField />
+      {/* ParticleField moved into sections wrapper below hero */}
 
       {/* Noise texture overlay */}
       <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, opacity: 0.018, pointerEvents: "none", zIndex: 2, backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')", backgroundRepeat: "repeat", backgroundSize: "256px 256px" }} />
@@ -959,6 +959,8 @@ export default function Page() {
 
       {/*  SECTIONS  */}
       <div style={{ position: "relative", zIndex: 1, background: "#08080D" }}>
+        {/* Particle field — absolute, behind all content */}
+        <ParticleField />
         {/* Global scanline + grid " parallax at 0.3x */}
         <div style={{ position: "absolute", inset: 0, opacity: 0.02, backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.04) 2px, rgba(255,255,255,0.04) 4px)", pointerEvents: "none", transform: `translateY(${scrollY * -0.05}px)` }} />
         <div style={{ position: "absolute", inset: 0, opacity: 0.012, backgroundImage: "linear-gradient(rgba(45,212,191,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(45,212,191,0.1) 1px, transparent 1px)", backgroundSize: "140px 140px", pointerEvents: "none", transform: `translateY(${scrollY * -0.08}px)` }} />
