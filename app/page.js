@@ -975,7 +975,7 @@ export default function Page() {
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 3 }}>
             <div style={{ animation: introPhase === "hero" ? "heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.6s both" : "none", opacity: introPhase === "hero" ? undefined : 0 }}>
               <div style={{ borderTop: "1px dashed rgba(255,255,255,0.06)" }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", height: 68 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", height: 56 }}>
                   {/* Issa profile */}
                   <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center", borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
                     <img src={PROFILE_IMG} alt="" style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(255,255,255,0.08)" }} />
@@ -1020,10 +1020,7 @@ export default function Page() {
               </div>
             </div>
 
-            {/* Scroll */}
-            <div style={{ animation: introPhase === "hero" ? "heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.75s both" : "none", opacity: introPhase === "hero" ? undefined : 0, textAlign: "center", paddingBottom: 16 }}>
-              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#334", letterSpacing: "0.12em" }}>SCROLL DOWN</span>
-            </div>
+
           </div>
         </div>
       </section>
