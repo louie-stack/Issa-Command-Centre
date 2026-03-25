@@ -36,21 +36,21 @@ export default function ProjectsPage() {
 
       {/* Sidebar */}
       <div style={{ width: 200, flexShrink: 0, borderRight: "1px dashed rgba(255,255,255,0.06)", display: "flex", flexDirection: "column", position: "relative", zIndex: 2 }}>
-        <div style={{ padding: "24px 16px 16px" }}><div style={{ ...mono, fontSize: 8, color: "#2DD4BF", letterSpacing: "0.1em" }}>PROJECTS</div></div>
+        <div style={{ padding: "24px 16px 16px" }}><div style={{ ...mono, fontSize: 11, color: "#2DD4BF", letterSpacing: "0.1em" }}>PROJECTS</div></div>
         <div style={{ flex: 1 }}>
           {projects.map((p, i) => (
             <div key={i} onClick={() => { setActiveProject(i); setActiveTab("board"); }} style={{ padding: "12px 16px", cursor: "pointer", transition: "all 0.25s", borderLeft: i === activeProject ? "2px solid " + p.color : "2px solid transparent", background: i === activeProject ? "rgba(255,255,255,0.02)" : "transparent" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <span style={{ ...jakarta, fontSize: 12, fontWeight: 700, color: i === activeProject ? "#E8E8F0" : "#667" }}>{p.name}</span>
-                {p.pct != null ? <span style={{ ...mono, fontSize: 7, color: p.color }}>{p.pct}%</span> : <span style={{ ...mono, fontSize: 7, padding: "2px 6px", borderRadius: 10, background: p.color + "0F", color: p.color }}>{p.status.toUpperCase()}</span>}
+                {p.pct != null ? <span style={{ ...mono, fontSize: 10, color: p.color }}>{p.pct}%</span> : <span style={{ ...mono, fontSize: 10, padding: "2px 6px", borderRadius: 10, background: p.color + "0F", color: p.color }}>{p.status.toUpperCase()}</span>}
               </div>
-              <div style={{ ...mono, fontSize: 7, color: "#334", marginTop: 4 }}>{p.shots ? p.shots + " shots" : p.sub}</div>
+              <div style={{ ...mono, fontSize: 10, color: "#334", marginTop: 4 }}>{p.shots ? p.shots + " shots" : p.sub}</div>
               {p.pct != null && i === activeProject && <div style={{ marginTop: 8, height: 2, background: "rgba(255,255,255,0.04)", borderRadius: 1 }}><div style={{ width: p.pct + "%", height: "100%", background: p.color, borderRadius: 1 }} /></div>}
             </div>
           ))}
         </div>
         <div style={{ padding: "16px 20px", borderTop: "1px dashed rgba(255,255,255,0.04)" }}>
-          <div style={{ padding: "8px 0", textAlign: "center", borderRadius: 8, border: "1px dashed rgba(45,212,191,0.12)", cursor: "pointer" }}><span style={{ ...mono, fontSize: 9, color: "#2DD4BF" }}>+ New Project</span></div>
+          <div style={{ padding: "8px 0", textAlign: "center", borderRadius: 8, border: "1px dashed rgba(45,212,191,0.12)", cursor: "pointer" }}><span style={{ ...mono, fontSize: 11, color: "#2DD4BF" }}>+ New Project</span></div>
         </div>
       </div>
 
@@ -60,12 +60,12 @@ export default function ProjectsPage() {
         <div style={{ padding: "20px 28px", display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px dashed rgba(255,255,255,0.06)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <span style={{ ...jakarta, fontSize: 18, fontWeight: 800 }}>{proj.name}</span>
-            <span style={{ ...mono, fontSize: 8, color: "#445" }}>{proj.sub}</span>
-            <span style={{ ...mono, fontSize: 7, color: proj.color, padding: "3px 8px", border: "1px solid " + proj.color + "1A", borderRadius: 20 }}>{proj.status.toUpperCase()}</span>
+            <span style={{ ...mono, fontSize: 11, color: "#445" }}>{proj.sub}</span>
+            <span style={{ ...mono, fontSize: 10, color: proj.color, padding: "3px 8px", border: "1px solid " + proj.color + "1A", borderRadius: 20 }}>{proj.status.toUpperCase()}</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 4 }}><span style={{ width: 5, height: 5, borderRadius: "50%", background: proj.agentColor }} /><span style={{ ...mono, fontSize: 8, color: "#556" }}>{proj.agent}</span></div>
-            <span style={{ ...mono, fontSize: 8, color: "#334" }}>{proj.deadline}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 4 }}><span style={{ width: 5, height: 5, borderRadius: "50%", background: proj.agentColor }} /><span style={{ ...mono, fontSize: 11, color: "#556" }}>{proj.agent}</span></div>
+            <span style={{ ...mono, fontSize: 11, color: "#334" }}>{proj.deadline}</span>
           </div>
         </div>
 
@@ -89,7 +89,7 @@ export default function ProjectsPage() {
               return (
                 <div key={col.key} style={{ borderRight: ci < 3 ? "1px dashed rgba(255,255,255,0.04)" : "none", paddingTop: 4, display: "flex", flexDirection: "column" }}>
                   <div style={{ padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: col.color }} /><span style={{ ...mono, fontSize: 8, color: "#556", letterSpacing: "0.06em" }}>{col.label}</span></div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: col.color }} /><span style={{ ...mono, fontSize: 11, color: "#556", letterSpacing: "0.06em" }}>{col.label}</span></div>
                     <span style={{ ...jakarta, fontSize: 14, fontWeight: 800, color: col.color + "66" }}>{cards.length}</span>
                   </div>
                   <div style={{ flex: 1, overflowY: "auto", paddingBottom: 8 }}>
@@ -102,13 +102,13 @@ export default function ProjectsPage() {
                           <div style={{ fontSize: 12, color: col.key === "queued" ? "#99A" : "#BBC", fontWeight: 500 }}>{card.title}</div>
                           {isGen && card.pct != null && <div style={{ marginTop: 8, height: 2, background: "rgba(255,255,255,0.04)", borderRadius: 1 }}><div style={{ width: card.pct + "%", height: "100%", background: col.color, borderRadius: 1 }} /></div>}
                           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: isGen && card.pct != null ? 6 : 8 }}>
-                            <span style={{ ...mono, fontSize: 7, color: "#334" }}>{card.scene}</span>
-                            <span style={{ ...mono, fontSize: 7, color: isGen ? col.color : col.key === "queued" ? "#334" : col.color + "99" }}>{isGen && card.pct != null ? card.pct + "%" : isGen ? "Starting" : card.tool}</span>
+                            <span style={{ ...mono, fontSize: 10, color: "#334" }}>{card.scene}</span>
+                            <span style={{ ...mono, fontSize: 10, color: isGen ? col.color : col.key === "queued" ? "#334" : col.color + "99" }}>{isGen && card.pct != null ? card.pct + "%" : isGen ? "Starting" : card.tool}</span>
                           </div>
                         </div>
                       );
                     })}
-                    {more > 0 && <div style={{ padding: "8px 16px" }}><span style={{ ...mono, fontSize: 7, color: col.key === "approved" ? "#2DD4BF" : "#334", cursor: "pointer" }}>+{more} more{col.key === "approved" ? " \u2192" : ""}</span></div>}
+                    {more > 0 && <div style={{ padding: "8px 16px" }}><span style={{ ...mono, fontSize: 10, color: col.key === "approved" ? "#2DD4BF" : "#334", cursor: "pointer" }}>+{more} more{col.key === "approved" ? " \u2192" : ""}</span></div>}
                   </div>
                 </div>
               );
@@ -122,7 +122,7 @@ export default function ProjectsPage() {
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
               <span style={{ ...mono, fontSize: 8, color: "#2DD4BF" }}>{"\u2726"}</span>
               <span style={{ ...mono, fontSize: 10, color: "#2DD4BF" }}>ACTIVITY</span>
-              <span style={{ ...mono, fontSize: 8, color: "#334", marginLeft: 4 }}>{proj.name} / last 24 hours</span>
+              <span style={{ ...mono, fontSize: 11, color: "#334", marginLeft: 4 }}>{proj.name} / last 24 hours</span>
             </div>
             <div style={{ position: "relative", paddingLeft: 48 }}>
               <div style={{ position: "absolute", left: 18, top: 0, bottom: 0, width: 1, borderLeft: "1px dashed rgba(255,255,255,0.04)" }} />
@@ -135,9 +135,9 @@ export default function ProjectsPage() {
                   <div style={{ flex: 1, padding: "16px 20px", borderRadius: 12, background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.04)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
                     <div style={{ fontSize: 13, color: "#BBC", marginBottom: 6 }}><span style={{ color: item.agentColor, fontWeight: 600 }}>{item.agent}</span> {item.text}</div>
                     <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                      <span style={{ ...mono, fontSize: 7, color: "#334" }}>{item.time}</span>
-                      {item.detail && <span style={{ ...mono, fontSize: 7, color: "#334" }}>{item.detail}</span>}
-                      {item.status && <span style={{ ...mono, fontSize: 7, padding: "2px 6px", borderRadius: 8, background: item.statusColor + "0F", color: item.statusColor }}>{"\u2192"} {item.status}</span>}
+                      <span style={{ ...mono, fontSize: 10, color: "#334" }}>{item.time}</span>
+                      {item.detail && <span style={{ ...mono, fontSize: 10, color: "#334" }}>{item.detail}</span>}
+                      {item.status && <span style={{ ...mono, fontSize: 10, padding: "2px 6px", borderRadius: 8, background: item.statusColor + "0F", color: item.statusColor }}>{"\u2192"} {item.status}</span>}
                     </div>
                   </div>
                 </div>
@@ -152,7 +152,7 @@ export default function ProjectsPage() {
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
               <span style={{ ...mono, fontSize: 8, color: "#2DD4BF" }}>{"\u2726"}</span>
               <span style={{ ...mono, fontSize: 10, color: "#2DD4BF" }}>DELIVERABLES</span>
-              <span style={{ ...mono, fontSize: 8, color: "#334", marginLeft: 4 }}>{proj.name} / {proj.context}</span>
+              <span style={{ ...mono, fontSize: 11, color: "#334", marginLeft: 4 }}>{proj.name} / {proj.context}</span>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {proj.deliverables.map((d, i) => {
@@ -168,12 +168,12 @@ export default function ProjectsPage() {
                       <div>
                         <div style={{ fontSize: 14, fontWeight: 600, color: d.status === "not_started" ? "#778" : "#E8E8F0", marginBottom: 3 }}>{d.title}</div>
                         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                          <span style={{ ...mono, fontSize: 7, color: "#445" }}>{d.detail}</span>
-                          {d.sent && <span style={{ ...mono, fontSize: 7, color: "#334" }}>{d.status === "pending" ? d.sent : "Sent " + d.sent}</span>}
+                          <span style={{ ...mono, fontSize: 10, color: "#445" }}>{d.detail}</span>
+                          {d.sent && <span style={{ ...mono, fontSize: 10, color: "#334" }}>{d.status === "pending" ? d.sent : "Sent " + d.sent}</span>}
                         </div>
                       </div>
                     </div>
-                    {d.feedback ? <span style={{ ...mono, fontSize: 8, color: d.feedback === "Feedback received" ? "#2DD4BF" : "#D4A800" }}>{d.feedback}</span> : isPending ? <div style={{ padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(45,212,191,0.12)", background: "rgba(45,212,191,0.04)", cursor: "pointer" }}><span style={{ ...mono, fontSize: 8, color: "#2DD4BF" }}>Send when ready</span></div> : d.status === "not_started" ? <span style={{ ...mono, fontSize: 8, color: "#334" }}>Not started</span> : null}
+                    {d.feedback ? <span style={{ ...mono, fontSize: 11, color: d.feedback === "Feedback received" ? "#2DD4BF" : "#D4A800" }}>{d.feedback}</span> : isPending ? <div style={{ padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(45,212,191,0.12)", background: "rgba(45,212,191,0.04)", cursor: "pointer" }}><span style={{ ...mono, fontSize: 11, color: "#2DD4BF" }}>Send when ready</span></div> : d.status === "not_started" ? <span style={{ ...mono, fontSize: 11, color: "#334" }}>Not started</span> : null}
                   </div>
                 );
               })}

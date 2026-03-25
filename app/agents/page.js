@@ -258,7 +258,7 @@ export default function AgentsPage() {
                   background: "rgba(255,255,255,0.06)",
                 }}
               />
-              <span style={{ ...mo, fontSize: 8, color: "#556", marginLeft: 4 }}>3 of 4 online</span>
+              <span style={{ ...mo, fontSize: 11, color: "#556", marginLeft: 4 }}>3 of 4 online</span>
             </div>
           </div>
         </div>
@@ -332,7 +332,7 @@ export default function AgentsPage() {
                   <span style={{ ...jk, fontSize: 12, fontWeight: 800, color: on ? "#E8E8F0" : "#445" }}>
                     {ag.name}
                   </span>
-                  <span style={{ ...mo, fontSize: 7, color: on ? `rgba(${ag.rgb},0.6)` : "#334" }}>
+                  <span style={{ ...mo, fontSize: 10, color: on ? `rgba(${ag.rgb},0.6)` : "#334" }}>
                     {ag.role}
                   </span>
                 </div>
@@ -366,11 +366,11 @@ export default function AgentsPage() {
                     boxShadow: `0 0 6px rgba(${a.rgb},0.4)`,
                   }}
                 />
-                <span style={{ ...mo, fontSize: 8, color: a.color, letterSpacing: "0.08em" }}>
+                <span style={{ ...mo, fontSize: 11, color: a.color, letterSpacing: "0.08em" }}>
                   {a.role.toUpperCase()}
                 </span>
                 <span style={{ width: 1, height: 10, background: "rgba(255,255,255,0.06)" }} />
-                <span style={{ ...mo, fontSize: 8, color: "#445" }}>{statusLabel}</span>
+                <span style={{ ...mo, fontSize: 11, color: "#445" }}>{statusLabel}</span>
               </div>
 
               {/* Name */}
@@ -435,7 +435,7 @@ export default function AgentsPage() {
                     >
                       {s.v}
                     </div>
-                    <div style={{ ...mo, fontSize: 7, color: "#445", letterSpacing: "0.04em" }}>
+                    <div style={{ ...mo, fontSize: 10, color: "#445", letterSpacing: "0.04em" }}>
                       {s.l}
                     </div>
                   </div>
@@ -447,7 +447,7 @@ export default function AgentsPage() {
               {/* Capabilities */}
               <div style={{ marginBottom: 20 }}>
                 <div
-                  style={{ ...mo, fontSize: 7, color: "#334", letterSpacing: "0.08em", marginBottom: 8 }}
+                  style={{ ...mo, fontSize: 10, color: "#334", letterSpacing: "0.08em", marginBottom: 8 }}
                 >
                   CAPABILITIES
                 </div>
@@ -457,7 +457,7 @@ export default function AgentsPage() {
                       key={i}
                       style={{
                         ...mo,
-                        fontSize: 9,
+                        fontSize: 11,
                         color: `rgba(${a.rgb},0.8)`,
                         padding: "4px 10px",
                         borderRadius: 4,
@@ -474,7 +474,7 @@ export default function AgentsPage() {
               {/* APIs */}
               <div style={{ marginBottom: 24 }}>
                 <div
-                  style={{ ...mo, fontSize: 7, color: "#334", letterSpacing: "0.08em", marginBottom: 8 }}
+                  style={{ ...mo, fontSize: 10, color: "#334", letterSpacing: "0.08em", marginBottom: 8 }}
                 >
                   CONNECTED
                 </div>
@@ -484,7 +484,7 @@ export default function AgentsPage() {
                       key={i}
                       style={{
                         ...mo,
-                        fontSize: 9,
+                        fontSize: 11,
                         color: "#667",
                         padding: "4px 10px",
                         borderRadius: 4,
@@ -504,7 +504,7 @@ export default function AgentsPage() {
                   <div
                     style={{
                       ...mo,
-                      fontSize: 7,
+                      fontSize: 10,
                       color: "#334",
                       letterSpacing: "0.08em",
                       marginBottom: 8,
@@ -526,7 +526,7 @@ export default function AgentsPage() {
                     >
                       <span style={{ fontSize: 12, color: "#99A" }}>{t.task}</span>
                       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                        <span style={{ ...mo, fontSize: 7, color: "#334" }}>{t.project}</span>
+                        <span style={{ ...mo, fontSize: 10, color: "#334" }}>{t.project}</span>
                         {t.pct != null && (
                           <>
                             <div
@@ -549,7 +549,7 @@ export default function AgentsPage() {
                             <span
                               style={{
                                 ...mo,
-                                fontSize: 7,
+                                fontSize: 10,
                                 color: a.color,
                                 minWidth: 24,
                                 textAlign: "right",
@@ -560,7 +560,7 @@ export default function AgentsPage() {
                           </>
                         )}
                         {t.pct == null && (
-                          <span style={{ ...mo, fontSize: 7, color: "#223" }}>{"\u2022"}</span>
+                          <span style={{ ...mo, fontSize: 10, color: "#223" }}>{"\u2022"}</span>
                         )}
                       </div>
                     </div>
@@ -568,7 +568,7 @@ export default function AgentsPage() {
                 </div>
               )}
               {a.queue.length === 0 && (
-                <div style={{ ...mo, fontSize: 8, color: "#334" }}>No active tasks</div>
+                <div style={{ ...mo, fontSize: 11, color: "#334" }}>No active tasks</div>
               )}
             </div>
 

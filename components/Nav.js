@@ -28,7 +28,7 @@ export default function Nav() {
           <img src={PROFILE_IMG} alt="Issa" style={{ width: 30, height: 30, borderRadius: "50%", objectFit: "cover", border: "1.5px solid rgba(45,212,191,0.25)" }} />
           <div>
             <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, fontWeight: 700 }}>ISSA</div>
-            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 7, color: "#445" }}>COMMAND CENTRE</div>
+            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#445" }}>COMMAND CENTRE</div>
           </div>
         </div>
         <div style={{ display: "flex", gap: 1 }}>
@@ -38,15 +38,15 @@ export default function Nav() {
             return (
               <Link key={i} href={route} style={{ textDecoration: "none" }}>
                 <div className={!isActive ? "nav-link" : ""} style={{ padding: "5px 12px", borderRadius: 2, cursor: "pointer", background: isActive ? "rgba(45,212,191,0.05)" : "transparent", border: isActive ? "1px solid rgba(45,212,191,0.1)" : "1px solid transparent" }}>
-                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: isActive ? "#2DD4BF" : "#556" }}>{p}</span>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: isActive ? "#2DD4BF" : "#556" }}>{p}</span>
                 </div>
               </Link>
             );
           })}
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#334" }}>{tStr} EST</span>
-          <div style={{ width: 28, height: 28, borderRadius: 3, background: "rgba(45,212,191,0.06)", border: "1px solid rgba(45,212,191,0.12)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 8, fontWeight: 800, color: "#2DD4BF" }}>IS</div>
+          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#334" }}>{tStr} EST</span>
+          <div style={{ width: 28, height: 28, borderRadius: 3, background: "rgba(45,212,191,0.06)", border: "1px solid rgba(45,212,191,0.12)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, fontWeight: 800, color: "#2DD4BF" }}>IS</div>
         </div>
       </div>
     </nav>
