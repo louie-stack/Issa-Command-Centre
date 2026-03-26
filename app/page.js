@@ -672,10 +672,22 @@ function ChatCard({ visible }) {
   );
 }
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
+
 export default function Page() {
   const scrollY = useScroll();
   const vh = typeof window !== "undefined" ? window.innerHeight : 900;
   const heroP = Math.min(1, scrollY / (vh * 0.5));
+  const isMobile = useIsMobile();
   const [scrolled, setScrolled] = useState(false);
   const [introPhase, setIntroPhase] = useState("text"); // text -> explode -> hero
   const [scrollPct, setScrollPct] = useState(0);
@@ -820,7 +832,7 @@ export default function Page() {
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "20%", background: "linear-gradient(0deg, transparent, rgba(17,17,24,0.6))", pointerEvents: "none", zIndex: 1 }} />
 
           {/* Content " Maze-inspired layout */}
-          <div style={{ position: "absolute", inset: 0, zIndex: 2, display: "flex", flexDirection: "column", padding: "0 44px" }}>
+          <div style={{ position: "absolute", inset: 0, zIndex: 2, display: "flex", flexDirection: "column", padding: isMobile ? "0 16px" : "0 44px" }}>
 
             {/* Top badge " near nav */}
             <div style={{ display: "flex", justifyContent: "center", paddingTop: 90, animation: introPhase === "hero" ? "heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.05s both" : "none", opacity: introPhase === "hero" ? undefined : 0 }}>
@@ -837,7 +849,7 @@ export default function Page() {
               <div style={{ animation: introPhase === "hero" ? "heroSlideUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both" : "none", opacity: introPhase === "hero" ? undefined : 0 }}>
                 <h1 style={{
                   fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  fontSize: "clamp(48px, 7vw, 88px)",
+                  fontSize: isMobile ? "clamp(36px, 9vw, 56px)" : "clamp(48px, 7vw, 88px)",
                   fontWeight: 700,
                   letterSpacing: "-0.03em",
                   lineHeight: 1.1,
@@ -848,7 +860,7 @@ export default function Page() {
 
               {/* Subtitle */}
               <div style={{ animation: introPhase === "hero" ? "heroSlideUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.35s both" : "none", opacity: introPhase === "hero" ? undefined : 0, marginTop: 24 }}>
-                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, color: "#667", lineHeight: 1.7, maxWidth: 480, margin: "0 auto" }}>
+                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: isMobile ? 14 : 17, color: "#667", lineHeight: 1.7, maxWidth: isMobile ? "90%" : 480, margin: "0 auto" }}>
                   Four AI agents running your creative pipeline, research, and business ops around the clock.
                 </p>
               </div>
@@ -868,7 +880,7 @@ export default function Page() {
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 3 }}>
             <div style={{ animation: introPhase === "hero" ? "heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.6s both" : "none", opacity: introPhase === "hero" ? undefined : 0 }}>
               <div style={{ borderTop: "1px dashed rgba(255,255,255,0.06)" }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", height: 56 }}>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr 1fr", height: isMobile ? "auto" : 56 }}>
                   {/* Issa profile */}
                   <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center", borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
                     <img src={PROFILE_IMG} alt="" style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(255,255,255,0.08)" }} />
@@ -923,13 +935,13 @@ export default function Page() {
         {/* Global scanline + grid " parallax at 0.3x */}
         <div style={{ position: "absolute", inset: 0, opacity: 0.02, backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.04) 2px, rgba(255,255,255,0.04) 4px)", pointerEvents: "none", transform: `translateY(${scrollY * -0.05}px)` }} />
         <div style={{ position: "absolute", inset: 0, opacity: 0.012, backgroundImage: "linear-gradient(rgba(45,212,191,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(45,212,191,0.1) 1px, transparent 1px)", backgroundSize: "140px 140px", pointerEvents: "none", transform: `translateY(${scrollY * -0.08}px)` }} />
-        <div style={{ position: "relative", maxWidth: 1440, margin: "0 auto", padding: "0 60px" }}>
+        <div style={{ position: "relative", maxWidth: 1440, margin: "0 auto", padding: isMobile ? "0 16px" : "0 60px" }}>
 
           {/* SECTION 1: YOUR DAY */}
           <section style={{ padding: "80px 0 0" }}>
             <SectionHeader idx="01" badge="YOUR DAY" title="Today's Focus" desc="priorities ' schedule ' quick_actions" right={<div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 14px", borderRadius: 3, border: "1px solid rgba(45,212,191,0.06)" }}><span style={{ fontSize: 16 }}>{"\u2600"}</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, fontWeight: 700 }}>72deg</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445" }}>NYC</span></div>} />
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: 12 }}>
-              <Reveal delay={40} style={{ gridColumn: "span 5" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(12, 1fr)", gap: 12 }}>
+              <Reveal delay={40} style={{ gridColumn: isMobile ? undefined : "span 5" }}>
                 <Card>
                   <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#2DD4BF", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}>
                     <svg width="8" height="8" viewBox="0 0 8 8"><line x1="4" y1="0" x2="4" y2="8" stroke="#2DD4BF" strokeWidth="0.5" opacity="0.5"/><line x1="0" y1="4" x2="8" y2="4" stroke="#2DD4BF" strokeWidth="0.5" opacity="0.5"/></svg>
@@ -943,7 +955,7 @@ export default function Page() {
                   })}
                 </Card>
               </Reveal>
-              <Reveal delay={80} style={{ gridColumn: "span 4" }}>
+              <Reveal delay={80} style={{ gridColumn: isMobile ? undefined : "span 4" }}>
                 <Card color="212,168,0">
                   <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#D4A800", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}>
                     <svg width="8" height="8" viewBox="0 0 8 8"><line x1="4" y1="0" x2="4" y2="8" stroke="#D4A800" strokeWidth="0.5" opacity="0.5"/><line x1="0" y1="4" x2="8" y2="4" stroke="#D4A800" strokeWidth="0.5" opacity="0.5"/></svg>
@@ -957,7 +969,7 @@ export default function Page() {
                   })}
                 </Card>
               </Reveal>
-              <Reveal delay={120} style={{ gridColumn: "span 3" }}>
+              <Reveal delay={120} style={{ gridColumn: isMobile ? undefined : "span 3" }}>
                 <Card>
                   <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#556", marginBottom: 14 }}>QUICK ACTIONS</div>
                   {[{ l: "New Project", ic: "+", c: "#2DD4BF" }, { l: "Gen Prompt", ic: "*", c: "#D4A800" }, { l: "Review Deal", ic: "#", c: "#F59E0B" }, { l: "Launch Agent", ic: "O", c: "#2DD4BF" }].map((a, i) => (
@@ -983,7 +995,7 @@ export default function Page() {
                 <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
                   <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(45,212,191,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: 360 }}>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", minHeight: isMobile ? "auto" : 360 }}>
                   {/* Left: Video area */}
                   <div style={{ position: "relative", overflow: "hidden", borderRight: "1px solid rgba(255,255,255,0.03)" }}>
                     <video autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 1 }}>
@@ -1022,7 +1034,7 @@ export default function Page() {
             </Reveal>
 
             {/* Other projects grid */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: 10 }}>
               {/* COCA-COLA */}
               <Reveal delay={100} parallax={0.25}>
                 <div className="bento-hover" {...hoverGlow("249,115,22","rgba(249,115,22,0.18)","0 0 16px rgba(249,115,22,0.12), 0 0 50px rgba(249,115,22,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.04)")} style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(249,115,22,0.18)", boxShadow: "0 0 16px rgba(249,115,22,0.12), 0 0 50px rgba(249,115,22,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.04)", cursor: "pointer" }}>
@@ -1105,7 +1117,7 @@ export default function Page() {
                 </svg>
 
                 {/* Stage nodes */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 0, position: "relative" }}>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr 1fr", gap: isMobile ? 12 : 0, position: "relative" }}>
                   {[
                     { label: "INGESTED", agent: "Script-V", color: "#EF4444", count: contentQueue.length, desc: "Prompts created from briefs" },
                     { label: "QUEUED", agent: "Chronos", color: "#F97316", count: contentQueue.filter(c=>c.status==="Queued").length, desc: "Awaiting generation slot" },
@@ -1150,7 +1162,7 @@ export default function Page() {
 
             {/* Active items */}
             <Reveal delay={120}>
-              <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
+              <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 8 }}>
                 {contentQueue.map((item, i) => (
                   <div key={i} className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.15)","0 0 16px rgba(45,212,191,0.08), 0 0 50px rgba(45,212,191,0.04), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.03)")} style={{ padding: "14px 16px", borderRadius: 10, border: "1px solid rgba(45,212,191,0.15)", background: "rgba(6,12,16,0.97)", boxShadow: "0 0 16px rgba(45,212,191,0.08), 0 0 50px rgba(45,212,191,0.04), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.03)", cursor: "pointer", position: "relative", overflow: "hidden" }}>
                     <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#AAB", lineHeight: 1.4, marginBottom: 8 }}>{item.prompt}</div>
@@ -1172,7 +1184,7 @@ export default function Page() {
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "1px dashed rgba(255,255,255,0.06)" }} />
             
             <SectionHeader idx="03" badge="YOUR AI TEAM" title="Agents" desc="autonomous_agents ' creative_pipeline ' always_building" right={<div style={{ display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: "#D4A800", boxShadow: "0 0 6px rgba(212,168,0,0.4)", animation: "pulse 2s infinite" }} /><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#D4A800" }}>3 ONLINE</span></div>} />
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 10 }}>
               {agentsEnhanced.map((agent, ai) => (
   <div key={ai} className="bento-hover"
     onMouseEnter={e => { e.currentTarget.querySelector("video")?.play(); e.currentTarget.style.boxShadow = `0 0 35px rgba(${agent.rgb},0.4), 0 0 90px rgba(${agent.rgb},0.2), 0 20px 50px rgba(0,0,0,0.6), inset 0 0 50px rgba(${agent.rgb},0.12)`; e.currentTarget.style.borderColor = `rgba(${agent.rgb},0.5)`; }}
@@ -1222,8 +1234,8 @@ export default function Page() {
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "1px dashed rgba(255,255,255,0.06)" }} />
             
             <SectionHeader idx="04" badge="BUSINESS" title="Deals + Pipeline" desc="partnerships ' workshops ' credentials" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32, fontWeight: 700, color: "#F59E0B" }}>$<Counter to={26} dur={1400} />k<span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#445", marginLeft: 6 }}>pipeline</span></span>} />
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: 12 }}>
-              <Reveal delay={40} style={{ gridColumn: "span 5" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(12, 1fr)", gap: 12 }}>
+              <Reveal delay={40} style={{ gridColumn: isMobile ? undefined : "span 5" }}>
                 <Card>
                   <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#F59E0B", marginBottom: 14 }}>+ DEAL / IP TRACKER</div>
                   {deals.map((d, i) => (
@@ -1240,7 +1252,7 @@ export default function Page() {
                   ))}
                 </Card>
               </Reveal>
-              <Reveal delay={80} style={{ gridColumn: "span 3" }}>
+              <Reveal delay={80} style={{ gridColumn: isMobile ? undefined : "span 3" }}>
                 <div style={{ borderRadius: 14, overflow: "hidden", position: "relative", height: 320, border: "none", cursor: "pointer" }}>
                   {/* Video - replace src with Desert Palace clip */}
                   <video autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", transform: "scale(1.4)", opacity: 1 }}>
@@ -1262,7 +1274,7 @@ export default function Page() {
                   </div>
                 </div>
               </Reveal>
-              <Reveal delay={100} style={{ gridColumn: "span 4" }}>
+              <Reveal delay={100} style={{ gridColumn: isMobile ? undefined : "span 4" }}>
                 <Card>
                   <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#2DD4BF", marginBottom: 14 }}>+ WORKSHOP PIPELINE</div>
                   {workshopsData.map((w, i) => (
@@ -1270,10 +1282,10 @@ export default function Page() {
                   ))}
                 </Card>
               </Reveal>
-              <Reveal delay={140} style={{ gridColumn: "span 12" }}>
+              <Reveal delay={140} style={{ gridColumn: isMobile ? undefined : "span 12" }}>
                 <div style={{ borderRadius: 12, overflow: "hidden", background: "rgba(255,255,255,0.02)", border: "none", backdropFilter: "blur(12px)" }}>
                   {/* Stats row */}
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
                     {[{ v: 12, l: "PROJECTS", c: "#2DD4BF" }, { v: 847, l: "ASSETS GENERATED", c: "#2DD4BF" }, { v: 3, l: "AGENTS ONLINE", c: "#D4A800" }].map((s, i) => (
                       <div key={i} style={{ textAlign: "center", padding: "24px 16px", borderRight: i < 2 ? "1px solid rgba(255,255,255,0.03)" : "none" }}>
                         <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32, fontWeight: 700, color: s.c, lineHeight: 1 }}><Counter to={s.v} /></div>
@@ -1298,9 +1310,9 @@ export default function Page() {
 
         {/* FOOTER */}
         <footer style={{ padding: "48px 0 28px", marginTop: 80 }}>
-          <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 60px" }}>
+          <div style={{ maxWidth: 1440, margin: "0 auto", padding: isMobile ? "0 16px" : "0 60px" }}>
             <div style={{ height: 1, background: "linear-gradient(90deg, rgba(45,212,191,0.12), rgba(45,212,191,0.03), rgba(249,115,22,0.03), rgba(249,115,22,0.08))", marginBottom: 20 }} />
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+            <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "flex-end", gap: isMobile ? 16 : 0 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <svg width="12" height="12" viewBox="0 0 12 12"><line x1="6" y1="0" x2="6" y2="12" stroke="#2DD4BF" strokeWidth="0.6" opacity="0.3"/><line x1="0" y1="6" x2="12" y2="6" stroke="#2DD4BF" strokeWidth="0.6" opacity="0.3"/></svg>
                 <div>
@@ -1308,7 +1320,7 @@ export default function Page() {
                   <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#334", marginTop: 2 }}>Amissa Studios [LLC] ' Command Centre [V1.0]</div>
                 </div>
               </div>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#223", textAlign: "right", lineHeight: 1.8 }}>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#223", textAlign: isMobile ? "left" : "right", lineHeight: 1.8 }}>
                 40.7128N 74.0060W<br/>
                 2026
               </div>

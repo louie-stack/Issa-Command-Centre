@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Nav from "../../components/Nav";
 
 const projects = [
@@ -10,177 +10,337 @@ const projects = [
 ];
 
 const columns = [
-  { key: "queued", label: "QUEUED", color: "#EF4444" },
-  { key: "generating", label: "GENERATING", color: "#F97316" },
-  { key: "review", label: "REVIEW", color: "#EAB308" },
-  { key: "approved", label: "APPROVED", color: "#2DD4BF" },
+  { key: "queued", label: "QUEUED", color: "#EF4444", rgb: "239,68,68" },
+  { key: "generating", label: "GENERATING", color: "#F97316", rgb: "249,115,22" },
+  { key: "review", label: "REVIEW", color: "#EAB308", rgb: "234,179,8" },
+  { key: "approved", label: "APPROVED", color: "#2DD4BF", rgb: "45,212,191" },
 ];
 
 const mono = { fontFamily: "'Space Mono', monospace" };
 const jakarta = { fontFamily: "'Plus Jakarta Sans', sans-serif" };
+const TEAL = "45,212,191";
+const GOLD = "212,168,0";
+
+function glowCard(rgb, h) {
+  return {
+    background: "rgba(6,12,16,0.97)",
+    border: `1px solid rgba(${rgb},${h ? 0.4 : 0.22})`,
+    boxShadow: h
+      ? `0 0 30px rgba(${rgb},0.32), 0 0 80px rgba(${rgb},0.16), 0 16px 40px rgba(0,0,0,0.55), inset 0 0 40px rgba(${rgb},0.08)`
+      : `0 0 18px rgba(${rgb},0.18), 0 0 55px rgba(${rgb},0.09), 0 12px 32px rgba(0,0,0,0.45), inset 0 0 30px rgba(${rgb},0.05)`,
+    transition: "all 0.35s cubic-bezier(0.16,1,0.3,1)",
+  };
+}
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
+
+function KanbanCard({ card, col }) {
+  const [h, setH] = useState(false);
+  const isGen = col.key === "generating";
+  return (
+    <div
+      onMouseEnter={() => setH(true)}
+      onMouseLeave={() => setH(false)}
+      style={{
+        margin: "0 12px 8px",
+        padding: "14px 16px",
+        borderRadius: 10,
+        position: "relative",
+        overflow: "hidden",
+        cursor: "pointer",
+        borderLeft: `2px solid ${col.color}`,
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        ...glowCard(col.rgb, h),
+      }}>
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse 90% 60% at 50% 0%, rgba(${col.rgb},${h ? 0.1 : 0.06}) 0%, transparent 70%)`, transition: "opacity 0.4s" }} />
+      <div style={{ position: "relative" }}>
+        <div style={{ ...jakarta, fontSize: 12, color: col.key === "queued" ? "#99A" : "#BBC", fontWeight: 500 }}>{card.title}</div>
+        {isGen && card.pct != null && (
+          <div style={{ marginTop: 8, height: 2, background: "rgba(255,255,255,0.04)", borderRadius: 1 }}>
+            <div style={{ width: card.pct + "%", height: "100%", background: col.color, borderRadius: 1 }} />
+          </div>
+        )}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: isGen && card.pct != null ? 6 : 8 }}>
+          <span style={{ ...mono, fontSize: 10, color: "#334" }}>{card.scene}</span>
+          <span style={{ ...mono, fontSize: 10, color: isGen ? col.color : col.key === "queued" ? "#334" : col.color + "99" }}>
+            {isGen && card.pct != null ? card.pct + "%" : isGen ? "Starting" : card.tool}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function ProjectsPage() {
   const [activeTab, setActiveTab] = useState("board");
   const [activeProject, setActiveProject] = useState(0);
+  const [mobileBoardCol, setMobileBoardCol] = useState("generating");
+  const isMobile = useIsMobile();
   const proj = projects[activeProject];
 
   return (
-    <div style={{  minHeight: "100vh", color: "#E8E8F0", fontFamily: "'Inter', sans-serif", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden" }}>
+    <div style={{ minHeight: "100vh", color: "#E8E8F0", fontFamily: "'Inter', sans-serif", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden" }}>
       <div style={{ height: 54, flexShrink: 0 }} />
       <div style={{ display: "flex", flex: 1, position: "relative" }}>
-      <div style={{ position: "absolute", top: -80, left: "30%", width: 500, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(45,212,191,0.03) 0%, transparent 60%)", filter: "blur(60px)", pointerEvents: "none", animation: "breathe 8s ease-in-out infinite" }} />
-      <div style={{ position: "absolute", bottom: -60, right: "10%", width: 400, height: 350, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.025) 0%, transparent 60%)", filter: "blur(60px)", pointerEvents: "none", animation: "breathe 10s ease-in-out 2s infinite" }} />
-      <div style={{ position: "absolute", inset: 0, opacity: 0.018, pointerEvents: "none", zIndex: 0, backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')", backgroundRepeat: "repeat", backgroundSize: "256px 256px" }} />
+        <div style={{ position: "absolute", top: -80, left: "30%", width: 500, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(45,212,191,0.03) 0%, transparent 60%)", filter: "blur(60px)", pointerEvents: "none", animation: "breathe 8s ease-in-out infinite" }} />
+        <div style={{ position: "absolute", bottom: -60, right: "10%", width: 400, height: 350, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.025) 0%, transparent 60%)", filter: "blur(60px)", pointerEvents: "none", animation: "breathe 10s ease-in-out 2s infinite" }} />
+        <div style={{ position: "absolute", inset: 0, opacity: 0.018, pointerEvents: "none", zIndex: 0, backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')", backgroundRepeat: "repeat", backgroundSize: "256px 256px" }} />
 
-      <Nav />
+        <Nav />
 
-      {/* Sidebar */}
-      <div style={{ width: 200, flexShrink: 0, borderRight: "1px dashed rgba(255,255,255,0.06)", display: "flex", flexDirection: "column", position: "relative", zIndex: 2 }}>
-        <div style={{ padding: "24px 16px 16px" }}><div style={{ ...mono, fontSize: 11, color: "#2DD4BF", letterSpacing: "0.1em" }}>PROJECTS</div></div>
-        <div style={{ flex: 1 }}>
-          {projects.map((p, i) => (
-            <div key={i} onClick={() => { setActiveProject(i); setActiveTab("board"); }} style={{ padding: "12px 16px", cursor: "pointer", transition: "all 0.25s", borderLeft: i === activeProject ? "2px solid " + p.color : "2px solid transparent", background: i === activeProject ? "rgba(255,255,255,0.02)" : "transparent" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span style={{ ...jakarta, fontSize: 12, fontWeight: 700, color: i === activeProject ? "#E8E8F0" : "#667" }}>{p.name}</span>
-                {p.pct != null ? <span style={{ ...mono, fontSize: 10, color: p.color }}>{p.pct}%</span> : <span style={{ ...mono, fontSize: 10, padding: "2px 6px", borderRadius: 10, background: p.color + "0F", color: p.color }}>{p.status.toUpperCase()}</span>}
-              </div>
-              <div style={{ ...mono, fontSize: 10, color: "#334", marginTop: 4 }}>{p.shots ? p.shots + " shots" : p.sub}</div>
-              {p.pct != null && i === activeProject && <div style={{ marginTop: 8, height: 2, background: "rgba(255,255,255,0.04)", borderRadius: 1 }}><div style={{ width: p.pct + "%", height: "100%", background: p.color, borderRadius: 1 }} /></div>}
-            </div>
-          ))}
-        </div>
-        <div style={{ padding: "16px 20px", borderTop: "1px dashed rgba(255,255,255,0.04)" }}>
-          <div style={{ padding: "8px 0", textAlign: "center", borderRadius: 8, border: "1px dashed rgba(45,212,191,0.12)", cursor: "pointer" }}><span style={{ ...mono, fontSize: 11, color: "#2DD4BF" }}>+ New Project</span></div>
-        </div>
-      </div>
-
-      {/* Main workspace */}
-      <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", position: "relative", zIndex: 2 }}>
-        {/* Header */}
-        <div style={{ padding: "20px 28px", display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px dashed rgba(255,255,255,0.06)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <span style={{ ...jakarta, fontSize: 18, fontWeight: 800 }}>{proj.name}</span>
-            <span style={{ ...mono, fontSize: 11, color: "#445" }}>{proj.sub}</span>
-            <span style={{ ...mono, fontSize: 10, color: proj.color, padding: "3px 8px", border: "1px solid " + proj.color + "1A", borderRadius: 20 }}>{proj.status.toUpperCase()}</span>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 4 }}><span style={{ width: 5, height: 5, borderRadius: "50%", background: proj.agentColor }} /><span style={{ ...mono, fontSize: 11, color: "#556" }}>{proj.agent}</span></div>
-            <span style={{ ...mono, fontSize: 11, color: "#334" }}>{proj.deadline}</span>
-          </div>
-        </div>
-
-        {/* Tabs */}
-        <div style={{ padding: "0 28px", display: "flex", gap: 0, borderBottom: "1px dashed rgba(255,255,255,0.06)" }}>
-          {["board", "activity", "deliverables"].map(t => (
-            <div key={t} onClick={() => setActiveTab(t)} style={{ padding: "8px 16px", ...mono, fontSize: 10, letterSpacing: "0.06em", cursor: "pointer", color: activeTab === t ? "#2DD4BF" : "#334", borderBottom: activeTab === t ? "1px solid #2DD4BF" : "1px solid transparent", transition: "all 0.25s" }}>
-              {t.charAt(0).toUpperCase() + t.slice(1)}
-            </div>
-          ))}
-        </div>
-
-        {/* Board */}
-        {activeTab === "board" && (
-          <div style={{ flex: 1, display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr" }}>
-            {columns.map((col, ci) => {
-              const cards = proj.board[col.key];
-              const max = col.key === "approved" ? 3 : col.key === "queued" ? 4 : 999;
-              const visible = cards.slice(0, max);
-              const more = cards.length - visible.length;
-              return (
-                <div key={col.key} style={{ borderRight: ci < 3 ? "1px dashed rgba(255,255,255,0.04)" : "none", paddingTop: 4, display: "flex", flexDirection: "column" }}>
-                  <div style={{ padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: col.color }} /><span style={{ ...mono, fontSize: 11, color: "#556", letterSpacing: "0.06em" }}>{col.label}</span></div>
-                    <span style={{ ...jakarta, fontSize: 14, fontWeight: 800, color: col.color + "66" }}>{cards.length}</span>
-                  </div>
-                  <div style={{ flex: 1, overflowY: "auto", paddingBottom: 8 }}>
-                    {visible.map((card, i) => {
-                      const isGen = col.key === "generating";
-                      return (
-                        <div key={i} style={{ margin: "0 12px 8px", padding: "14px 16px", borderRadius: 10, background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.04)", borderLeft: "2px solid " + col.color, cursor: "pointer", transition: "all 0.35s cubic-bezier(0.16,1,0.3,1)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
-                          onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.2)"; }}
-                          onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}>
-                          <div style={{ fontSize: 12, color: col.key === "queued" ? "#99A" : "#BBC", fontWeight: 500 }}>{card.title}</div>
-                          {isGen && card.pct != null && <div style={{ marginTop: 8, height: 2, background: "rgba(255,255,255,0.04)", borderRadius: 1 }}><div style={{ width: card.pct + "%", height: "100%", background: col.color, borderRadius: 1 }} /></div>}
-                          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: isGen && card.pct != null ? 6 : 8 }}>
-                            <span style={{ ...mono, fontSize: 10, color: "#334" }}>{card.scene}</span>
-                            <span style={{ ...mono, fontSize: 10, color: isGen ? col.color : col.key === "queued" ? "#334" : col.color + "99" }}>{isGen && card.pct != null ? card.pct + "%" : isGen ? "Starting" : card.tool}</span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                    {more > 0 && <div style={{ padding: "8px 16px" }}><span style={{ ...mono, fontSize: 10, color: col.key === "approved" ? "#2DD4BF" : "#334", cursor: "pointer" }}>+{more} more{col.key === "approved" ? " \u2192" : ""}</span></div>}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {/* Activity */}
-        {activeTab === "activity" && (
-          <div style={{ padding: "24px 28px", flex: 1 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
-              <span style={{ ...mono, fontSize: 8, color: "#2DD4BF" }}>{"\u2726"}</span>
-              <span style={{ ...mono, fontSize: 10, color: "#2DD4BF" }}>ACTIVITY</span>
-              <span style={{ ...mono, fontSize: 11, color: "#334", marginLeft: 4 }}>{proj.name} / last 24 hours</span>
-            </div>
-            <div style={{ position: "relative", paddingLeft: 48 }}>
-              <div style={{ position: "absolute", left: 18, top: 0, bottom: 0, width: 1, borderLeft: "1px dashed rgba(255,255,255,0.04)" }} />
-              {proj.activity.map((item, i) => (
-                <div key={i} style={{ position: "relative", marginBottom: 12, display: "flex", alignItems: "center", opacity: i >= 3 ? 0.5 : 1 }}>
-                  <div style={{ position: "absolute", left: -48, width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <svg style={{ position: "absolute", inset: 0, animation: "spin 3s linear infinite" }} width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke={item.agentColor + "4D"} strokeWidth="1" strokeDasharray="12 82" strokeLinecap="round" /></svg>
-                    <div style={{ width: 10, height: 10, borderRadius: "50%", background: item.agentColor + "14", border: "1.5px solid " + item.agentColor }} />
-                  </div>
-                  <div style={{ flex: 1, padding: "16px 20px", borderRadius: 12, background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.04)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
-                    <div style={{ fontSize: 13, color: "#BBC", marginBottom: 6 }}><span style={{ color: item.agentColor, fontWeight: 600 }}>{item.agent}</span> {item.text}</div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                      <span style={{ ...mono, fontSize: 10, color: "#334" }}>{item.time}</span>
-                      {item.detail && <span style={{ ...mono, fontSize: 10, color: "#334" }}>{item.detail}</span>}
-                      {item.status && <span style={{ ...mono, fontSize: 10, padding: "2px 6px", borderRadius: 8, background: item.statusColor + "0F", color: item.statusColor }}>{"\u2192"} {item.status}</span>}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Deliverables */}
-        {activeTab === "deliverables" && (
-          <div style={{ padding: "24px 28px", flex: 1 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
-              <span style={{ ...mono, fontSize: 8, color: "#2DD4BF" }}>{"\u2726"}</span>
-              <span style={{ ...mono, fontSize: 10, color: "#2DD4BF" }}>DELIVERABLES</span>
-              <span style={{ ...mono, fontSize: 11, color: "#334", marginLeft: 4 }}>{proj.name} / {proj.context}</span>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {proj.deliverables.map((d, i) => {
-                const isSent = d.status === "sent";
-                const isPending = d.status === "pending";
-                const iconColor = isSent ? "#2DD4BF" : isPending ? "#EAB308" : "#334";
+        {/* Sidebar — hidden on mobile */}
+        {!isMobile && (
+          <div style={{ width: 200, flexShrink: 0, borderRight: "1px dashed rgba(255,255,255,0.06)", display: "flex", flexDirection: "column", position: "relative", zIndex: 2 }}>
+            <div style={{ padding: "24px 16px 16px" }}><div style={{ ...mono, fontSize: 11, color: "#2DD4BF", letterSpacing: "0.1em" }}>PROJECTS</div></div>
+            <div style={{ flex: 1 }}>
+              {projects.map((p, i) => {
+                const sel = i === activeProject;
+                const rgb = p.color === "#2DD4BF" ? TEAL : p.color === "#F97316" ? "249,115,22" : p.color === "#5EEAD4" ? "94,234,212" : TEAL;
                 return (
-                  <div key={i} style={{ padding: "18px 22px", borderRadius: 12, background: "rgba(255,255,255," + (isSent ? "0.025" : "0.015") + ")", border: "1px " + (isSent ? "solid" : "dashed") + " rgba(" + (isPending ? "234,179,8" : "255,255,255") + "," + (isSent ? "0.05" : isPending ? "0.1" : "0.04") + ")", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                      <div style={{ width: 36, height: 36, borderRadius: 8, background: iconColor + "0A", border: "1px solid " + iconColor + "1A", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        {isSent ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={iconColor} strokeWidth="1.5"><path d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="9" /></svg> : isPending ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={iconColor} strokeWidth="1.5"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg> : <span style={{ ...mono, fontSize: 9, color: "#334" }}>...</span>}
-                      </div>
-                      <div>
-                        <div style={{ fontSize: 14, fontWeight: 600, color: d.status === "not_started" ? "#778" : "#E8E8F0", marginBottom: 3 }}>{d.title}</div>
-                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                          <span style={{ ...mono, fontSize: 10, color: "#445" }}>{d.detail}</span>
-                          {d.sent && <span style={{ ...mono, fontSize: 10, color: "#334" }}>{d.status === "pending" ? d.sent : "Sent " + d.sent}</span>}
-                        </div>
-                      </div>
+                  <div
+                    key={i}
+                    onClick={() => { setActiveProject(i); setActiveTab("board"); }}
+                    style={{
+                      padding: "12px 16px",
+                      cursor: "pointer",
+                      transition: "all 0.25s",
+                      borderLeft: sel ? "2px solid " + p.color : "2px solid transparent",
+                      position: "relative",
+                      ...(sel ? {
+                        background: `rgba(${rgb},0.06)`,
+                        boxShadow: `inset 0 0 20px rgba(${rgb},0.05)`,
+                      } : { background: "transparent" }),
+                    }}>
+                    {sel && (
+                      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse 90% 60% at 50% 0%, rgba(${rgb},0.06) 0%, transparent 70%)` }} />
+                    )}
+                    <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <span style={{ ...jakarta, fontSize: 12, fontWeight: 700, color: sel ? "#E8E8F0" : "#667" }}>{p.name}</span>
+                      {p.pct != null ? <span style={{ ...mono, fontSize: 10, color: p.color }}>{p.pct}%</span> : <span style={{ ...mono, fontSize: 10, padding: "2px 6px", borderRadius: 10, background: p.color + "0F", color: p.color }}>{p.status.toUpperCase()}</span>}
                     </div>
-                    {d.feedback ? <span style={{ ...mono, fontSize: 11, color: d.feedback === "Feedback received" ? "#2DD4BF" : "#D4A800" }}>{d.feedback}</span> : isPending ? <div style={{ padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(45,212,191,0.12)", background: "rgba(45,212,191,0.04)", cursor: "pointer" }}><span style={{ ...mono, fontSize: 11, color: "#2DD4BF" }}>Send when ready</span></div> : d.status === "not_started" ? <span style={{ ...mono, fontSize: 11, color: "#334" }}>Not started</span> : null}
+                    <div style={{ position: "relative", ...mono, fontSize: 10, color: "#334", marginTop: 4 }}>{p.shots ? p.shots + " shots" : p.sub}</div>
+                    {p.pct != null && sel && <div style={{ position: "relative", marginTop: 8, height: 2, background: "rgba(255,255,255,0.04)", borderRadius: 1 }}><div style={{ width: p.pct + "%", height: "100%", background: p.color, borderRadius: 1 }} /></div>}
                   </div>
                 );
               })}
             </div>
+            <div style={{ padding: "16px 20px", borderTop: "1px dashed rgba(255,255,255,0.04)" }}>
+              <div style={{ padding: "8px 0", textAlign: "center", borderRadius: 8, border: "1px dashed rgba(45,212,191,0.12)", cursor: "pointer" }}><span style={{ ...mono, fontSize: 11, color: "#2DD4BF" }}>+ New Project</span></div>
+            </div>
           </div>
         )}
+
+        {/* Main workspace */}
+        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", position: "relative", zIndex: 2 }}>
+
+          {/* Mobile project selector pills */}
+          {isMobile && (
+            <div style={{ padding: "12px 16px 0", overflowX: "auto", display: "flex", gap: 8, flexShrink: 0 }}>
+              {projects.map((p, i) => (
+                <div
+                  key={i}
+                  onClick={() => { setActiveProject(i); setActiveTab("board"); }}
+                  style={{
+                    padding: "6px 14px",
+                    borderRadius: 20,
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                    flexShrink: 0,
+                    background: i === activeProject ? `rgba(${p.color === "#2DD4BF" ? TEAL : p.color === "#F97316" ? "249,115,22" : "45,212,191"},0.12)` : "rgba(255,255,255,0.04)",
+                    border: `1px solid ${i === activeProject ? p.color + "44" : "rgba(255,255,255,0.08)"}`,
+                    ...mono,
+                    fontSize: 11,
+                    color: i === activeProject ? p.color : "#556",
+                    transition: "all 0.2s",
+                  }}>
+                  {p.name}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Header */}
+          <div style={{ padding: isMobile ? "12px 16px" : "20px 28px", display: "flex", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 8 : 0, justifyContent: "space-between", borderBottom: "1px dashed rgba(255,255,255,0.06)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+              <span style={{ ...jakarta, fontSize: isMobile ? 15 : 18, fontWeight: 800 }}>{proj.name}</span>
+              <span style={{ ...mono, fontSize: 11, color: "#445" }}>{proj.sub}</span>
+              <span style={{ ...mono, fontSize: 10, color: proj.color, padding: "3px 8px", border: "1px solid " + proj.color + "1A", borderRadius: 20 }}>{proj.status.toUpperCase()}</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 4 }}><span style={{ width: 5, height: 5, borderRadius: "50%", background: proj.agentColor }} /><span style={{ ...mono, fontSize: 11, color: "#556" }}>{proj.agent}</span></div>
+              <span style={{ ...mono, fontSize: 11, color: "#334" }}>{proj.deadline}</span>
+            </div>
+          </div>
+
+          {/* Tabs */}
+          <div style={{ padding: isMobile ? "0 16px" : "0 28px", display: "flex", gap: 0, borderBottom: "1px dashed rgba(255,255,255,0.06)", overflowX: "auto" }}>
+            {["board", "activity", "deliverables"].map(t => (
+              <div key={t} onClick={() => setActiveTab(t)} style={{ padding: "8px 16px", ...mono, fontSize: 10, letterSpacing: "0.06em", cursor: "pointer", color: activeTab === t ? "#2DD4BF" : "#334", borderBottom: activeTab === t ? "1px solid #2DD4BF" : "1px solid transparent", transition: "all 0.25s", whiteSpace: "nowrap" }}>
+                {t.charAt(0).toUpperCase() + t.slice(1)}
+              </div>
+            ))}
+          </div>
+
+          {/* Board */}
+          {activeTab === "board" && (
+            <>
+              {/* Mobile column selector */}
+              {isMobile && (
+                <div style={{ padding: "10px 16px", display: "flex", gap: 8, overflowX: "auto", borderBottom: "1px dashed rgba(255,255,255,0.06)" }}>
+                  {columns.map(col => (
+                    <div
+                      key={col.key}
+                      onClick={() => setMobileBoardCol(col.key)}
+                      style={{
+                        padding: "5px 12px",
+                        borderRadius: 16,
+                        cursor: "pointer",
+                        whiteSpace: "nowrap",
+                        flexShrink: 0,
+                        background: mobileBoardCol === col.key ? `rgba(${col.rgb},0.12)` : "rgba(255,255,255,0.03)",
+                        border: `1px solid rgba(${col.rgb},${mobileBoardCol === col.key ? 0.4 : 0.12})`,
+                        ...mono,
+                        fontSize: 10,
+                        color: mobileBoardCol === col.key ? col.color : "#445",
+                        transition: "all 0.2s",
+                      }}>
+                      {col.label} ({proj.board[col.key].length})
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <div style={{ flex: 1, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr 1fr" }}>
+                {columns.filter(col => !isMobile || col.key === mobileBoardCol).map((col, ci) => {
+                  const cards = proj.board[col.key];
+                  const max = col.key === "approved" ? 3 : col.key === "queued" ? 4 : 999;
+                  const visible = cards.slice(0, max);
+                  const more = cards.length - visible.length;
+                  return (
+                    <div key={col.key} style={{ borderRight: !isMobile && ci < 3 ? "1px dashed rgba(255,255,255,0.04)" : "none", paddingTop: 4, display: "flex", flexDirection: "column" }}>
+                      <div style={{ padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                          <span style={{ width: 6, height: 6, borderRadius: "50%", background: col.color }} />
+                          <span style={{ ...mono, fontSize: 11, color: "#556", letterSpacing: "0.06em" }}>{col.label}</span>
+                        </div>
+                        <span style={{ ...jakarta, fontSize: 14, fontWeight: 800, color: col.color + "66" }}>{cards.length}</span>
+                      </div>
+                      <div style={{ flex: 1, overflowY: "auto", paddingBottom: 8 }}>
+                        {visible.map((card, i) => (
+                          <KanbanCard key={i} card={card} col={col} />
+                        ))}
+                        {more > 0 && <div style={{ padding: "8px 16px" }}><span style={{ ...mono, fontSize: 10, color: col.key === "approved" ? "#2DD4BF" : "#334", cursor: "pointer" }}>+{more} more{col.key === "approved" ? " →" : ""}</span></div>}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
+
+          {/* Activity */}
+          {activeTab === "activity" && (
+            <div style={{ padding: isMobile ? "16px 16px" : "24px 28px", flex: 1 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
+                <span style={{ ...mono, fontSize: 8, color: "#2DD4BF" }}>{"\u2726"}</span>
+                <span style={{ ...mono, fontSize: 10, color: "#2DD4BF" }}>ACTIVITY</span>
+                <span style={{ ...mono, fontSize: 11, color: "#334", marginLeft: 4 }}>{proj.name} / last 24 hours</span>
+              </div>
+              <div style={{ position: "relative", paddingLeft: isMobile ? 36 : 48 }}>
+                <div style={{ position: "absolute", left: isMobile ? 10 : 18, top: 0, bottom: 0, width: 1, borderLeft: "1px dashed rgba(255,255,255,0.04)" }} />
+                {proj.activity.map((item, i) => {
+                  const agentRgb = item.agentColor === "#F97316" ? "249,115,22" : item.agentColor === "#D4A800" ? "212,168,0" : item.agentColor === "#2DD4BF" ? "45,212,191" : "140,160,200";
+                  return (
+                    <ActivityCard key={i} item={item} agentRgb={agentRgb} dim={i >= 3} isMobile={isMobile} />
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Deliverables */}
+          {activeTab === "deliverables" && (
+            <div style={{ padding: isMobile ? "16px 16px" : "24px 28px", flex: 1 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
+                <span style={{ ...mono, fontSize: 8, color: "#2DD4BF" }}>{"\u2726"}</span>
+                <span style={{ ...mono, fontSize: 10, color: "#2DD4BF" }}>DELIVERABLES</span>
+                <span style={{ ...mono, fontSize: 11, color: "#334", marginLeft: 4 }}>{proj.name} / {proj.context}</span>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {proj.deliverables.map((d, i) => (
+                  <DeliverableCard key={i} d={d} />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
+    </div>
+  );
+}
+
+function ActivityCard({ item, agentRgb, dim, isMobile }) {
+  const [h, setH] = useState(false);
+  return (
+    <div style={{ position: "relative", marginBottom: 12, display: "flex", alignItems: "center", opacity: dim ? 0.5 : 1 }}>
+      <div style={{ position: "absolute", left: isMobile ? -36 : -48, width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <svg style={{ position: "absolute", inset: 0, animation: "spin 3s linear infinite" }} width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke={item.agentColor + "4D"} strokeWidth="1" strokeDasharray="12 82" strokeLinecap="round" /></svg>
+        <div style={{ width: 10, height: 10, borderRadius: "50%", background: item.agentColor + "14", border: "1.5px solid " + item.agentColor }} />
+      </div>
+      <div
+        onMouseEnter={() => h || undefined}
+        onMouseLeave={() => undefined}
+        style={{ flex: 1, padding: "16px 20px", borderRadius: 12, position: "relative", overflow: "hidden", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", ...glowCard(agentRgb, h) }}>
+        <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse 90% 60% at 50% 0%, rgba(${agentRgb},${h ? 0.08 : 0.04}) 0%, transparent 70%)`, transition: "opacity 0.4s" }} />
+        <div style={{ position: "relative" }}>
+          <div style={{ fontSize: 13, color: "#BBC", marginBottom: 6 }}><span style={{ color: item.agentColor, fontWeight: 600 }}>{item.agent}</span> {item.text}</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+            <span style={{ ...mono, fontSize: 10, color: "#334" }}>{item.time}</span>
+            {item.detail && <span style={{ ...mono, fontSize: 10, color: "#334" }}>{item.detail}</span>}
+            {item.status && <span style={{ ...mono, fontSize: 10, padding: "2px 6px", borderRadius: 8, background: item.statusColor + "0F", color: item.statusColor }}>{"\u2192"} {item.status}</span>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DeliverableCard({ d }) {
+  const [h, setH] = useState(false);
+  const isSent = d.status === "sent";
+  const isPending = d.status === "pending";
+  const iconColor = isSent ? "#2DD4BF" : isPending ? "#EAB308" : "#334";
+  const rgb = isSent ? TEAL : isPending ? GOLD : "80,80,100";
+  return (
+    <div
+      onMouseEnter={() => setH(true)}
+      onMouseLeave={() => setH(false)}
+      style={{ padding: "18px 22px", borderRadius: 12, position: "relative", overflow: "hidden", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12, ...glowCard(rgb, h) }}>
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse 90% 60% at 50% 0%, rgba(${rgb},${h ? 0.08 : 0.04}) 0%, transparent 70%)`, transition: "opacity 0.4s" }} />
+      <div style={{ position: "relative", display: "flex", alignItems: "center", gap: 14 }}>
+        <div style={{ width: 36, height: 36, borderRadius: 8, background: iconColor + "0A", border: "1px solid " + iconColor + "1A", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          {isSent ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={iconColor} strokeWidth="1.5"><path d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="9" /></svg> : isPending ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={iconColor} strokeWidth="1.5"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg> : <span style={{ ...mono, fontSize: 9, color: "#334" }}>...</span>}
+        </div>
+        <div>
+          <div style={{ fontSize: 14, fontWeight: 600, color: d.status === "not_started" ? "#778" : "#E8E8F0", marginBottom: 3 }}>{d.title}</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+            <span style={{ ...mono, fontSize: 10, color: "#445" }}>{d.detail}</span>
+            {d.sent && <span style={{ ...mono, fontSize: 10, color: "#334" }}>{d.status === "pending" ? d.sent : "Sent " + d.sent}</span>}
+          </div>
+        </div>
+      </div>
+      <div style={{ position: "relative" }}>
+        {d.feedback ? <span style={{ ...mono, fontSize: 11, color: d.feedback === "Feedback received" ? "#2DD4BF" : "#D4A800" }}>{d.feedback}</span> : isPending ? <div style={{ padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(45,212,191,0.12)", background: "rgba(45,212,191,0.04)", cursor: "pointer" }}><span style={{ ...mono, fontSize: 11, color: "#2DD4BF" }}>Send when ready</span></div> : d.status === "not_started" ? <span style={{ ...mono, fontSize: 11, color: "#334" }}>Not started</span> : null}
       </div>
     </div>
   );

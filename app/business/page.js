@@ -1,6 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Nav from "../../components/Nav";
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
 
 const mono = { fontFamily: "'Space Mono', monospace" };
 const jakarta = { fontFamily: "'Plus Jakarta Sans', sans-serif" };
@@ -92,25 +103,27 @@ function WorkshopCard({ ws }) {
   );
 }
 
-function RevenueSlide({ slide, active }) {
+function RevenueSlide({ slide, active, isMobile }) {
   const { label, value, color, rgb, sub, subColor, note } = slide;
-  const circ = 2 * Math.PI * 92;
+  const sz = isMobile ? 160 : 220;
+  const r = isMobile ? 67 : 92;
+  const circ = 2 * Math.PI * r;
   return (
     <div style={{ display: active ? "flex" : "none", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "100%", height: "100%", position: "absolute", inset: 0 }}>
-      <div style={{ position: "relative", width: 220, height: 220, borderRadius: "50%", boxShadow: `0 0 40px rgba(${rgb},0.25), 0 0 100px rgba(${rgb},0.12), 0 0 180px rgba(${rgb},0.06)` }}>
+      <div style={{ position: "relative", width: sz, height: sz, borderRadius: "50%", boxShadow: `0 0 40px rgba(${rgb},0.25), 0 0 100px rgba(${rgb},0.12), 0 0 180px rgba(${rgb},0.06)` }}>
         {/* Backlit glow layer */}
         <div style={{ position: "absolute", inset: -30, borderRadius: "50%", background: `radial-gradient(circle, rgba(${rgb},0.12) 0%, rgba(${rgb},0.04) 40%, transparent 70%)`, pointerEvents: "none", filter: "blur(8px)" }} />
-        <svg width="220" height="220" viewBox="0 0 220 220" style={{ position: "absolute", inset: 0 }}>
-          <circle cx="110" cy="110" r="106" fill="none" stroke={`rgba(${rgb},0.04)`} strokeWidth="0.5" />
-          <circle cx="110" cy="110" r="92" fill="none" stroke={`rgba(${rgb},0.07)`} strokeWidth="5" strokeLinecap="round" />
-          <circle cx="110" cy="110" r="92" fill="none" stroke={color} strokeWidth="5" strokeLinecap="round"
+        <svg width={sz} height={sz} viewBox={`0 0 ${sz} ${sz}`} style={{ position: "absolute", inset: 0 }}>
+          <circle cx={sz/2} cy={sz/2} r={sz/2-4} fill="none" stroke={`rgba(${rgb},0.04)`} strokeWidth="0.5" />
+          <circle cx={sz/2} cy={sz/2} r={r} fill="none" stroke={`rgba(${rgb},0.07)`} strokeWidth="5" strokeLinecap="round" />
+          <circle cx={sz/2} cy={sz/2} r={r} fill="none" stroke={color} strokeWidth="5" strokeLinecap="round"
             strokeDasharray={`${circ * slide.progress} ${circ}`} strokeDashoffset={circ * 0.25}
-            transform="rotate(-90 110 110)" opacity="0.8" />
-          <circle cx="110" cy="110" r="55" fill={`rgba(${rgb},0.015)`} />
+            transform={`rotate(-90 ${sz/2} ${sz/2})`} opacity="0.8" />
+          <circle cx={sz/2} cy={sz/2} r={sz*0.25} fill={`rgba(${rgb},0.015)`} />
         </svg>
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-          <div style={{ ...mono, fontSize: 10, color: "#445", letterSpacing: "0.08em", marginBottom: 6 }}>{label}</div>
-          <div style={{ ...jakarta, fontSize: 44, fontWeight: 800, color, lineHeight: 0.9, letterSpacing: "-0.03em" }}>{value}</div>
+          <div style={{ ...mono, fontSize: isMobile ? 8 : 10, color: "#445", letterSpacing: "0.08em", marginBottom: 6 }}>{label}</div>
+          <div style={{ ...jakarta, fontSize: isMobile ? 30 : 44, fontWeight: 800, color, lineHeight: 0.9, letterSpacing: "-0.03em" }}>{value}</div>
           <div style={{ display: "flex", alignItems: "center", gap: 4, marginTop: 8 }}>
             {subColor && <span style={{ display: "inline-block", width: 0, height: 0, borderLeft: "3px solid transparent", borderRight: "3px solid transparent", borderBottom: "5px solid " + subColor }} />}
             <span style={{ ...mono, fontSize: 10, color: subColor || "#556" }}>{sub}</span>
@@ -151,29 +164,30 @@ const slideRgbs = [GOLD, TEAL, ORANGE];
 
 export default function BusinessPage() {
   const [slide, setSlide] = useState(0);
+  const isMobile = useIsMobile();
 
   const prev = () => setSlide((slide - 1 + slides.length) % slides.length);
   const next = () => setSlide((slide + 1) % slides.length);
 
   return (
-    <div style={{ minHeight: "100vh",  color: "#E8E8F0", paddingTop: 54 }}>
+    <div style={{ minHeight: "100vh", color: "#E8E8F0", paddingTop: 54 }}>
       <Nav />
-      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 44px", position: "relative" }}>
+      <div style={{ maxWidth: 1440, margin: "0 auto", padding: isMobile ? "0 16px" : "0 44px", position: "relative" }}>
 
         {/* PAGE HEADER */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "28px 0", borderBottom: "1px dashed rgba(255,255,255,0.06)" }}>
+        <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "center", gap: isMobile ? 12 : 0, padding: "28px 0", borderBottom: "1px dashed rgba(255,255,255,0.06)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <span style={{ ...mono, fontSize: 10, color: "#D4A800" }}>✦</span>
             <span style={{ ...jakarta, fontSize: 20, fontWeight: 800 }}>Business</span>
           </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
             {[
               { val: "$26k", label: "pipeline", color: "#D4A800" },
               { val: "3", label: "active deals", color: "#2DD4BF" },
               { val: "2", label: "workshops", color: "#E8E8F0" },
             ].map((s, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 5, padding: "0 20px", borderLeft: i > 0 ? "1px dashed rgba(255,255,255,0.06)" : "none" }}>
-                <span style={{ ...jakarta, fontSize: 18, fontWeight: 800, color: s.color }}>{s.val}</span>
+              <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 5, padding: isMobile ? "0 12px 0 0" : "0 20px", borderLeft: !isMobile && i > 0 ? "1px dashed rgba(255,255,255,0.06)" : "none" }}>
+                <span style={{ ...jakarta, fontSize: isMobile ? 15 : 18, fontWeight: 800, color: s.color }}>{s.val}</span>
                 <span style={{ ...mono, fontSize: 10, color: "#445" }}>{s.label}</span>
               </div>
             ))}
@@ -192,8 +206,8 @@ export default function BusinessPage() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" strokeLinecap="round"><path d="M15 18l-6-6 6-6" /></svg>
             </button>
 
-            <div style={{ width: 420, height: 280, position: "relative" }}>
-              {slides.map((s, i) => <RevenueSlide key={i} slide={s} active={i === slide} />)}
+            <div style={{ width: isMobile ? "calc(100vw - 80px)" : 420, height: isMobile ? 200 : 280, position: "relative" }}>
+              {slides.map((s, i) => <RevenueSlide key={i} slide={s} active={i === slide} isMobile={isMobile} />)}
             </div>
 
             {/* Next */}
@@ -215,7 +229,7 @@ export default function BusinessPage() {
         {/* ACTIVE DEALS */}
         <div style={{ padding: "0 0 40px" }}>
           <div style={{ ...mono, fontSize: 10, color: "#D4A800", letterSpacing: "0.12em", marginBottom: 20 }}>ACTIVE DEALS</div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 12 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: 16, marginBottom: 12 }}>
             {deals.map((d, i) => <DealCard key={i} deal={d} />)}
           </div>
           {/* Lead row */}
@@ -230,7 +244,7 @@ export default function BusinessPage() {
         {/* WORKSHOPS */}
         <div style={{ padding: "36px 0 40px", borderTop: "1px dashed rgba(255,255,255,0.06)" }}>
           <div style={{ ...mono, fontSize: 10, color: "#2DD4BF", letterSpacing: "0.12em", marginBottom: 20 }}>WORKSHOPS</div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 12 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16, marginBottom: 12 }}>
             {workshops.map((w, i) => <WorkshopCard key={i} ws={w} />)}
           </div>
           {/* Planning row */}
@@ -244,7 +258,7 @@ export default function BusinessPage() {
 
         {/* BOTTOM STATS */}
         <div style={{ borderTop: "1px dashed rgba(255,255,255,0.06)", padding: "24px 0 40px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", textAlign: "center" }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr 1fr", textAlign: "center" }}>
             {bottomStats.map((s, i) => (
               <div key={i} style={{ borderLeft: i > 0 ? "1px dashed rgba(255,255,255,0.06)" : "none" }}>
                 <div style={{ ...jakarta, fontSize: 26, fontWeight: 800, color: s.color }}>{s.value}</div>
