@@ -239,6 +239,7 @@ export default function AgentsPage() {
           gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
           gap: isMobile ? 24 : 48,
           alignItems: "start",
+          marginTop: 24,
         }}>
           {/* LEFT — Info panel with glow */}
           <div style={{
