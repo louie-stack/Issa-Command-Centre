@@ -688,6 +688,16 @@ export default function Page() {
   const vh = typeof window !== "undefined" ? window.innerHeight : 900;
   const heroP = Math.min(1, scrollY / (vh * 0.5));
   const isMobile = useIsMobile();
+
+  // On mobile, imperatively play agent section videos (autoPlay attr doesn't fire after hydration)
+  useEffect(() => {
+    if (isMobile) {
+      document.querySelectorAll(".agent-section-video").forEach(v => {
+        v.play().catch(() => {});
+      });
+    }
+  }, [isMobile]);
+
   const [scrolled, setScrolled] = useState(false);
   const [introPhase, setIntroPhase] = useState("text"); // text -> explode -> hero
   const [scrollPct, setScrollPct] = useState(0);
@@ -1193,9 +1203,10 @@ export default function Page() {
     onClick={() => window.location.href = `/agents#${agent.agentId}`}
     style={{ borderRadius: 16, overflow: "hidden", background: "rgba(6,12,16,0.97)", border: `1px solid rgba(${agent.rgb},0.32)`, boxShadow: `0 0 22px rgba(${agent.rgb},0.22), 0 0 60px rgba(${agent.rgb},0.12), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 40px rgba(${agent.rgb},0.08)`, cursor: "pointer", transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)" }}>
     <div style={{ position: "relative", height: 170, overflow: "hidden", background: "#06080D" }}>
-      {/* Agent character video — plays on hover only */}
+      {/* Agent character video — plays on hover (desktop) / autoplay (mobile) */}
       <video
-        muted loop playsInline autoPlay={isMobile}
+        className="agent-section-video"
+        muted loop playsInline
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
       >
         <source src={agent.video} type="video/mp4" />
