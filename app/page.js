@@ -1189,7 +1189,7 @@ export default function Page() {
               {agentsEnhanced.map((agent, ai) => (
   <div key={ai} className="bento-hover"
     onMouseEnter={e => { e.currentTarget.querySelector("video")?.play(); e.currentTarget.style.boxShadow = `0 0 35px rgba(${agent.rgb},0.4), 0 0 90px rgba(${agent.rgb},0.2), 0 20px 50px rgba(0,0,0,0.6), inset 0 0 50px rgba(${agent.rgb},0.12)`; e.currentTarget.style.borderColor = `rgba(${agent.rgb},0.5)`; }}
-    onMouseLeave={e => { const v = e.currentTarget.querySelector("video"); if (v) { v.pause(); v.currentTime = 0; } e.currentTarget.style.boxShadow = `0 0 22px rgba(${agent.rgb},0.22), 0 0 60px rgba(${agent.rgb},0.12), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 40px rgba(${agent.rgb},0.08)`; e.currentTarget.style.borderColor = `rgba(${agent.rgb},0.32)`; }}
+    onMouseLeave={e => { const v = e.currentTarget.querySelector("video"); if (v && !isMobile) { v.pause(); v.currentTime = 0; } e.currentTarget.style.boxShadow = `0 0 22px rgba(${agent.rgb},0.22), 0 0 60px rgba(${agent.rgb},0.12), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 40px rgba(${agent.rgb},0.08)`; e.currentTarget.style.borderColor = `rgba(${agent.rgb},0.32)`; }}
     onClick={() => window.location.href = `/agents#${agent.agentId}`}
     style={{ borderRadius: 16, overflow: "hidden", background: "rgba(6,12,16,0.97)", border: `1px solid rgba(${agent.rgb},0.32)`, boxShadow: `0 0 22px rgba(${agent.rgb},0.22), 0 0 60px rgba(${agent.rgb},0.12), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 40px rgba(${agent.rgb},0.08)`, cursor: "pointer", transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)" }}>
     <div style={{ position: "relative", height: 170, overflow: "hidden", background: "#06080D" }}>
