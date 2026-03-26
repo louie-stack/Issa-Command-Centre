@@ -170,7 +170,7 @@ export default function AgentsPage() {
 
       {/* Hero Banner */}
       <div style={{ position: "relative", width: "100%", height: isMobile ? 200 : 300, overflow: "hidden", marginTop: 54 }}>
-        <img src="/team-banner.png" alt="Agent team" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 10%", animation: "slowZoom 25s ease-in-out infinite alternate" }} />
+        <img src="/team-banner.png" alt="Agent team" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: isMobile ? "150%" : "100%", objectFit: "cover", objectPosition: isMobile ? "top center" : "center 10%", animation: "slowZoom 25s ease-in-out infinite alternate" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(0deg, #000 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.6) 100%)", pointerEvents: "none" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, #000 0%, transparent 20%, transparent 80%, #000 100%)", pointerEvents: "none" }} />
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 2, maxWidth: 1440, margin: "0 auto", padding: isMobile ? "0 16px 16px" : "0 60px 24px" }}>
@@ -325,8 +325,8 @@ export default function AgentsPage() {
           </div>
 
           {/* RIGHT — Character */}
-          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "center", height: isMobile ? 300 : 780, overflow: "hidden", background: "#000", maxHeight: isMobile ? 300 : undefined, width: "100%" }}>
-            <div style={{ position: "relative", height: "100%", overflow: "hidden", flexShrink: 0, background: "#000" }}>
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "center", height: isMobile ? 420 : 780, overflow: "hidden", background: "#000", width: "100%", order: isMobile ? -1 : 0 }}>
+            <div style={{ position: "relative", height: isMobile ? "130%" : "100%", overflow: "hidden", flexShrink: 0, background: "#000" }}>
               <video key={a.video} src={a.video} autoPlay loop muted playsInline style={{ display: "block", height: "100%", width: "auto", position: "relative", zIndex: 1 }} />
               <div style={{ position: "absolute", top: 0, left: 0, width: "30%", height: "100%", background: "linear-gradient(90deg, #000 0%, transparent 100%)", zIndex: 2, pointerEvents: "none" }} />
               <div style={{ position: "absolute", top: 0, right: 0, width: "10%", height: "100%", background: "linear-gradient(270deg, #000 0%, transparent 100%)", zIndex: 2, pointerEvents: "none" }} />

@@ -882,43 +882,44 @@ export default function Page() {
               <div style={{ borderTop: "1px dashed rgba(255,255,255,0.06)" }}>
                 <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr 1fr", height: isMobile ? "auto" : 56 }}>
                   {/* Issa profile */}
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center", borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
-                    <img src={PROFILE_IMG} alt="" style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(255,255,255,0.08)" }} />
+                  <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 6 : 12, justifyContent: "center", padding: isMobile ? "10px 4px" : 0, borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
+                    <img src={PROFILE_IMG} alt="" style={{ width: isMobile ? 24 : 32, height: isMobile ? 24 : 32, borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(255,255,255,0.08)", flexShrink: 0 }} />
                     <div>
-                      <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, fontWeight: 700, color: "#D8D8E0" }}>Issa Sissoko</div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#556", marginTop: 2 }}>AI Filmmaker + Creative Director</div>
+                      <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: isMobile ? 10 : 12, fontWeight: 700, color: "#D8D8E0" }}>Issa Sissoko</div>
+                      {!isMobile && <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#556", marginTop: 2 }}>AI Filmmaker + Creative Director</div>}
+                      {isMobile && <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#556", marginTop: 1 }}>AI Filmmaker</div>}
                     </div>
                   </div>
                   {/* Agents - glowing dots */}
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center", borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 6 : 12, justifyContent: "center", padding: isMobile ? "10px 4px" : 0, borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 4 : 6 }}>
                       {[0, 0.3, 0.6].map((d, i) => (
-                        <span key={i} style={{ width: 8, height: 8, borderRadius: "50%", background: "#2DD4BF", boxShadow: "0 0 8px rgba(45,212,191,0.5), 0 0 16px rgba(45,212,191,0.2)", animation: `pulse 2s ease-in-out ${d}s infinite` }} />
+                        <span key={i} style={{ width: isMobile ? 6 : 8, height: isMobile ? 6 : 8, borderRadius: "50%", background: "#2DD4BF", boxShadow: "0 0 8px rgba(45,212,191,0.5), 0 0 16px rgba(45,212,191,0.2)", animation: `pulse 2s ease-in-out ${d}s infinite` }} />
                       ))}
-                      <span style={{ width: 8, height: 8, borderRadius: "50%", background: "rgba(255,255,255,0.06)" }} />
+                      <span style={{ width: isMobile ? 6 : 8, height: isMobile ? 6 : 8, borderRadius: "50%", background: "rgba(255,255,255,0.06)" }} />
                     </div>
                     <div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#667", letterSpacing: "0.1em", lineHeight: 1 }}>AGENTS</div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#2DD4BF", letterSpacing: "0.1em", marginTop: 3, lineHeight: 1 }}>3 ONLINE</div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 8 : 11, color: "#667", letterSpacing: "0.08em", lineHeight: 1 }}>AGENTS</div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 9 : 11, color: "#2DD4BF", letterSpacing: "0.08em", marginTop: 3, lineHeight: 1 }}>3 ONLINE</div>
                     </div>
                   </div>
                   {/* Assets */}
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center", borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
-                    <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 26, fontWeight: 800, color: "#D4A800", lineHeight: 1 }}>847</span>
+                  <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 6 : 10, justifyContent: "center", padding: isMobile ? "10px 4px" : 0, borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
+                    <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: isMobile ? 18 : 26, fontWeight: 800, color: "#D4A800", lineHeight: 1 }}>847</span>
                     <div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#667", letterSpacing: "0.1em", lineHeight: 1 }}>ASSETS</div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.1em", marginTop: 3, lineHeight: 1 }}>GENERATED</div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 8 : 11, color: "#667", letterSpacing: "0.08em", lineHeight: 1 }}>ASSETS</div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 7 : 9, color: "#667", letterSpacing: "0.08em", marginTop: 3, lineHeight: 1 }}>GENERATED</div>
                     </div>
                   </div>
                   {/* Pipeline */}
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 6 : 10, justifyContent: "center", padding: isMobile ? "10px 4px" : 0 }}>
                     <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", lineHeight: 1, display: "flex", alignItems: "baseline" }}>
-                      <span style={{ fontSize: 16, fontWeight: 700, color: "#E8E8F0" }}>$</span>
-                      <span style={{ fontSize: 26, fontWeight: 800, color: "#E8E8F0" }}>26k</span>
+                      <span style={{ fontSize: isMobile ? 12 : 16, fontWeight: 700, color: "#E8E8F0" }}>$</span>
+                      <span style={{ fontSize: isMobile ? 18 : 26, fontWeight: 800, color: "#E8E8F0" }}>26k</span>
                     </div>
                     <div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#667", letterSpacing: "0.1em", lineHeight: 1 }}>PIPELINE</div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.1em", marginTop: 3, lineHeight: 1 }}>VALUE</div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 8 : 11, color: "#667", letterSpacing: "0.08em", lineHeight: 1 }}>PIPELINE</div>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 7 : 9, color: "#667", letterSpacing: "0.08em", marginTop: 3, lineHeight: 1 }}>VALUE</div>
                     </div>
                   </div>
                 </div>
@@ -1194,7 +1195,7 @@ export default function Page() {
     <div style={{ position: "relative", height: 170, overflow: "hidden", background: "#06080D" }}>
       {/* Agent character video — plays on hover only */}
       <video
-        muted loop playsInline
+        muted loop playsInline autoPlay={isMobile}
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
       >
         <source src={agent.video} type="video/mp4" />
@@ -1233,7 +1234,7 @@ export default function Page() {
           <section style={{ padding: "80px 0 0", position: "relative" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "1px dashed rgba(255,255,255,0.06)" }} />
             
-            <SectionHeader idx="04" badge="BUSINESS" title="Deals + Pipeline" desc="partnerships ' workshops ' credentials" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32, fontWeight: 700, color: "#F59E0B" }}>$<Counter to={26} dur={1400} />k<span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#445", marginLeft: 6 }}>pipeline</span></span>} />
+            <SectionHeader idx="04" badge="BUSINESS" title="Deals + Pipeline" desc="partnerships ' workshops ' credentials" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: isMobile ? 22 : 32, fontWeight: 700, color: "#F59E0B" }}>$<Counter to={26} dur={1400} />k<span style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 9 : 11, color: "#445", marginLeft: 6 }}>pipeline</span></span>} />
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(12, 1fr)", gap: 12 }}>
               <Reveal delay={40} style={{ gridColumn: isMobile ? undefined : "span 5" }}>
                 <Card>
@@ -1294,7 +1295,7 @@ export default function Page() {
                     ))}
                   </div>
                   {/* CPP badges row */}
-                  <div style={{ display: "flex", justifyContent: "center", gap: 10, padding: "14px 20px" }}>
+                  <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: 8, padding: "14px 16px" }}>
                     <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#334", marginRight: 4 }}>CPP</span>
                     {[{ l: "Google DeepMind", c: "#2DD4BF" }, { l: "Luma AI", c: "#D4A800" }, { l: "Hailuo", c: "#F59E0B" }, { l: "Haiper", c: "#2DD4BF" }].map((b, i) => (
                       <span key={i} className="pill-hover" style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, padding: "4px 12px", borderRadius: 20, color: b.c, background: `${b.c}08`, border: `1px solid ${b.c}15`, display: "inline-flex", alignItems: "center", gap: 6 }}>
