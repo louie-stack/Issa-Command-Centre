@@ -654,13 +654,15 @@ export default function Page() {
   const heroP = Math.min(1, scrollY / (vh * 0.5));
   const isMobile = useIsMobile();
 
-  // On mobile, imperatively play agent section videos (autoPlay attr doesn't fire after hydration)
+  // Imperatively play agent videos on mobile — autoPlay alone is unreliable after SSR hydration
   useEffect(() => {
-    if (isMobile) {
-      document.querySelectorAll(".agent-section-video").forEach(v => {
-        v.play().catch(() => {});
-      });
-    }
+    if (!isMobile) return;
+    const tryPlay = () => document.querySelectorAll(".agent-section-video").forEach(v => { v.muted = true; v.play().catch(() => {}); });
+    tryPlay();
+    // Retry after Reveal animations settle
+    const t1 = setTimeout(tryPlay, 400);
+    const t2 = setTimeout(tryPlay, 1200);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [isMobile]);
 
   const [scrolled, setScrolled] = useState(false);
@@ -1203,7 +1205,7 @@ export default function Page() {
       {/* Agent character video — plays on hover (desktop) / autoplay (mobile) */}
       <video
         className="agent-section-video"
-        muted loop playsInline
+        autoPlay muted loop playsInline
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
       >
         <source src={agent.video} type="video/mp4" />
