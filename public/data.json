@@ -1,0 +1,46 @@
+{
+  "stats": {
+    "assetsGenerated": 847,
+    "agentsOnline": 3,
+    "pipelineValue": 26,
+    "activeProjects": 4
+  },
+  "priorities": [
+    "Review Mansa storyboard feedback from Hoyt",
+    "Coca-Cola concept deck due Friday",
+    "Workshop registration page needs final copy"
+  ],
+  "meetings": [
+    { "time": "2:00 PM", "title": "Freepik sync", "dur": "30min" },
+    { "time": "4:30 PM", "title": "Mau, agent review", "dur": "45min" }
+  ],
+  "projects": [
+    { "name": "Mansa: Ep.1 Storyboard", "ctx": "Personal IP", "status": "In Production", "deadline": "Apr 15", "shots": 24, "scenes": 6, "completion": 72 },
+    { "name": "Coca-Cola Holiday Concept", "ctx": "Amissa Studios", "status": "Review", "deadline": "Mar 28" },
+    { "name": "AI Workshop Series", "ctx": "Amissa Studios", "status": "Concept", "deadline": "May 01" },
+    { "name": "Freepik AI Templates", "ctx": "Freepik", "status": "In Production", "deadline": "Mar 31" }
+  ],
+  "agents": [
+    { "name": "Chronos", "role": "Chief of Staff", "task": "Compiling morning brief", "progress": 72 },
+    { "name": "Script-V", "role": "Content Pipeline", "task": "Generating Mansa shot list", "progress": 45 },
+    { "name": "Lumen", "role": "Color + Grade", "task": "Standby", "progress": 0 },
+    { "name": "Synthetix", "role": "Research Intel", "task": "Offline", "progress": 0 }
+  ],
+  "contentQueue": [
+    { "project": "Mansa", "prompt": "Desert palace, wide establishing shot, golden hour", "status": "Queued", "tool": "Runway" },
+    { "project": "Mansa", "prompt": "Warrior council chamber, low angle, torchlight", "status": "Queued", "tool": "MidJourney" },
+    { "project": "Mansa", "prompt": "Mansa Musa throne room, close-up, firelight", "status": "Generating", "tool": "Runway" },
+    { "project": "Mansa", "prompt": "Caravan crossing Sahara, aerial drone shot", "status": "Generating", "tool": "Hailuo" },
+    { "project": "Coca-Cola", "prompt": "Holiday table scene, warm tones, family", "status": "Review", "tool": "Freepik AI" },
+    { "project": "Coca-Cola", "prompt": "Snow falling on red truck, cinematic", "status": "Review", "tool": "MidJourney" }
+  ],
+  "deals": [
+    { "name": "Mansa IP", "type": "Personal IP", "val": "$12,000", "risk": "low" },
+    { "name": "Coca-Cola Commercial", "type": "Brand Deal", "val": "$8,000", "risk": "medium" },
+    { "name": "Freepik Retainer", "type": "Retainer", "val": "$6,000", "risk": "low" }
+  ],
+  "workshops": [
+    { "name": "AI Content Creation for Business Owners", "date": "Apr 12", "reg": 24, "format": "Online" },
+    { "name": "Cinematic AI Filmmaking Masterclass", "date": "May 03", "reg": 8, "format": "In-person" }
+  ]
+}

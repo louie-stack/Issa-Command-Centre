@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Nav from "../../components/Nav";
 
 const mo = { fontFamily: "'Space Mono', monospace" };
@@ -125,10 +126,54 @@ const agents = [
   },
 ];
 
-export default function AgentsPage() {
+function AgentsPageInner() {
+  const searchParams = useSearchParams();
   const [sel, setSel] = useState(0);
   const [trans, setTrans] = useState(false);
   const isMobile = useIsMobile();
+
+  // Chat panel
+  const [chatOpen, setChatOpen] = useState(false);
+  const [chatInput, setChatInput] = useState("");
+  const [chatMsgs, setChatMsgs] = useState([{ role: "assistant", agent: "CHRONOS", agentKey: 0, text: "Morning. All four agents standing by. What do you need?", time: "now" }]);
+  const [chatLoading, setChatLoading] = useState(false);
+  const chatEndRef = useRef(null);
+  const inputRef = useRef(null);
+
+  useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); }, [chatMsgs]);
+  useEffect(() => { if (chatOpen) setTimeout(() => inputRef.current?.focus(), 100); }, [chatOpen]);
+  useEffect(() => { if (searchParams?.get("chat") === "1") setChatOpen(true); }, [searchParams]);
+
+  const AGENT_SYSTEM = {
+    0: { name: "Chronos", color: "45,212,191", hex: "#2DD4BF", label: "C", sys: "You are Chronos, Chief of Staff for Issa Sissoko. You handle scheduling, briefs, task routing, and pipeline coordination. Be concise, structured, professional. Never use em dashes. Max 3 sentences." },
+    1: { name: "Script-V", color: "249,115,22", hex: "#F97316", label: "S", sys: "You are Script-V, Content Pipeline agent for Issa Sissoko. You handle shot lists, storyboards, scene prompts, and creative directions. Be creative, precise, cinematic in language. Never use em dashes. Max 3 sentences." },
+    2: { name: "Lumen", color: "212,168,0", hex: "#D4A800", label: "L", sys: "You are Lumen, Color and Grade agent for Issa Sissoko. You handle visual style, palette direction, grade notes, and aesthetic decisions. Be visual, evocative, technical. Never use em dashes. Max 3 sentences." },
+    3: { name: "Synthetix", color: "100,116,139", hex: "#8CA0C8", label: "X", sys: "You are Synthetix, Research and Intel agent for Issa Sissoko. You handle trends, competitor analysis, deal research, and market intelligence. Be analytical, sharp, data-aware. Never use em dashes. Max 3 sentences." },
+  };
+
+  async function sendChat() {
+    const text = chatInput.trim();
+    if (!text || chatLoading) return;
+    setChatInput("");
+    const userMsg = { role: "user", text };
+    setChatMsgs(prev => [...prev, userMsg]);
+    setChatLoading(true);
+    const ag = AGENT_SYSTEM[sel];
+    try {
+      const history = [...chatMsgs, userMsg].map(m => ({ role: m.role === "assistant" ? "assistant" : "user", content: m.text }));
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-api-key": "", "anthropic-version": "2023-06-01", "anthropic-dangerous-client-side-origin-allowlist": "*" },
+        body: JSON.stringify({ model: "claude-haiku-4-20250514", max_tokens: 400, system: ag.sys, messages: history }),
+      });
+      const data = await res.json();
+      const reply = data?.content?.map(b => b.text || "").join("") || "No response.";
+      setChatMsgs(prev => [...prev, { role: "assistant", agent: ag.name.toUpperCase(), agentKey: sel, text: reply, time: "now" }]);
+    } catch {
+      setChatMsgs(prev => [...prev, { role: "assistant", agent: ag.name.toUpperCase(), agentKey: sel, text: "Connection issue. Try again in a moment.", time: "now" }]);
+    }
+    setChatLoading(false);
+  }
 
   useEffect(() => {
     const hash = window.location.hash.replace("#", "").toLowerCase();
@@ -299,15 +344,7 @@ export default function AgentsPage() {
                 </div>
               </div>
 
-              {/* APIs */}
-              <div style={{ marginBottom: 24 }}>
-                <div style={{ ...mo, fontSize: 10, color: "#334", letterSpacing: "0.08em", marginBottom: 8 }}>CONNECTED</div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                  {a.apis.map((api, i) => (
-                    <span key={i} style={{ ...mo, fontSize: 11, color: "#667", padding: "4px 10px", borderRadius: 4, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.04)" }}>{api}</span>
-                  ))}
-                </div>
-              </div>
+
 
               {/* Queue */}
               {a.queue.length > 0 && (
@@ -336,8 +373,81 @@ export default function AgentsPage() {
           </div>
         </div>
       </div>
+
+      {/* ── CHAT TOGGLE BUTTON ───────── */}
+      <button
+        onClick={() => setChatOpen(v => !v)}
+        style={{ position: "fixed", bottom: 28, right: 28, zIndex: 200, width: 52, height: 52, borderRadius: "50%", background: chatOpen ? `rgba(${AGENT_SYSTEM[sel].color},0.18)` : "rgba(6,12,18,0.95)", border: `1px solid rgba(${AGENT_SYSTEM[sel].color},0.35)`, boxShadow: `0 0 20px rgba(${AGENT_SYSTEM[sel].color},0.25), 0 8px 24px rgba(0,0,0,0.6)`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)" }}
+        title={chatOpen ? "Close chat" : "Talk to agent"}
+      >
+        {chatOpen
+          ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={AGENT_SYSTEM[sel].hex} strokeWidth="2" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={AGENT_SYSTEM[sel].hex} strokeWidth="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        }
+      </button>
+
+      {/* ── CHAT PANEL ───────────────── */}
+      <div style={{ position: "fixed", bottom: 90, right: 28, zIndex: 199, width: isMobile ? "calc(100vw - 32px)" : 380, maxHeight: "65vh", borderRadius: 18, background: "rgba(6,12,18,0.97)", border: `1px solid rgba(${AGENT_SYSTEM[sel].color},0.22)`, boxShadow: `0 0 40px rgba(${AGENT_SYSTEM[sel].color},0.12), 0 24px 60px rgba(0,0,0,0.7)`, display: "flex", flexDirection: "column", overflow: "hidden", transform: chatOpen ? "translateY(0) scale(1)" : "translateY(20px) scale(0.97)", opacity: chatOpen ? 1 : 0, pointerEvents: chatOpen ? "all" : "none", transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)" }}>
+        {/* Header */}
+        <div style={{ padding: "14px 16px", borderBottom: `1px solid rgba(${AGENT_SYSTEM[sel].color},0.1)`, display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
+          <div style={{ width: 28, height: 28, borderRadius: 8, background: `rgba(${AGENT_SYSTEM[sel].color},0.08)`, border: `1px solid rgba(${AGENT_SYSTEM[sel].color},0.18)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 9, fontWeight: 800, color: AGENT_SYSTEM[sel].hex }}>{AGENT_SYSTEM[sel].label}</div>
+          <div>
+            <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, fontWeight: 700, color: "#E8E8F0" }}>{AGENT_SYSTEM[sel].name}</div>
+            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: `rgba(${AGENT_SYSTEM[sel].color},0.7)` }}>ONLINE · READY</div>
+          </div>
+          <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 6 }}>
+            <button onClick={() => setChatMsgs([{ role: "assistant", agent: AGENT_SYSTEM[sel].name.toUpperCase(), agentKey: sel, text: "Chat cleared. What do you need?", time: "now" }])} title="Clear" style={{ background: "none", border: "none", color: "#334", cursor: "pointer", fontSize: 13, lineHeight: 1 }}>↺</button>
+          </div>
+        </div>
+        {/* Agent selector tabs */}
+        <div style={{ display: "flex", borderBottom: `1px solid rgba(255,255,255,0.04)`, flexShrink: 0 }}>
+          {Object.values(AGENT_SYSTEM).map((ag, i) => (
+            <button key={i} onClick={() => { setSel(i); pick(i); }} style={{ flex: 1, padding: "8px 4px", background: sel === i ? `rgba(${ag.color},0.07)` : "transparent", border: "none", borderBottom: sel === i ? `1px solid ${ag.hex}` : "1px solid transparent", cursor: "pointer", fontFamily: "'Space Mono', monospace", fontSize: 9, color: sel === i ? ag.hex : "#334", transition: "all 0.2s", marginBottom: -1 }}>{ag.label}</button>
+          ))}
+        </div>
+        {/* Messages */}
+        <div style={{ flex: 1, overflowY: "auto", padding: "14px 14px 8px", display: "flex", flexDirection: "column", gap: 10 }}>
+          {chatMsgs.map((m, i) => m.role === "user" ? (
+            <div key={i} style={{ display: "flex", justifyContent: "flex-end" }}>
+              <div style={{ padding: "8px 12px", borderRadius: "12px 12px 3px 12px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.05)", maxWidth: "80%", fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#BBB", lineHeight: 1.5 }}>{m.text}</div>
+            </div>
+          ) : (
+            <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-end" }}>
+              <div style={{ width: 20, height: 20, borderRadius: 6, background: `rgba(${AGENT_SYSTEM[m.agentKey ?? 0].color},0.07)`, border: `1px solid rgba(${AGENT_SYSTEM[m.agentKey ?? 0].color},0.15)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 7, fontWeight: 800, color: AGENT_SYSTEM[m.agentKey ?? 0].hex, flexShrink: 0 }}>{AGENT_SYSTEM[m.agentKey ?? 0].label}</div>
+              <div style={{ padding: "8px 12px", borderRadius: "12px 12px 12px 3px", background: `rgba(${AGENT_SYSTEM[m.agentKey ?? 0].color},0.04)`, border: `1px solid rgba(${AGENT_SYSTEM[m.agentKey ?? 0].color},0.07)`, maxWidth: "80%", fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#889", lineHeight: 1.5 }}>{m.text}</div>
+            </div>
+          ))}
+          {chatLoading && (
+            <div style={{ display: "flex", gap: 7, alignItems: "flex-end" }}>
+              <div style={{ width: 20, height: 20, borderRadius: 6, background: `rgba(${AGENT_SYSTEM[sel].color},0.07)`, border: `1px solid rgba(${AGENT_SYSTEM[sel].color},0.15)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 7, fontWeight: 800, color: AGENT_SYSTEM[sel].hex, flexShrink: 0 }}>{AGENT_SYSTEM[sel].label}</div>
+              <div style={{ padding: "8px 12px", borderRadius: "12px 12px 12px 3px", background: `rgba(${AGENT_SYSTEM[sel].color},0.04)`, border: `1px solid rgba(${AGENT_SYSTEM[sel].color},0.07)`, display: "flex", gap: 4, alignItems: "center" }}>
+                {[0,1,2].map(j => <span key={j} style={{ width: 4, height: 4, borderRadius: "50%", background: AGENT_SYSTEM[sel].hex, animation: `pulse 1.2s ${j * 0.2}s infinite`, opacity: 0.6 }} />)}
+              </div>
+            </div>
+          )}
+          <div ref={chatEndRef} />
+        </div>
+        {/* Input */}
+        <div style={{ padding: "10px 12px", borderTop: `1px solid rgba(${AGENT_SYSTEM[sel].color},0.08)`, display: "flex", gap: 8, flexShrink: 0 }}>
+          <input
+            ref={inputRef}
+            value={chatInput}
+            onChange={e => setChatInput(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && !e.shiftKey && sendChat()}
+            placeholder={`Message ${AGENT_SYSTEM[sel].name}…`}
+            style={{ flex: 1, background: `rgba(${AGENT_SYSTEM[sel].color},0.04)`, border: `1px solid rgba(${AGENT_SYSTEM[sel].color},0.12)`, borderRadius: 8, padding: "8px 10px", color: "#C8E8E4", fontSize: 12, fontFamily: "inherit", outline: "none" }}
+          />
+          <button onClick={sendChat} disabled={!chatInput.trim() || chatLoading} style={{ width: 34, height: 34, borderRadius: 8, background: chatInput.trim() ? `rgba(${AGENT_SYSTEM[sel].color},0.14)` : "transparent", border: `1px solid rgba(${AGENT_SYSTEM[sel].color},${chatInput.trim() ? 0.3 : 0.08})`, display: "flex", alignItems: "center", justifyContent: "center", cursor: chatInput.trim() ? "pointer" : "not-allowed", transition: "all 0.2s", flexShrink: 0 }}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={chatInput.trim() ? AGENT_SYSTEM[sel].hex : "#334"} strokeWidth="2" strokeLinecap="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
   );
+}
+
+export default function AgentsPage() {
+  return <Suspense fallback={null}><AgentsPageInner /></Suspense>;
 }
 
 function QueueRow({ task: t, agent: a, isLast }) {

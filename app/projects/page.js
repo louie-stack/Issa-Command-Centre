@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Nav from "../../components/Nav";
 
 const projects = [
@@ -81,11 +82,42 @@ function KanbanCard({ card, col }) {
   );
 }
 
-export default function ProjectsPage() {
+function ProjectsPageInner() {
+  const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState("board");
-  const [activeProject, setActiveProject] = useState(0);
+  const [activeProject, setActiveProject] = useState(() => {
+    const p = parseInt(searchParams?.get("p") ?? "0", 10);
+    return isNaN(p) || p < 0 || p >= projects.length ? 0 : p;
+  });
   const [mobileBoardCol, setMobileBoardCol] = useState("generating");
   const isMobile = useIsMobile();
+
+  // Custom projects from data.json
+  const [customProjects, setCustomProjects] = useState([]);
+  const [showNewForm, setShowNewForm] = useState(searchParams?.get("new") === "1");
+  const [npName, setNpName] = useState("");
+  const [npType, setNpType] = useState("Personal IP");
+  const [npStatus, setNpStatus] = useState("Planning");
+  const [npDeadline, setNpDeadline] = useState("");
+  const [npSaving, setNpSaving] = useState(false);
+
+  useEffect(() => {
+    fetch("/data.json").then(r => r.json()).then(d => setCustomProjects(d.customProjects ?? [])).catch(() => {});
+  }, []);
+
+  async function saveNewProject() {
+    if (!npName.trim()) return;
+    setNpSaving(true);
+    const newProj = { name: npName.trim(), type: npType, status: npStatus, deadline: npDeadline, color: "#2DD4BF", pct: 0, shots: 0, scenes: 0, sub: npType };
+    const updatedCustom = [...customProjects, newProj];
+    setCustomProjects(updatedCustom);
+    const dataRes = await fetch("/data.json").then(r => r.json()).catch(() => ({}));
+    await fetch("/api/data", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...dataRes, customProjects: updatedCustom }) }).catch(() => {});
+    setNpSaving(false);
+    setShowNewForm(false);
+    setNpName(""); setNpType("Personal IP"); setNpStatus("Planning"); setNpDeadline("");
+  }
+
   const proj = projects[activeProject];
 
   return (
@@ -134,8 +166,17 @@ export default function ProjectsPage() {
                 );
               })}
             </div>
+            {customProjects.map((cp, ci) => (
+              <div key={"cp" + ci} style={{ padding: "10px 16px", borderLeft: "2px solid rgba(45,212,191,0.25)", background: "rgba(45,212,191,0.03)" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <span style={{ ...jakarta, fontSize: 12, fontWeight: 700, color: "#889" }}>{cp.name}</span>
+                  <span style={{ ...mono, fontSize: 9, padding: "2px 5px", borderRadius: 8, background: "rgba(45,212,191,0.06)", color: "#2DD4BF" }}>{cp.status.toUpperCase()}</span>
+                </div>
+                <div style={{ ...mono, fontSize: 10, color: "#334", marginTop: 3 }}>{cp.type}</div>
+              </div>
+            ))}
             <div style={{ padding: "16px 20px", borderTop: "1px dashed rgba(255,255,255,0.04)" }}>
-              <div style={{ padding: "8px 0", textAlign: "center", borderRadius: 8, border: "1px dashed rgba(45,212,191,0.12)", cursor: "pointer" }}><span style={{ ...mono, fontSize: 11, color: "#2DD4BF" }}>+ New Project</span></div>
+              <div onClick={() => setShowNewForm(true)} style={{ padding: "8px 0", textAlign: "center", borderRadius: 8, border: "1px dashed rgba(45,212,191,0.12)", cursor: "pointer", transition: "all 0.2s" }}><span style={{ ...mono, fontSize: 11, color: "#2DD4BF" }}>+ New Project</span></div>
             </div>
           </div>
         )}
@@ -285,8 +326,44 @@ export default function ProjectsPage() {
           )}
         </div>
       </div>
+
+      {/* ── NEW PROJECT FORM OVERLAY ── */}
+      {showNewForm && (
+        <div onClick={() => setShowNewForm(false)} style={{ position: "fixed", inset: 0, zIndex: 9999, background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+          <div onClick={e => e.stopPropagation()} style={{ width: "100%", maxWidth: 480, borderRadius: 18, background: "rgba(6,12,18,0.98)", border: "1px solid rgba(45,212,191,0.22)", boxShadow: "0 0 60px rgba(45,212,191,0.12), 0 30px 80px rgba(0,0,0,0.7)", padding: "28px 28px 24px" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
+              <div>
+                <div style={{ ...mono, fontSize: 9, color: "#2DD4BF", letterSpacing: "0.1em", marginBottom: 4 }}>NEW PROJECT</div>
+                <div style={{ ...jakarta, fontSize: 18, fontWeight: 800, color: "#E8E8F0" }}>Create Project</div>
+              </div>
+              <button onClick={() => setShowNewForm(false)} style={{ width: 28, height: 28, borderRadius: 8, border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)", color: "#556", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>×</button>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              {[
+                { label: "Project Name", el: <input autoFocus value={npName} onChange={e => setNpName(e.target.value)} onKeyDown={e => e.key === "Enter" && saveNewProject()} placeholder="e.g. Short Film Concept" style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(45,212,191,0.15)", borderRadius: 8, padding: "9px 12px", color: "#C8E8E4", fontSize: 13, fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} /> },
+                { label: "Type", el: <select value={npType} onChange={e => setNpType(e.target.value)} style={{ width: "100%", background: "rgba(6,12,18,0.98)", border: "1px solid rgba(45,212,191,0.15)", borderRadius: 8, padding: "9px 12px", color: "#C8E8E4", fontSize: 13, fontFamily: "'Space Mono', monospace", outline: "none", cursor: "pointer" }}>{["Personal IP","Client Work","Consulting","Research","Marketing"].map(o => <option key={o} value={o}>{o}</option>)}</select> },
+                { label: "Status", el: <select value={npStatus} onChange={e => setNpStatus(e.target.value)} style={{ width: "100%", background: "rgba(6,12,18,0.98)", border: "1px solid rgba(45,212,191,0.15)", borderRadius: 8, padding: "9px 12px", color: "#C8E8E4", fontSize: 13, fontFamily: "'Space Mono', monospace", outline: "none", cursor: "pointer" }}>{["Planning","Concept","In Production","Review","Complete"].map(o => <option key={o} value={o}>{o}</option>)}</select> },
+                { label: "Target Deadline", el: <input type="date" value={npDeadline} onChange={e => setNpDeadline(e.target.value)} style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(45,212,191,0.15)", borderRadius: 8, padding: "9px 12px", color: "#C8E8E4", fontSize: 13, fontFamily: "inherit", outline: "none", colorScheme: "dark", boxSizing: "border-box" }} /> },
+              ].map(({ label, el }) => (
+                <div key={label}>
+                  <div style={{ ...mono, fontSize: 9, color: "#556", letterSpacing: "0.08em", marginBottom: 6 }}>{label.toUpperCase()}</div>
+                  {el}
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", gap: 10, marginTop: 22 }}>
+              <button onClick={() => setShowNewForm(false)} style={{ flex: 1, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)", background: "transparent", color: "#556", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: "pointer" }}>CANCEL</button>
+              <button onClick={saveNewProject} disabled={!npName.trim() || npSaving} style={{ flex: 2, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(45,212,191,0.3)", background: "rgba(45,212,191,0.1)", color: "#2DD4BF", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: npName.trim() ? "pointer" : "not-allowed", opacity: npName.trim() ? 1 : 0.4, transition: "all 0.2s" }}>{npSaving ? "SAVING..." : "CREATE PROJECT →"}</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
+}
+
+export default function ProjectsPage() {
+  return <Suspense fallback={null}><ProjectsPageInner /></Suspense>;
 }
 
 function ActivityCard({ item, agentRgb, dim, isMobile }) {

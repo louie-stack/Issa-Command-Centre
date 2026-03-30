@@ -227,7 +227,7 @@ export default function BusinessPage() {
         </div>
 
         {/* ACTIVE DEALS */}
-        <div style={{ padding: "0 0 40px" }}>
+        <div id="deals" style={{ padding: "0 0 40px", scrollMarginTop: 80 }}>
           <div style={{ ...mono, fontSize: 10, color: "#D4A800", letterSpacing: "0.12em", marginBottom: 20 }}>ACTIVE DEALS</div>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: 16, marginBottom: 12 }}>
             {deals.map((d, i) => <DealCard key={i} deal={d} />)}
@@ -242,7 +242,7 @@ export default function BusinessPage() {
         </div>
 
         {/* WORKSHOPS */}
-        <div style={{ padding: "36px 0 40px", borderTop: "1px dashed rgba(255,255,255,0.06)" }}>
+        <div id="workshops" style={{ padding: "36px 0 40px", borderTop: "1px dashed rgba(255,255,255,0.06)", scrollMarginTop: 80 }}>
           <div style={{ ...mono, fontSize: 10, color: "#2DD4BF", letterSpacing: "0.12em", marginBottom: 20 }}>WORKSHOPS</div>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16, marginBottom: 12 }}>
             {workshops.map((w, i) => <WorkshopCard key={i} ws={w} />)}

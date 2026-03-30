@@ -27,7 +27,12 @@ export default function Nav() {
   useEffect(() => {
     function tick() {
       const now = new Date();
-      setTStr(now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true }));
+      const nyc = new Date(now.toLocaleString("en-US", { timeZone: "America/New_York" }));
+      const h = nyc.getHours();
+      const m = String(nyc.getMinutes()).padStart(2, "0");
+      const ampm = h >= 12 ? "PM" : "AM";
+      const h12 = h % 12 || 12;
+      setTStr(`${String(h12).padStart(2, "0")}:${m} ${ampm}`);
     }
     tick();
     const id = setInterval(tick, 1000);
@@ -71,7 +76,7 @@ export default function Nav() {
           {/* Right side */}
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             {!isMobile && (
-              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#334" }}>{tStr} EST</span>
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#8899AA" }}>{tStr} NYC</span>
             )}
 
             {isMobile ? (
@@ -86,7 +91,7 @@ export default function Nav() {
                 <span style={{ display: "block", width: 16, height: 1.5, background: menuOpen ? "#2DD4BF" : "#667", borderRadius: 1, transition: "all 0.25s", transform: menuOpen ? "translateY(-3.25px) rotate(-45deg)" : "none" }} />
               </button>
             ) : (
-              <div style={{ width: 28, height: 28, borderRadius: 3, background: "rgba(45,212,191,0.06)", border: "1px solid rgba(45,212,191,0.12)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, fontWeight: 800, color: "#2DD4BF" }}>IS</div>
+              <div style={{ width: 28, height: 28, borderRadius: 3, background: "rgba(45,212,191,0.06)", border: "1px solid rgba(45,212,191,0.12)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, fontWeight: 800, color: "#2DD4BF" }}>OS</div>
             )}
           </div>
         </div>
@@ -104,7 +109,7 @@ export default function Nav() {
           <div style={{ padding: "8px 16px 20px" }}>
             {/* Time */}
             <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#334", padding: "12px 0 8px", borderBottom: "1px dashed rgba(255,255,255,0.04)", marginBottom: 8 }}>
-              {tStr} EST
+              {tStr} NYC
             </div>
             {/* Nav links */}
             {navPages.map((p, i) => {

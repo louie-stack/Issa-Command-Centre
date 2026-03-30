@@ -1,51 +1,15 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Nav from "../components/Nav";
 
-const priorities = [
-  "Review Mansa storyboard feedback from Hoyt",
-  "Coca-Cola concept deck due Friday",
-  "Workshop registration page needs final copy",
-];
-const meetings = [
-  { time: "2:00 PM", title: "Freepik sync", dur: "30min" },
-  { time: "4:30 PM", title: "Mau, agent review", dur: "45min" },
-];
-const projects = [
-  { name: "Mansa: Ep.1 Storyboard", ctx: "Personal IP", status: "In Production", deadline: "Apr 15" },
-  { name: "Coca-Cola Holiday Concept", ctx: "Amissa Studios", status: "Review", deadline: "Mar 28" },
-  { name: "AI Workshop Series", ctx: "Amissa Studios", status: "Concept", deadline: "May 01" },
-  { name: "Freepik AI Templates", ctx: "Freepik", status: "In Production", deadline: "Mar 31" },
-];
-const agentsData = [
-  { name: "Chronos", role: "Chief of Staff", task: "Compiling morning brief", g: "#2DD4BF", progress: 72 },
-  { name: "Script-V", role: "Content Pipeline", task: "Generating Mansa shot list", g: "#F97316", progress: 45 },
-  { name: "Lumen", role: "Color + Grade", task: "Standby", g: "#F59E0B", progress: 0 },
-  { name: "Synthetix", role: "Research Intel", task: "Offline", g: "#64748B", progress: 0 },
-];
-const agentsEnhanced = [
-  { name: "Chronos", role: "CHIEF OF STAFF", desc: "Compiling morning brief and scheduling pipeline tasks", color: "#2DD4BF", glowColor: "#2DD4BF", statusColor: "#2DD4BF", rgb: "45,212,191", progress: 72, video: "/Chronos%20Character%20Vid.mp4", agentId: "chronos" },
-  { name: "Script-V", role: "CONTENT PIPELINE", desc: "Generating Mansa shot list and scene compositions", color: "#F97316", glowColor: "#F97316", statusColor: "#F97316", rgb: "249,115,22", progress: 45, video: "/SCRIPT-V%20Character%20Vid.mp4", agentId: "scriptv" },
-  { name: "Lumen", role: "COLOR + GRADE", desc: "Color grading, visual tone matching and frame polish", color: "#D4A800", glowColor: "#D4A800", statusColor: "#445", rgb: "212,168,0", progress: 0, video: "/LUMEN%20Character%20Vid.mp4", agentId: "lumen" },
-  { name: "Synthetix", role: "RESEARCH INTEL", desc: "Market research, competitor intel and deal analysis", color: "#8CA0C8", glowColor: "#8CA0C8", statusColor: "#445", rgb: "140,160,200", progress: 0, video: "/SYNTHETIX%20Character%20Vid.mp4", agentId: "synthetix" },
-];
-const contentQueue = [
-  { project: "Mansa", prompt: "Desert palace, wide establishing shot, golden hour", status: "Queued", tool: "Runway" },
-  { project: "Mansa", prompt: "Warrior council chamber, low angle, torchlight", status: "Queued", tool: "MidJourney" },
-  { project: "Mansa", prompt: "Mansa Musa throne room, close-up, firelight", status: "Generating", tool: "Runway" },
-  { project: "Mansa", prompt: "Caravan crossing Sahara, aerial drone shot", status: "Generating", tool: "Hailuo" },
-  { project: "Coca-Cola", prompt: "Holiday table scene, warm tones, family", status: "Review", tool: "Freepik AI" },
-  { project: "Coca-Cola", prompt: "Snow falling on red truck, cinematic", status: "Review", tool: "MidJourney" },
-];
-const deals = [
-  { name: "AI Platform Partnership", type: "Partnership", val: "$15,000", risk: "medium" },
-  { name: "Brand Campaign, Luxury Auto", type: "Brand Deal", val: "$8,000", risk: "low" },
-  { name: "Startup Creative Consult", type: "Consulting", val: "$3,000/mo", risk: "none" },
-];
-const workshopsData = [
-  { name: "AI Content Creation for Business Owners", date: "Apr 12", reg: 24, format: "Online" },
-  { name: "Cinematic AI Filmmaking Masterclass", date: "May 03", reg: 8, format: "In-person" },
+// All data now lives in /public/data.json — edit that file to update the dashboard
+const AGENT_META = [
+  { color: "#2DD4BF", rgb: "45,212,191", statusColor: "#2DD4BF", video: "/Chronos%20Character%20Vid.mp4", agentId: "chronos", roleLabel: "CHIEF OF STAFF" },
+  { color: "#F97316", rgb: "249,115,22", statusColor: "#F97316", video: "/SCRIPT-V%20Character%20Vid.mp4", agentId: "scriptv", roleLabel: "CONTENT PIPELINE" },
+  { color: "#D4A800", rgb: "212,168,0", statusColor: "#445", video: "/LUMEN%20Character%20Vid.mp4", agentId: "lumen", roleLabel: "COLOR + GRADE" },
+  { color: "#8CA0C8", rgb: "140,160,200", statusColor: "#445", video: "/SYNTHETIX%20Character%20Vid.mp4", agentId: "synthetix", roleLabel: "RESEARCH INTEL" },
 ];
 const SC = { "In Production": "#2DD4BF", Review: "#F59E0B", Concept: "#5EEAD4", Generating: "#F97316", Queued: "#64748B" };
 const riskC = { none: "#10B981", low: "#2DD4BF", medium: "#F59E0B" };
@@ -485,11 +449,12 @@ function WorkshopItem({ workshop: w, sel, onSelect }) {
   );
 }
 
-function Card({ children, label, color = "45,212,191", style = {} }) {
+function Card({ children, label, color = "45,212,191", style = {}, onClick }) {
   const [h, setH] = useState(false);
   return (
     <div
       className="card-hover"
+      onClick={onClick}
       onMouseEnter={() => setH(true)}
       onMouseLeave={() => setH(false)}
       style={{
@@ -703,7 +668,73 @@ export default function Page() {
   const [scrollPct, setScrollPct] = useState(0);
   const [selectedPriority, setSelectedPriority] = useState(null);
   const [selectedMeeting, setSelectedMeeting] = useState(null);
+  const [addingPriority, setAddingPriority] = useState(false);
+  const [newPriorityText, setNewPriorityText] = useState("");
+  const router = useRouter();
+
+  // New Project modal
+  const [showNewProject, setShowNewProject] = useState(false);
+  const [npName, setNpName] = useState("");
+  const [npType, setNpType] = useState("Personal IP");
+  const [npStatus, setNpStatus] = useState("Planning");
+  const [npDeadline, setNpDeadline] = useState("");
+  const [npSaving, setNpSaving] = useState(false);
+
+  async function saveNewProject() {
+    if (!npName.trim()) return;
+    setNpSaving(true);
+    const newProj = { name: npName.trim(), type: npType, status: npStatus, deadline: npDeadline, color: "#2DD4BF", pct: 0, shots: 0, scenes: 0, sub: npType };
+    const updated = { ...siteData, customProjects: [...(siteData?.customProjects ?? []), newProj] };
+    setSiteData(updated);
+    await fetch("/api/data", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(updated) }).catch(() => {});
+    setNpSaving(false);
+    setShowNewProject(false);
+    setNpName(""); setNpType("Personal IP"); setNpStatus("Planning"); setNpDeadline("");
+    router.push("/projects?new=1");
+  }
+
+  // Gen Prompt modal
+  const [showGenPrompt, setShowGenPrompt] = useState(false);
+  const [gpAgent, setGpAgent] = useState("Chronos");
+  const [gpProject, setGpProject] = useState("Mansa");
+  const [gpTask, setGpTask] = useState("");
+  const [gpResult, setGpResult] = useState("");
+  const [gpCopied, setGpCopied] = useState(false);
+
+  function generatePrompt() {
+    if (!gpTask.trim()) return;
+    const agentDescs = { Chronos: "Chief of Staff — scheduling, briefs, task routing", "Script-V": "Content Pipeline — shot lists, storyboards, scene prompts", Lumen: "Color + Grade — visual style, palette direction, grade notes", Synthetix: "Research Intel — trends, competitor analysis, deal research" };
+    const result = `AGENT BRIEF\n───────────────────────────────\nAgent:   ${gpAgent} (${agentDescs[gpAgent]})\nProject: ${gpProject}\nDate:    ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}\n\nTASK\n${gpTask.trim()}\n\nDELIVERABLE\nReturn a structured output. Flag any blockers. Mark complete when done.\n───────────────────────────────`;
+    setGpResult(result);
+  }
+
+  function copyPrompt() {
+    navigator.clipboard.writeText(gpResult).then(() => { setGpCopied(true); setTimeout(() => setGpCopied(false), 2000); });
+  }
   const [selectedWorkshop, setSelectedWorkshop] = useState(null);
+  const [siteData, setSiteData] = useState(null);
+
+  useEffect(() => {
+    fetch("/data.json").then(r => r.json()).then(setSiteData).catch(() => {});
+  }, []);
+
+  async function addPriority() {
+    const text = newPriorityText.trim();
+    if (!text || !siteData) return;
+    const updated = { ...siteData, priorities: [...(siteData.priorities ?? []), text] };
+    setSiteData(updated);
+    setNewPriorityText("");
+    setAddingPriority(false);
+    await fetch("/api/data", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(updated) }).catch(() => {});
+  }
+
+  async function removePriority(idx) {
+    if (!siteData) return;
+    const updated = { ...siteData, priorities: siteData.priorities.filter((_, i) => i !== idx) };
+    setSiteData(updated);
+    if (selectedPriority === idx) setSelectedPriority(null);
+    await fetch("/api/data", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(updated) }).catch(() => {});
+  }
 
   // Returns onMouseEnter/onMouseLeave handlers that intensify a card's own-colour glow on hover
   const hoverGlow = (rgb, restBorder, restShadow) => ({
@@ -827,172 +858,138 @@ export default function Page() {
       {/* NAV */}
       <Nav />
 
-      {/*  HERO  */}
-      <section style={{ position: "relative", height: "100vh", background: "#08080D", overflow: "hidden" }}>
-        <div style={{ position: "relative", width: "100%", height: "100vh" }}>
-          {/* BG */}
-          <div style={{ position: "absolute", inset: 0, background: "#08080D" }} />
-          {/* 3D Particle Globe */}
-          <HeroCanvas />
-          {/* Vignette so text reads over animation */}
-          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 50%, rgba(17,17,24,0.4) 0%, rgba(17,17,24,0.75) 55%, rgba(17,17,24,0.95) 100%)", pointerEvents: "none", zIndex: 1 }} />
-          {/* Bottom gradient */}
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "35%", background: "linear-gradient(180deg, transparent, rgba(17,17,24,0.9))", pointerEvents: "none", zIndex: 1 }} />
-          {/* Top gradient for nav readability */}
-          <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "20%", background: "linear-gradient(0deg, transparent, rgba(17,17,24,0.6))", pointerEvents: "none", zIndex: 1 }} />
+      {/* TODAY'S FOCUS */}
+      <section style={{ padding: isMobile ? "100px 16px 40px" : "100px 60px 40px", maxWidth: 1440, margin: "0 auto" }}>
+        <SectionHeader idx="01" badge="YOUR DAY" title="Today's Focus" desc="priorities · schedule · quick_actions" right={<div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 14px", borderRadius: 3, border: "1px solid rgba(45,212,191,0.06)" }}><span style={{ fontSize: 16 }}>{"\u2600"}</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, fontWeight: 700 }}>72deg</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445" }}>NYC</span></div>} />
 
-          {/* Content " Maze-inspired layout */}
-          <div style={{ position: "absolute", inset: 0, zIndex: 2, display: "flex", flexDirection: "column", padding: isMobile ? "0 16px" : "0 44px" }}>
-
-            {/* Top badge " near nav */}
-            <div style={{ display: "flex", justifyContent: "center", paddingTop: 90, animation: introPhase === "hero" ? "heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.05s both" : "none", opacity: introPhase === "hero" ? undefined : 0 }}>
-              <div onClick={() => {}} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "7px 16px", borderRadius: 30, border: "1px dashed rgba(45,212,191,0.15)", background: "rgba(255,255,255,0.02)", backdropFilter: "blur(8px)", cursor: "pointer", transition: "all 0.3s" }}>
-                <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#2DD4BF", boxShadow: "0 0 6px rgba(45,212,191,0.4)", flexShrink: 0, display: "inline-block" }} />
-                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#AAB", letterSpacing: "0.04em", lineHeight: 1 }}>4 Active Projects</span>
-                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#2DD4BF", lineHeight: 1 }}>-&gt;</span>
-              </div>
-            </div>
-
-            {/* Center content */}
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", marginTop: -100 }}>
-              {/* Title */}
-              <div style={{ animation: introPhase === "hero" ? "heroSlideUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both" : "none", opacity: introPhase === "hero" ? undefined : 0 }}>
-                <h1 style={{
-                  fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  fontSize: isMobile ? "clamp(36px, 9vw, 56px)" : "clamp(48px, 7vw, 88px)",
-                  fontWeight: 700,
-                  letterSpacing: "-0.03em",
-                  lineHeight: 1.1,
-                  color: "#E8E8F0",
-                  margin: 0,
-                }}>Let's create, <span style={{ color: "#2DD4BF" }}>together.</span></h1>
-              </div>
-
-              {/* Subtitle */}
-              <div style={{ animation: introPhase === "hero" ? "heroSlideUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.35s both" : "none", opacity: introPhase === "hero" ? undefined : 0, marginTop: 24 }}>
-                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: isMobile ? 14 : 17, color: "#667", lineHeight: 1.7, maxWidth: isMobile ? "90%" : 480, margin: "0 auto" }}>
-                  Four AI agents running your creative pipeline, research, and business ops around the clock.
-                </p>
-              </div>
-
-              {/* CTA */}
-              <div style={{ animation: introPhase === "hero" ? "heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s both" : "none", opacity: introPhase === "hero" ? undefined : 0, marginTop: 32 }}>
-                <div onClick={() => window.location.href = "/agents"} className="action-btn" style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "14px 32px", borderRadius: 14, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.07)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", cursor: "pointer", transition: "all 0.3s", boxShadow: "0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)", overflow: "hidden", position: "relative" }}>
-                  <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: 1, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)", pointerEvents: "none" }} />
-                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 14, fontWeight: 600, color: "#E8E8F0", letterSpacing: "0.01em", position: "relative" }}>Meet the team</span>
-                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: "#2DD4BF", position: "relative" }}>{"\u2192"}</span>
+        {/* Focus cards */}
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(12, 1fr)", gap: 12 }}>
+          <Reveal delay={40} style={{ gridColumn: isMobile ? undefined : "span 5" }}>
+            <Card>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#2DD4BF", marginBottom: 14, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <svg width="8" height="8" viewBox="0 0 8 8"><line x1="4" y1="0" x2="4" y2="8" stroke="#2DD4BF" strokeWidth="0.5" opacity="0.5"/><line x1="0" y1="4" x2="8" y2="4" stroke="#2DD4BF" strokeWidth="0.5" opacity="0.5"/></svg>
+                  PRIORITIES
                 </div>
+                <button
+                  onClick={() => { setAddingPriority(v => !v); setNewPriorityText(""); }}
+                  title="Add priority"
+                  style={{ width: 20, height: 20, borderRadius: 4, background: addingPriority ? "rgba(45,212,191,0.18)" : "rgba(45,212,191,0.07)", border: "1px solid rgba(45,212,191,0.2)", color: "#2DD4BF", fontSize: 14, lineHeight: 1, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s", flexShrink: 0 }}
+                >+</button>
               </div>
-            </div>
-          </div>
-
-          {/* Bottom data strip */}
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 3 }}>
-            <div style={{ animation: introPhase === "hero" ? "heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.6s both" : "none", opacity: introPhase === "hero" ? undefined : 0 }}>
-              <div style={{ borderTop: "1px dashed rgba(255,255,255,0.06)" }}>
-                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr 1fr", height: isMobile ? "auto" : 56 }}>
-                  {/* Issa profile */}
-                  <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 6 : 12, justifyContent: "center", padding: isMobile ? "10px 4px" : 0, borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
-                    <img src={PROFILE_IMG} alt="" style={{ width: isMobile ? 24 : 32, height: isMobile ? 24 : 32, borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(255,255,255,0.08)", flexShrink: 0 }} />
-                    <div>
-                      <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: isMobile ? 10 : 12, fontWeight: 700, color: "#D8D8E0" }}>Issa Sissoko</div>
-                      {!isMobile && <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#556", marginTop: 2 }}>AI Filmmaker + Creative Director</div>}
-                      {isMobile && <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#556", marginTop: 1 }}>AI Filmmaker</div>}
-                    </div>
-                  </div>
-                  {/* Agents - glowing dots */}
-                  <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 6 : 12, justifyContent: "center", padding: isMobile ? "10px 4px" : 0, borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 4 : 6 }}>
-                      {[0, 0.3, 0.6].map((d, i) => (
-                        <span key={i} style={{ width: isMobile ? 6 : 8, height: isMobile ? 6 : 8, borderRadius: "50%", background: "#2DD4BF", boxShadow: "0 0 8px rgba(45,212,191,0.5), 0 0 16px rgba(45,212,191,0.2)", animation: `pulse 2s ease-in-out ${d}s infinite` }} />
-                      ))}
-                      <span style={{ width: isMobile ? 6 : 8, height: isMobile ? 6 : 8, borderRadius: "50%", background: "rgba(255,255,255,0.06)" }} />
-                    </div>
-                    <div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 8 : 11, color: "#667", letterSpacing: "0.08em", lineHeight: 1 }}>AGENTS</div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 9 : 11, color: "#2DD4BF", letterSpacing: "0.08em", marginTop: 3, lineHeight: 1 }}>3 ONLINE</div>
-                    </div>
-                  </div>
-                  {/* Assets */}
-                  <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 6 : 10, justifyContent: "center", padding: isMobile ? "10px 4px" : 0, borderRight: "1px dashed rgba(255,255,255,0.06)" }}>
-                    <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: isMobile ? 18 : 26, fontWeight: 800, color: "#D4A800", lineHeight: 1 }}>847</span>
-                    <div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 8 : 11, color: "#667", letterSpacing: "0.08em", lineHeight: 1 }}>ASSETS</div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 7 : 9, color: "#667", letterSpacing: "0.08em", marginTop: 3, lineHeight: 1 }}>GENERATED</div>
-                    </div>
-                  </div>
-                  {/* Pipeline */}
-                  <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 6 : 10, justifyContent: "center", padding: isMobile ? "10px 4px" : 0 }}>
-                    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", lineHeight: 1, display: "flex", alignItems: "baseline" }}>
-                      <span style={{ fontSize: isMobile ? 12 : 16, fontWeight: 700, color: "#E8E8F0" }}>$</span>
-                      <span style={{ fontSize: isMobile ? 18 : 26, fontWeight: 800, color: "#E8E8F0" }}>26k</span>
-                    </div>
-                    <div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 8 : 11, color: "#667", letterSpacing: "0.08em", lineHeight: 1 }}>PIPELINE</div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 7 : 9, color: "#667", letterSpacing: "0.08em", marginTop: 3, lineHeight: 1 }}>VALUE</div>
-                    </div>
-                  </div>
+              {addingPriority && (
+                <div style={{ display: "flex", gap: 6, marginBottom: 10 }}>
+                  <input
+                    autoFocus
+                    value={newPriorityText}
+                    onChange={e => setNewPriorityText(e.target.value)}
+                    onKeyDown={e => { if (e.key === "Enter") addPriority(); if (e.key === "Escape") { setAddingPriority(false); setNewPriorityText(""); } }}
+                    placeholder="Add a priority task…"
+                    style={{ flex: 1, background: "rgba(45,212,191,0.04)", border: "1px solid rgba(45,212,191,0.2)", borderRadius: 6, padding: "6px 10px", color: "#C8E8E4", fontSize: 12, fontFamily: "inherit", outline: "none" }}
+                  />
+                  <button
+                    onClick={addPriority}
+                    style={{ padding: "6px 10px", borderRadius: 6, background: "rgba(45,212,191,0.12)", border: "1px solid rgba(45,212,191,0.25)", color: "#2DD4BF", fontSize: 11, cursor: "pointer", fontFamily: "'Space Mono', monospace" }}
+                  >ADD</button>
                 </div>
+              )}
+              {(siteData?.priorities ?? []).map((p, i) => {
+                const sel = selectedPriority === i;
+                return (
+                  <div key={i} style={{ position: "relative", display: "flex", alignItems: "flex-start" }}>
+                    <div style={{ flex: 1 }}>
+                      <PriorityItem idx={i} text={p} sel={sel} onSelect={() => setSelectedPriority(sel ? null : i)} />
+                    </div>
+                    <button
+                      onClick={e => { e.stopPropagation(); removePriority(i); }}
+                      title="Remove"
+                      style={{ position: "absolute", right: 6, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "rgba(255,80,80,0.35)", fontSize: 14, cursor: "pointer", lineHeight: 1, padding: "2px 4px", opacity: sel ? 1 : 0, transition: "opacity 0.15s" }}
+                      onMouseEnter={e => e.currentTarget.style.opacity = 1}
+                      onMouseLeave={e => e.currentTarget.style.opacity = sel ? 1 : 0}
+                    >×</button>
+                  </div>
+                );
+              })}
+            </Card>
+          </Reveal>
+          <Reveal delay={80} style={{ gridColumn: isMobile ? undefined : "span 4" }}>
+            <Card color="212,168,0">
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#D4A800", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}>
+                <svg width="8" height="8" viewBox="0 0 8 8"><line x1="4" y1="0" x2="4" y2="8" stroke="#D4A800" strokeWidth="0.5" opacity="0.5"/><line x1="0" y1="4" x2="8" y2="4" stroke="#D4A800" strokeWidth="0.5" opacity="0.5"/></svg>
+                SCHEDULE
               </div>
-            </div>
-
-
-          </div>
+              {(siteData?.meetings ?? []).map((m, i) => {
+                const sel = selectedMeeting === i;
+                return <MeetingItem key={i} meeting={m} sel={sel} onSelect={() => setSelectedMeeting(sel ? null : i)} />;
+              })}
+            </Card>
+          </Reveal>
+          <Reveal delay={120} style={{ gridColumn: isMobile ? undefined : "span 3" }}>
+            <Card>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#556", marginBottom: 14 }}>QUICK ACTIONS</div>
+              {[
+                { l: "New Project", ic: "+", c: "#2DD4BF", fn: () => setShowNewProject(true) },
+                { l: "Gen Prompt", ic: "✦", c: "#D4A800", fn: () => { setGpResult(""); setShowGenPrompt(true); } },
+                { l: "Review Deal", ic: "◈", c: "#F59E0B", fn: () => router.push("/business#deals") },
+                { l: "Launch Agent", ic: "◉", c: "#2DD4BF", fn: () => router.push("/agents?chat=1") },
+              ].map((a, i) => (
+                <div key={i} onClick={a.fn} className="action-btn" style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 10px", borderRadius: 8, background: `${a.c}04`, border: `1px solid ${a.c}0C`, marginBottom: 5, cursor: "pointer", transition: "all 0.2s" }}>
+                  <span style={{ fontSize: 12, color: a.c, width: 16, textAlign: "center" }}>{a.ic}</span>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: a.c }}>{a.l}</span>
+                </div>
+              ))}
+            </Card>
+          </Reveal>
         </div>
-      </section>
 
+        {/* Stats strip */}
+        <Reveal delay={160}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 12, marginTop: 32 }}>
+            {/* Profile */}
+            <div className="bento-hover" {...hoverGlow("255,255,255","rgba(255,255,255,0.1)","0 0 16px rgba(255,255,255,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(255,255,255,0.02)")} style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 12, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", cursor: "default" }}>
+              <img src={PROFILE_IMG} alt="" style={{ width: 40, height: 40, borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(255,255,255,0.1)", flexShrink: 0 }} />
+              <div>
+                <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, fontWeight: 700, color: "#D8D8E0", lineHeight: 1.2 }}>Issa Sissoko</div>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#556", marginTop: 4, lineHeight: 1.4 }}>AI Filmmaker · Creative Director</div>
+              </div>
+            </div>
+            {/* Agents */}
+            <div className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.2)","0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)")} style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 12, background: "rgba(45,212,191,0.03)", border: "1px solid rgba(45,212,191,0.1)", cursor: "default" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                {[0, 0.3, 0.6].map((d, i) => (
+                  <span key={i} style={{ width: 7, height: 7, borderRadius: "50%", background: "#2DD4BF", boxShadow: "0 0 8px rgba(45,212,191,0.5)", animation: `pulse 2s ease-in-out ${d}s infinite`, display: "block" }} />
+                ))}
+              </div>
+              <div>
+                <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, fontWeight: 800, color: "#2DD4BF", lineHeight: 1 }}>{siteData?.stats?.agentsOnline ?? 3}</div>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.08em", marginTop: 4 }}>AGENTS ONLINE</div>
+              </div>
+            </div>
+            {/* Assets */}
+            <div className="bento-hover" {...hoverGlow("212,168,0","rgba(212,168,0,0.2)","0 0 16px rgba(212,168,0,0.12), 0 0 50px rgba(212,168,0,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(212,168,0,0.04)")} style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 12, background: "rgba(212,168,0,0.03)", border: "1px solid rgba(212,168,0,0.1)", cursor: "default" }}>
+              <div>
+                <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, fontWeight: 800, color: "#D4A800", lineHeight: 1 }}>{siteData?.stats?.assetsGenerated ?? 847}</div>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.08em", marginTop: 4 }}>ASSETS GENERATED</div>
+              </div>
+            </div>
+            {/* Pipeline */}
+            <div className="bento-hover" {...hoverGlow("255,255,255","rgba(255,255,255,0.1)","0 0 16px rgba(255,255,255,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(255,255,255,0.02)")} style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 12, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", cursor: "default" }}>
+              <div>
+                <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, fontWeight: 800, color: "#E8E8F0", lineHeight: 1, display: "flex", alignItems: "baseline", gap: 2 }}>
+                  <span style={{ fontSize: 16, fontWeight: 700 }}>$</span>{siteData?.stats?.pipelineValue ?? 26}k
+                </div>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.08em", marginTop: 4 }}>PIPELINE VALUE</div>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </section>
       {/*  SECTIONS  */}
       <div style={{ position: "relative", zIndex: 1 }}>
         {/* Global scanline + grid " parallax at 0.3x */}
         <div style={{ position: "absolute", inset: 0, opacity: 0.02, backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.04) 2px, rgba(255,255,255,0.04) 4px)", pointerEvents: "none", transform: `translateY(${scrollY * -0.05}px)` }} />
         <div style={{ position: "absolute", inset: 0, opacity: 0.012, backgroundImage: "linear-gradient(rgba(45,212,191,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(45,212,191,0.1) 1px, transparent 1px)", backgroundSize: "140px 140px", pointerEvents: "none", transform: `translateY(${scrollY * -0.08}px)` }} />
         <div style={{ position: "relative", maxWidth: 1440, margin: "0 auto", padding: isMobile ? "0 16px" : "0 60px" }}>
-
-          {/* SECTION 1: YOUR DAY */}
-          <section style={{ padding: "80px 0 0" }}>
-            <SectionHeader idx="01" badge="YOUR DAY" title="Today's Focus" desc="priorities ' schedule ' quick_actions" right={<div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 14px", borderRadius: 3, border: "1px solid rgba(45,212,191,0.06)" }}><span style={{ fontSize: 16 }}>{"\u2600"}</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, fontWeight: 700 }}>72deg</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445" }}>NYC</span></div>} />
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(12, 1fr)", gap: 12 }}>
-              <Reveal delay={40} style={{ gridColumn: isMobile ? undefined : "span 5" }}>
-                <Card>
-                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#2DD4BF", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}>
-                    <svg width="8" height="8" viewBox="0 0 8 8"><line x1="4" y1="0" x2="4" y2="8" stroke="#2DD4BF" strokeWidth="0.5" opacity="0.5"/><line x1="0" y1="4" x2="8" y2="4" stroke="#2DD4BF" strokeWidth="0.5" opacity="0.5"/></svg>
-                    PRIORITIES
-                  </div>
-                  {priorities.map((p, i) => {
-                    const sel = selectedPriority === i;
-                    return (
-                      <PriorityItem key={i} idx={i} text={p} sel={sel} onSelect={() => setSelectedPriority(sel ? null : i)} />
-                    );
-                  })}
-                </Card>
-              </Reveal>
-              <Reveal delay={80} style={{ gridColumn: isMobile ? undefined : "span 4" }}>
-                <Card color="212,168,0">
-                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#D4A800", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}>
-                    <svg width="8" height="8" viewBox="0 0 8 8"><line x1="4" y1="0" x2="4" y2="8" stroke="#D4A800" strokeWidth="0.5" opacity="0.5"/><line x1="0" y1="4" x2="8" y2="4" stroke="#D4A800" strokeWidth="0.5" opacity="0.5"/></svg>
-                    SCHEDULE
-                  </div>
-                  {meetings.map((m, i) => {
-                    const sel = selectedMeeting === i;
-                    return (
-                      <MeetingItem key={i} meeting={m} sel={sel} onSelect={() => setSelectedMeeting(sel ? null : i)} />
-                    );
-                  })}
-                </Card>
-              </Reveal>
-              <Reveal delay={120} style={{ gridColumn: isMobile ? undefined : "span 3" }}>
-                <Card>
-                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#556", marginBottom: 14 }}>QUICK ACTIONS</div>
-                  {[{ l: "New Project", ic: "+", c: "#2DD4BF" }, { l: "Gen Prompt", ic: "*", c: "#D4A800" }, { l: "Review Deal", ic: "#", c: "#F59E0B" }, { l: "Launch Agent", ic: "O", c: "#2DD4BF" }].map((a, i) => (
-                    <div key={i} className="action-btn" style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 10px", borderRadius: 8, background: `${a.c}04`, border: `1px solid ${a.c}0C`, marginBottom: 5, cursor: "pointer" }}>
-                      <span style={{ fontSize: 12, color: a.c, width: 16, textAlign: "center" }}>{a.ic}</span>
-                      <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: a.c }}>{a.l}</span>
-                    </div>
-                  ))}
-                </Card>
-              </Reveal>
-            </div>
-          </section>
 
           {/* SECTION 2: PROJECTS */}
           <section style={{ padding: "80px 0 0", position: "relative" }}>
@@ -1002,7 +999,7 @@ export default function Page() {
 
             {/*  FEATURED: MANSA  */}
             <Reveal delay={40} parallax={0.2}>
-              <div className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.2)","0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)")} style={{ borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 360, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(45,212,191,0.2)", boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer", marginBottom: 24 }}>
+              <div onClick={() => router.push("/projects?p=0")} className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.2)","0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)")} style={{ borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 360, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(45,212,191,0.2)", boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer", marginBottom: 24 }}>
                 <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
                   <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(45,212,191,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                 </div>
@@ -1031,7 +1028,7 @@ export default function Page() {
                     <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#556", lineHeight: 1.6, margin: "0 0 24px" }}>African historical epic. Full storyboard pipeline from script to first-frame prompts, motion direction, and camera language. Collaborating with Hoyt Dwyer.</p>
                     <div style={{ marginTop: "auto" }}>
                       <div style={{ display: "flex", gap: 1, borderRadius: 12, overflow: "hidden" }}>
-                        {[{v:"24",l:"SHOTS"},{v:"6",l:"SCENES"},{v:"72%",l:"COMPLETE"},{v:"Apr 15",l:"TARGET"}].map((s,j)=>(
+                        {[{v: siteData?.projects?.[0]?.shots ?? "24", l:"SHOTS"},{v: siteData?.projects?.[0]?.scenes ?? "6", l:"SCENES"},{v: (siteData?.projects?.[0]?.completion ?? "72") + "%", l:"COMPLETE"},{v: siteData?.projects?.[0]?.deadline ?? "Apr 15", l:"TARGET"}].map((s,j)=>(
                           <div key={j} style={{ flex: 1, background: "rgba(255,255,255,0.03)", padding: "14px 8px", textAlign: "center", borderRight: j<3 ? "1px solid rgba(255,255,255,0.03)" : "none" }}>
                             <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 16, fontWeight: 800, color: "rgba(45,212,191,0.8)" }}>{s.v}</div>
                             <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 6, color: "#445", marginTop: 3, letterSpacing: "0.1em" }}>{s.l}</div>
@@ -1048,7 +1045,7 @@ export default function Page() {
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: 10 }}>
               {/* COCA-COLA */}
               <Reveal delay={100} parallax={0.25}>
-                <div className="bento-hover" {...hoverGlow("249,115,22","rgba(249,115,22,0.18)","0 0 16px rgba(249,115,22,0.12), 0 0 50px rgba(249,115,22,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.04)")} style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(249,115,22,0.18)", boxShadow: "0 0 16px rgba(249,115,22,0.12), 0 0 50px rgba(249,115,22,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.04)", cursor: "pointer" }}>
+                <div onClick={() => router.push("/projects?p=1")} className="bento-hover" {...hoverGlow("249,115,22","rgba(249,115,22,0.18)","0 0 16px rgba(249,115,22,0.12), 0 0 50px rgba(249,115,22,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.04)")} style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(249,115,22,0.18)", boxShadow: "0 0 16px rgba(249,115,22,0.12), 0 0 50px rgba(249,115,22,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.04)", cursor: "pointer" }}>
                   <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
                     <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(249,115,22,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                   </div>
@@ -1069,7 +1066,7 @@ export default function Page() {
 
               {/* WORKSHOP */}
               <Reveal delay={160} parallax={0.3}>
-                <div className="bento-hover" {...hoverGlow("94,234,212","rgba(94,234,212,0.15)","0 0 16px rgba(94,234,212,0.12), 0 0 50px rgba(94,234,212,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(94,234,212,0.04)")} style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(94,234,212,0.15)", boxShadow: "0 0 16px rgba(94,234,212,0.12), 0 0 50px rgba(94,234,212,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(94,234,212,0.04)", cursor: "pointer" }}>
+                <div onClick={() => router.push("/projects?p=2")} className="bento-hover" {...hoverGlow("94,234,212","rgba(94,234,212,0.15)","0 0 16px rgba(94,234,212,0.12), 0 0 50px rgba(94,234,212,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(94,234,212,0.04)")} style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(94,234,212,0.15)", boxShadow: "0 0 16px rgba(94,234,212,0.12), 0 0 50px rgba(94,234,212,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(94,234,212,0.04)", cursor: "pointer" }}>
                   <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
                     <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(94,234,212,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                   </div>
@@ -1090,7 +1087,7 @@ export default function Page() {
 
               {/* FREEPIK */}
               <Reveal delay={220} parallax={0.35}>
-                <div className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.2)","0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)")} style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(45,212,191,0.2)", boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer" }}>
+                <div onClick={() => router.push("/projects?p=3")} className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.2)","0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)")} style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(45,212,191,0.2)", boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer" }}>
                   <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
                     <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(45,212,191,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                   </div>
@@ -1130,10 +1127,10 @@ export default function Page() {
                 {/* Stage nodes */}
                 <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr 1fr", gap: isMobile ? 12 : 0, position: "relative" }}>
                   {[
-                    { label: "INGESTED", agent: "Script-V", color: "#EF4444", count: contentQueue.length, desc: "Prompts created from briefs" },
-                    { label: "QUEUED", agent: "Chronos", color: "#F97316", count: contentQueue.filter(c=>c.status==="Queued").length, desc: "Awaiting generation slot" },
-                    { label: "GENERATING", agent: "Script-V", color: "#EAB308", count: contentQueue.filter(c=>c.status==="Generating").length, desc: "AI models rendering frames" },
-                    { label: "REVIEW", agent: "Lumen", color: "#2DD4BF", count: contentQueue.filter(c=>c.status==="Review").length, desc: "Style and quality check" },
+                    { label: "INGESTED", agent: "Script-V", color: "#EF4444", count: (siteData?.contentQueue ?? []).length, desc: "Prompts created from briefs" },
+                    { label: "QUEUED", agent: "Chronos", color: "#F97316", count: (siteData?.contentQueue ?? []).filter(c=>c.status==="Queued").length, desc: "Awaiting generation slot" },
+                    { label: "GENERATING", agent: "Script-V", color: "#EAB308", count: (siteData?.contentQueue ?? []).filter(c=>c.status==="Generating").length, desc: "AI models rendering frames" },
+                    { label: "REVIEW", agent: "Lumen", color: "#2DD4BF", count: (siteData?.contentQueue ?? []).filter(c=>c.status==="Review").length, desc: "Style and quality check" },
                   ].map((stage, si) => (
                     <div key={si} style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
                       <div style={{ position: "relative", width: 46, height: 46, marginBottom: 20, zIndex: 1 }}>
@@ -1174,18 +1171,18 @@ export default function Page() {
             {/* Active items */}
             <Reveal delay={120}>
               <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 8 }}>
-                {contentQueue.map((item, i) => (
-                  <div key={i} className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.15)","0 0 16px rgba(45,212,191,0.08), 0 0 50px rgba(45,212,191,0.04), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.03)")} style={{ padding: "14px 16px", borderRadius: 10, border: "1px solid rgba(45,212,191,0.15)", background: "rgba(6,12,16,0.97)", boxShadow: "0 0 16px rgba(45,212,191,0.08), 0 0 50px rgba(45,212,191,0.04), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.03)", cursor: "pointer", position: "relative", overflow: "hidden" }}>
+                {(siteData?.contentQueue ?? []).map((item, i) => { const isCoca = item.project === "Coca-Cola"; const rgb = isCoca ? "249,115,22" : "45,212,191"; const hex = isCoca ? "#F97316" : "#2DD4BF"; return (
+                  <div key={i} className="bento-hover" {...hoverGlow(rgb,`rgba(${rgb},0.15)`,`0 0 16px rgba(${rgb},0.08), 0 0 50px rgba(${rgb},0.04), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${rgb},0.03)`)} style={{ padding: "14px 16px", borderRadius: 10, border: `1px solid rgba(${rgb},0.15)`, background: "rgba(6,12,16,0.97)", boxShadow: `0 0 16px rgba(${rgb},0.08), 0 0 50px rgba(${rgb},0.04), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${rgb},0.03)`, cursor: "pointer", position: "relative", overflow: "hidden" }}>
                     <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#AAB", lineHeight: 1.4, marginBottom: 8 }}>{item.prompt}</div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
                         <span style={{ width: 4, height: 4, borderRadius: "50%", background: item.project === "Mansa" ? "#2DD4BF" : "#F97316" }} />
-                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: item.project === "Mansa" ? "#2DD4BF" : "#F97316" }}>{item.project}</span>
+                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: hex }}>{item.project}</span>
                       </div>
                       <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#334" }}>{item.tool}</span>
                     </div>
                   </div>
-                ))}
+                )})}
               </div>
             </Reveal>
           </section>
@@ -1196,7 +1193,7 @@ export default function Page() {
             
             <SectionHeader idx="03" badge="YOUR AI TEAM" title="Agents" desc="autonomous_agents ' creative_pipeline ' always_building" right={<div style={{ display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: "#D4A800", boxShadow: "0 0 6px rgba(212,168,0,0.4)", animation: "pulse 2s infinite" }} /><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#D4A800" }}>3 ONLINE</span></div>} />
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 10 }}>
-              {agentsEnhanced.map((agent, ai) => (
+              {(siteData?.agents ?? []).map((agentData, ai) => { const meta = AGENT_META[ai] || AGENT_META[0]; const agent = { ...meta, name: agentData.name, role: meta.roleLabel, desc: agentData.task, progress: agentData.progress }; return (
   <div key={ai} className="bento-hover"
     onMouseEnter={e => { e.currentTarget.querySelector("video")?.play(); e.currentTarget.style.boxShadow = `0 0 35px rgba(${agent.rgb},0.4), 0 0 90px rgba(${agent.rgb},0.2), 0 20px 50px rgba(0,0,0,0.6), inset 0 0 50px rgba(${agent.rgb},0.12)`; e.currentTarget.style.borderColor = `rgba(${agent.rgb},0.5)`; }}
     onMouseLeave={e => { const v = e.currentTarget.querySelector("video"); if (v && !isMobile) { v.pause(); v.currentTime = 0; } e.currentTarget.style.boxShadow = `0 0 22px rgba(${agent.rgb},0.22), 0 0 60px rgba(${agent.rgb},0.12), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 40px rgba(${agent.rgb},0.08)`; e.currentTarget.style.borderColor = `rgba(${agent.rgb},0.32)`; }}
@@ -1237,7 +1234,7 @@ export default function Page() {
       )}
     </div>
   </div>
-))}
+); })}
             </div>
           </section>
 
@@ -1245,12 +1242,15 @@ export default function Page() {
           <section style={{ padding: "80px 0 0", position: "relative" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "1px dashed rgba(255,255,255,0.06)" }} />
             
-            <SectionHeader idx="04" badge="BUSINESS" title="Deals + Pipeline" desc="partnerships ' workshops ' credentials" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: isMobile ? 22 : 32, fontWeight: 700, color: "#F59E0B" }}>$<Counter to={26} dur={1400} />k<span style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 9 : 11, color: "#445", marginLeft: 6 }}>pipeline</span></span>} />
+            <SectionHeader idx="04" badge="BUSINESS" title="Deals + Pipeline" desc="partnerships ' workshops ' credentials" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: isMobile ? 22 : 32, fontWeight: 700, color: "#F59E0B" }}>$<Counter to={siteData?.stats?.pipelineValue ?? 26} dur={1400} />k<span style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 9 : 11, color: "#445", marginLeft: 6 }}>pipeline</span></span>} />
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(12, 1fr)", gap: 12 }}>
               <Reveal delay={40} style={{ gridColumn: isMobile ? undefined : "span 5" }}>
-                <Card>
-                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#F59E0B", marginBottom: 14 }}>+ DEAL / IP TRACKER</div>
-                  {deals.map((d, i) => (
+                <Card onClick={() => router.push("/business#deals")} style={{ cursor: "pointer" }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#F59E0B", marginBottom: 14, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span>+ DEAL / IP TRACKER</span>
+                    <span style={{ fontSize: 9, color: "#F59E0B", opacity: 0.5 }}>VIEW ALL →</span>
+                  </div>
+                  {(siteData?.deals ?? []).map((d, i) => (
                     <div key={i} className="deal-row" style={{ padding: "10px 6px", borderBottom: i < 2 ? "1px solid rgba(255,255,255,0.02)" : "none", borderRadius: 6, cursor: "pointer" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
                         <span style={{ fontSize: 13, fontWeight: 600 }}>{d.name}</span>
@@ -1265,7 +1265,7 @@ export default function Page() {
                 </Card>
               </Reveal>
               <Reveal delay={80} style={{ gridColumn: isMobile ? undefined : "span 3" }}>
-                <div style={{ borderRadius: 14, overflow: "hidden", position: "relative", height: 320, border: "none", cursor: "pointer" }}>
+                <div onClick={() => router.push("/projects?p=0")} style={{ borderRadius: 14, overflow: "hidden", position: "relative", height: 320, border: "none", cursor: "pointer" }}>
                   {/* Video - replace src with Desert Palace clip */}
                   <video autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", transform: "scale(1.4)", opacity: 1 }}>
                     <source src="/Zombie.mp4" type="video/mp4" />
@@ -1287,9 +1287,12 @@ export default function Page() {
                 </div>
               </Reveal>
               <Reveal delay={100} style={{ gridColumn: isMobile ? undefined : "span 4" }}>
-                <Card>
-                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#2DD4BF", marginBottom: 14 }}>+ WORKSHOP PIPELINE</div>
-                  {workshopsData.map((w, i) => (
+                <Card onClick={() => router.push("/business#workshops")} style={{ cursor: "pointer" }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#2DD4BF", marginBottom: 14, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span>+ WORKSHOP PIPELINE</span>
+                    <span style={{ fontSize: 9, color: "#2DD4BF", opacity: 0.5 }}>VIEW ALL →</span>
+                  </div>
+                  {(siteData?.workshops ?? []).map((w, i) => (
                     <WorkshopItem key={i} workshop={w} sel={selectedWorkshop === i} onSelect={() => setSelectedWorkshop(selectedWorkshop === i ? null : i)} />
                   ))}
                 </Card>
@@ -1298,22 +1301,18 @@ export default function Page() {
                 <div style={{ borderRadius: 12, overflow: "hidden", background: "rgba(255,255,255,0.02)", border: "none", backdropFilter: "blur(12px)" }}>
                   {/* Stats row */}
                   <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
-                    {[{ v: 12, l: "PROJECTS", c: "#2DD4BF" }, { v: 847, l: "ASSETS GENERATED", c: "#2DD4BF" }, { v: 3, l: "AGENTS ONLINE", c: "#D4A800" }].map((s, i) => (
-                      <div key={i} style={{ textAlign: "center", padding: "24px 16px", borderRight: i < 2 ? "1px solid rgba(255,255,255,0.03)" : "none" }}>
+                    {[
+                      { v: siteData?.stats?.activeProjects ?? 4, l: "PROJECTS", c: "#2DD4BF", href: "/projects" },
+                      { v: siteData?.stats?.assetsGenerated ?? 847, l: "ASSETS GENERATED", c: "#2DD4BF", href: null },
+                      { v: siteData?.stats?.agentsOnline ?? 3, l: "AGENTS ONLINE", c: "#D4A800", href: "/agents" },
+                    ].map((s, i) => (
+                      <div key={i} onClick={() => s.href && router.push(s.href)} style={{ textAlign: "center", padding: "24px 16px", borderRight: i < 2 ? "1px solid rgba(255,255,255,0.03)" : "none", cursor: s.href ? "pointer" : "default", transition: "background 0.2s" }} onMouseEnter={e => { if (s.href) e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }} onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}>
                         <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32, fontWeight: 700, color: s.c, lineHeight: 1 }}><Counter to={s.v} /></div>
-                        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, letterSpacing: "0.12em", color: "#445", marginTop: 8 }}>{s.l}</div>
+                        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, letterSpacing: "0.12em", color: "#445", marginTop: 8 }}>{s.l}{s.href && <span style={{ marginLeft: 4, opacity: 0.4 }}>→</span>}</div>
                       </div>
                     ))}
                   </div>
-                  {/* CPP badges row */}
-                  <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: 8, padding: "14px 16px" }}>
-                    <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#334", marginRight: 4 }}>CPP</span>
-                    {[{ l: "Google DeepMind", c: "#2DD4BF" }, { l: "Luma AI", c: "#D4A800" }, { l: "Hailuo", c: "#F59E0B" }, { l: "Haiper", c: "#2DD4BF" }].map((b, i) => (
-                      <span key={i} className="pill-hover" style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, padding: "4px 12px", borderRadius: 20, color: b.c, background: `${b.c}08`, border: `1px solid ${b.c}15`, display: "inline-flex", alignItems: "center", gap: 6 }}>
-                        <span style={{ width: 5, height: 5, borderRadius: "50%", background: b.c, boxShadow: `0 0 4px ${b.c}40` }} />{b.l}
-                      </span>
-                    ))}
-                  </div>
+
                 </div>
               </Reveal>
             </div>
@@ -1340,6 +1339,90 @@ export default function Page() {
           </div>
         </footer>
       </div>
+
+      {/* ── NEW PROJECT MODAL ─────────────────────────── */}
+      {showNewProject && (
+        <div onClick={() => setShowNewProject(false)} style={{ position: "fixed", inset: 0, zIndex: 9999, background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+          <div onClick={e => e.stopPropagation()} style={{ width: "100%", maxWidth: 480, borderRadius: 18, background: "rgba(6,12,18,0.98)", border: "1px solid rgba(45,212,191,0.22)", boxShadow: "0 0 60px rgba(45,212,191,0.12), 0 30px 80px rgba(0,0,0,0.7)", padding: "28px 28px 24px" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
+              <div>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#2DD4BF", letterSpacing: "0.1em", marginBottom: 4 }}>NEW PROJECT</div>
+                <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 18, fontWeight: 800, color: "#E8E8F0" }}>Create Project</div>
+              </div>
+              <button onClick={() => setShowNewProject(false)} style={{ width: 28, height: 28, borderRadius: 8, border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)", color: "#556", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>×</button>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              {[
+                { label: "Project Name", el: <input autoFocus value={npName} onChange={e => setNpName(e.target.value)} onKeyDown={e => e.key === "Enter" && saveNewProject()} placeholder="e.g. Short Film Concept" style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(45,212,191,0.15)", borderRadius: 8, padding: "9px 12px", color: "#C8E8E4", fontSize: 13, fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} /> },
+                { label: "Type", el: <select value={npType} onChange={e => setNpType(e.target.value)} style={{ width: "100%", background: "rgba(6,12,18,0.98)", border: "1px solid rgba(45,212,191,0.15)", borderRadius: 8, padding: "9px 12px", color: "#C8E8E4", fontSize: 13, fontFamily: "'Space Mono', monospace", outline: "none", cursor: "pointer" }}>{["Personal IP","Client Work","Consulting","Research","Marketing"].map(o => <option key={o} value={o}>{o}</option>)}</select> },
+                { label: "Status", el: <select value={npStatus} onChange={e => setNpStatus(e.target.value)} style={{ width: "100%", background: "rgba(6,12,18,0.98)", border: "1px solid rgba(45,212,191,0.15)", borderRadius: 8, padding: "9px 12px", color: "#C8E8E4", fontSize: 13, fontFamily: "'Space Mono', monospace", outline: "none", cursor: "pointer" }}>{["Planning","Concept","In Production","Review","Complete"].map(o => <option key={o} value={o}>{o}</option>)}</select> },
+                { label: "Target Deadline", el: <input type="date" value={npDeadline} onChange={e => setNpDeadline(e.target.value)} style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(45,212,191,0.15)", borderRadius: 8, padding: "9px 12px", color: "#C8E8E4", fontSize: 13, fontFamily: "inherit", outline: "none", colorScheme: "dark", boxSizing: "border-box" }} /> },
+              ].map(({ label, el }) => (
+                <div key={label}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#556", letterSpacing: "0.08em", marginBottom: 6 }}>{label.toUpperCase()}</div>
+                  {el}
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", gap: 10, marginTop: 22 }}>
+              <button onClick={() => setShowNewProject(false)} style={{ flex: 1, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)", background: "transparent", color: "#556", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: "pointer" }}>CANCEL</button>
+              <button onClick={saveNewProject} disabled={!npName.trim() || npSaving} style={{ flex: 2, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(45,212,191,0.3)", background: "rgba(45,212,191,0.1)", color: "#2DD4BF", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: npName.trim() ? "pointer" : "not-allowed", opacity: npName.trim() ? 1 : 0.4, transition: "all 0.2s" }}>{npSaving ? "SAVING..." : "CREATE PROJECT →"}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── GEN PROMPT MODAL ──────────────────────────── */}
+      {showGenPrompt && (
+        <div onClick={() => setShowGenPrompt(false)} style={{ position: "fixed", inset: 0, zIndex: 9999, background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+          <div onClick={e => e.stopPropagation()} style={{ width: "100%", maxWidth: 540, borderRadius: 18, background: "rgba(6,12,18,0.98)", border: "1px solid rgba(212,168,0,0.22)", boxShadow: "0 0 60px rgba(212,168,0,0.1), 0 30px 80px rgba(0,0,0,0.7)", padding: "28px 28px 24px" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
+              <div>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#D4A800", letterSpacing: "0.1em", marginBottom: 4 }}>AGENT TASK</div>
+                <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 18, fontWeight: 800, color: "#E8E8F0" }}>Generate Brief</div>
+              </div>
+              <button onClick={() => setShowGenPrompt(false)} style={{ width: 28, height: 28, borderRadius: 8, border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)", color: "#556", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>×</button>
+            </div>
+            <div style={{ display: "flex", gap: 12, marginBottom: 14 }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#556", letterSpacing: "0.08em", marginBottom: 6 }}>AGENT</div>
+                <select value={gpAgent} onChange={e => setGpAgent(e.target.value)} style={{ width: "100%", background: "rgba(6,12,18,0.98)", border: "1px solid rgba(212,168,0,0.15)", borderRadius: 8, padding: "9px 12px", color: "#C8E8E4", fontSize: 12, fontFamily: "'Space Mono', monospace", outline: "none", cursor: "pointer" }}>
+                  {["Chronos","Script-V","Lumen","Synthetix"].map(o => <option key={o} value={o}>{o}</option>)}
+                </select>
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#556", letterSpacing: "0.08em", marginBottom: 6 }}>PROJECT</div>
+                <select value={gpProject} onChange={e => setGpProject(e.target.value)} style={{ width: "100%", background: "rgba(6,12,18,0.98)", border: "1px solid rgba(212,168,0,0.15)", borderRadius: 8, padding: "9px 12px", color: "#C8E8E4", fontSize: 12, fontFamily: "'Space Mono', monospace", outline: "none", cursor: "pointer" }}>
+                  {["Mansa","Coca-Cola","AI Workshop","Freepik"].map(o => <option key={o} value={o}>{o}</option>)}
+                </select>
+              </div>
+            </div>
+            <div style={{ marginBottom: 14 }}>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#556", letterSpacing: "0.08em", marginBottom: 6 }}>TASK DESCRIPTION</div>
+              <textarea value={gpTask} onChange={e => setGpTask(e.target.value)} placeholder={"Describe what you need the agent to do…\n\ne.g. Generate 6 shot prompts for the coronation scene — cinematic, golden hour, wide establishing and 2 close-ups."} rows={4} style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(212,168,0,0.15)", borderRadius: 8, padding: "10px 12px", color: "#C8E8E4", fontSize: 13, fontFamily: "inherit", outline: "none", resize: "vertical", boxSizing: "border-box", lineHeight: 1.5 }} />
+            </div>
+            {gpResult ? (
+              <div style={{ marginBottom: 14 }}>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#D4A800", letterSpacing: "0.08em", marginBottom: 6 }}>GENERATED BRIEF</div>
+                <pre style={{ background: "rgba(212,168,0,0.04)", border: "1px solid rgba(212,168,0,0.12)", borderRadius: 8, padding: "12px 14px", fontSize: 11, color: "#AAA", fontFamily: "'Space Mono', monospace", whiteSpace: "pre-wrap", lineHeight: 1.6, margin: 0, maxHeight: 200, overflowY: "auto" }}>{gpResult}</pre>
+              </div>
+            ) : null}
+            <div style={{ display: "flex", gap: 10 }}>
+              {gpResult ? (
+                <>
+                  <button onClick={() => { setGpResult(""); setGpTask(""); }} style={{ flex: 1, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)", background: "transparent", color: "#556", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: "pointer" }}>RESET</button>
+                  <button onClick={copyPrompt} style={{ flex: 2, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(212,168,0,0.3)", background: "rgba(212,168,0,0.1)", color: "#D4A800", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: "pointer", transition: "all 0.2s" }}>{gpCopied ? "✓ COPIED" : "COPY BRIEF"}</button>
+                </>
+              ) : (
+                <>
+                  <button onClick={() => setShowGenPrompt(false)} style={{ flex: 1, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)", background: "transparent", color: "#556", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: "pointer" }}>CANCEL</button>
+                  <button onClick={generatePrompt} disabled={!gpTask.trim()} style={{ flex: 2, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(212,168,0,0.3)", background: "rgba(212,168,0,0.1)", color: "#D4A800", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: gpTask.trim() ? "pointer" : "not-allowed", opacity: gpTask.trim() ? 1 : 0.4, transition: "all 0.2s" }}>GENERATE BRIEF →</button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
