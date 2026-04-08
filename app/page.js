@@ -384,7 +384,7 @@ function SectionHeader({ badge, idx, title, desc, right }) {
       </Reveal>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 16 }}>
         <div>
-          <WordReveal text={title} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32, fontWeight: 700, letterSpacing: "0.02em", lineHeight: 1.1, textTransform: "uppercase", marginBottom: desc ? 10 : 0 }} />
+          <WordReveal text={title} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32, fontWeight: 700, letterSpacing: "0.02em", lineHeight: 1.1, textTransform: "uppercase", marginBottom: desc ? 10 : 0, color: "#FFFFFF", textShadow: "0 1px 2px rgba(0,0,0,0.35)" }} />
           {desc && <Reveal delay={200}><p style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: "#445", maxWidth: 480, lineHeight: 1.6 }}>{desc}</p></Reveal>}
         </div>
         {right && <Reveal delay={300}>{right}</Reveal>}

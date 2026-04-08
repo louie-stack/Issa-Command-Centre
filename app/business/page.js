@@ -23,8 +23,8 @@ const ORANGE = "249,115,22";
 function glowCard(rgb, h) {
   return {
     background: h
-      ? "linear-gradient(180deg, rgba(28,38,50,0.69), rgba(14,22,34,0.65))"
-      : "linear-gradient(180deg, rgba(22,30,40,0.63), rgba(12,18,28,0.59))",
+      ? "linear-gradient(180deg, rgba(28,38,50,0.43), rgba(14,22,34,0.39))"
+      : "linear-gradient(180deg, rgba(22,30,40,0.37), rgba(12,18,28,0.33))",
     border: `1px solid rgba(255,255,255,${h ? 0.22 : 0.17})`,
     boxShadow: h
       ? `0 14px 38px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.34), 0 0 24px rgba(${rgb},0.16)`
