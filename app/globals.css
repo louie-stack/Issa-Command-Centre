@@ -30,11 +30,91 @@ html { scroll-behavior: smooth; }
 @keyframes heroSlideDown { 0% { opacity: 0; transform: translateY(-40px); } 100% { opacity: 1; transform: translateY(0); } }
 @keyframes heroScaleIn { 0% { opacity: 0; transform: scale(0.85); } 100% { opacity: 1; transform: scale(1); } }
 
-.card-hover { transition: all 0.4s cubic-bezier(0.16,1,0.3,1) !important; }
-.card-hover:hover { transform: translateY(-5px) scale(1.014) !important; }
-.bento-hover { transition: all 0.5s cubic-bezier(0.16,1,0.3,1) !important; overflow: hidden; position: relative; }
-.bento-hover:hover { transform: translateY(-6px) scale(1.016) !important; }
-.bento-hover:hover .bento-glow { opacity: 1 !important; }
+.liquid-glass-card,
+.card-hover,
+.bento-hover {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px !important;
+  background:
+    linear-gradient(180deg, rgba(22, 30, 40, 0.65), rgba(12, 18, 28, 0.61)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  backdrop-filter: blur(12px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+  box-shadow:
+    0 10px 34px rgba(0, 0, 0, 0.32),
+    0 2px 10px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+  color: #edf3ff;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.35);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+@keyframes liquidSheenDrift {
+  0% { opacity: 0.72; background-position: 42% 0; }
+  50% { opacity: 0.86; background-position: 58% 0; }
+  100% { opacity: 0.72; background-position: 42% 0; }
+}
+
+@keyframes liquidEdgeSweep {
+  0% { background-position: 30% 0; opacity: 0.45; }
+  50% { background-position: 70% 0; opacity: 0.8; }
+  100% { background-position: 30% 0; opacity: 0.45; }
+}
+
+.liquid-glass-card::before,
+.card-hover::before,
+.bento-hover::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 40%;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.26) 0%,
+    rgba(255, 255, 255, 0.12) 18%,
+    rgba(255, 255, 255, 0.02) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 140% 100%;
+  background-position: 50% 0;
+  animation: liquidSheenDrift 2.6s ease-in-out infinite;
+}
+
+.liquid-glass-card::after,
+.card-hover::after,
+.bento-hover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.9), rgba(255,255,255,0));
+  background-size: 140% 100%;
+  background-position: 50% 0;
+  pointer-events: none;
+  animation: liquidEdgeSweep 3.2s ease-in-out infinite;
+}
+
+.card-hover:hover,
+.bento-hover:hover,
+.liquid-glass-card:hover {
+  transform: translateY(-4px) !important;
+  background:
+    linear-gradient(180deg, rgba(28, 38, 50, 0.71), rgba(14, 22, 34, 0.67)) !important;
+  backdrop-filter: blur(14px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(190%) !important;
+  box-shadow:
+    0 16px 42px rgba(0, 0, 0, 0.36),
+    0 4px 16px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34) !important;
+}
+
+.bento-hover:hover .bento-glow { opacity: 0.45 !important; }
 .nav-link { transition: all 0.3s cubic-bezier(0.16,1,0.3,1); position: relative; }
 .nav-link:hover { color: #2DD4BF !important; transform: translateY(-1px); }
 .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 50%; width: 0; height: 1px; background: #2DD4BF; transition: all 0.3s; transform: translateX(-50%); }
@@ -86,3 +166,29 @@ html { scroll-behavior: smooth; }
 .svg-panel-2 { animation: panelPulse2 2.4s ease-in-out infinite; }
 .svg-panel-3 { animation: panelPulse3 2.4s ease-in-out infinite; }
 .svg-scan { animation: scanLine 2s linear infinite; overflow: hidden; }
+
+.card-container {
+  perspective: 1000px;
+}
+
+.card {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out;
+  background: linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06));
+  border: 1px solid rgba(255,255,255,0.16);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow:
+    0 10px 35px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.28), transparent 35%);
+  pointer-events: none;
+}

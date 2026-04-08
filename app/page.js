@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Nav from "../components/Nav";
+import { LiquidCard } from "@/components/ui/liquid-glass-card";
 
 // All data now lives in /public/data.json — edit that file to update the dashboard
 const AGENT_META = [
@@ -451,8 +452,9 @@ function WorkshopItem({ workshop: w, sel, onSelect }) {
 
 function Card({ children, label, color = "45,212,191", style = {}, onClick }) {
   const [h, setH] = useState(false);
+
   return (
-    <div
+    <LiquidCard
       className="card-hover"
       onClick={onClick}
       onMouseEnter={() => setH(true)}
@@ -462,20 +464,20 @@ function Card({ children, label, color = "45,212,191", style = {}, onClick }) {
         padding: 22,
         position: "relative",
         overflow: "hidden",
-        background: "rgba(6,12,16,0.97)",
-        border: `1px solid rgba(${color},${h ? 0.45 : 0.28})`,
+        background: "rgba(18,28,36,0.24)",
+        border: `1px solid rgba(${color},${h ? 0.62 : 0.42})`,
         boxShadow: h
-          ? `0 0 0 1px rgba(${color},0.18), 0 0 30px rgba(${color},0.35), 0 0 90px rgba(${color},0.18), 0 20px 40px rgba(0,0,0,0.6), inset 0 0 50px rgba(${color},0.1)`
-          : `0 0 0 1px rgba(${color},0.1), 0 0 20px rgba(${color},0.2), 0 0 60px rgba(${color},0.1), 0 12px 32px rgba(0,0,0,0.45), inset 0 0 40px rgba(${color},0.06)`,
+          ? `0 0 0 1px rgba(${color},0.3), 0 0 44px rgba(${color},0.55), 0 0 130px rgba(${color},0.28), 0 28px 54px rgba(0,0,0,0.62), inset 0 0 70px rgba(255,255,255,0.16)`
+          : `0 0 0 1px rgba(${color},0.2), 0 0 30px rgba(${color},0.36), 0 0 95px rgba(${color},0.2), 0 14px 36px rgba(0,0,0,0.5), inset 0 0 54px rgba(255,255,255,0.1)`,
         transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)",
         cursor: "pointer",
         height: "100%",
         ...style,
-      }}>
-      {/* Interior radial glow — backlit from top */}
+      }}
+    >
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse 90% 60% at 50% 0%, rgba(${color},${h ? 0.16 : 0.1}) 0%, transparent 70%)`, transition: "opacity 0.4s" }} />
       <div style={{ position: "relative" }}>{children}</div>
-    </div>
+    </LiquidCard>
   );
 }
 
@@ -788,6 +790,9 @@ export default function Page() {
       {/* Particle field */}
       {/* ParticleField moved into sections wrapper below hero */}
 
+      {/* Rich backdrop so glass reads clearly */}
+      <div style={{ position: "fixed", inset: 0, zIndex: 1, pointerEvents: "none", background: "radial-gradient(55% 45% at 18% 14%, rgba(45,212,191,0.18), transparent 65%), radial-gradient(50% 40% at 85% 12%, rgba(249,115,22,0.16), transparent 70%), radial-gradient(40% 34% at 50% 78%, rgba(147,51,234,0.14), transparent 75%)" }} />
+
       {/* Noise texture overlay */}
       <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, opacity: 0.018, pointerEvents: "none", zIndex: 2, backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')", backgroundRepeat: "repeat", backgroundSize: "256px 256px" }} />
 
@@ -986,6 +991,7 @@ export default function Page() {
           </div>
         </Reveal>
       </section>
+
       {/*  SECTIONS  */}
       <div style={{ position: "relative", zIndex: 1 }}>
         {/* Global scanline + grid " parallax at 0.3x */}

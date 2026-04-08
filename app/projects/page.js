@@ -24,12 +24,18 @@ const GOLD = "212,168,0";
 
 function glowCard(rgb, h) {
   return {
-    background: "rgba(6,12,16,0.97)",
-    border: `1px solid rgba(${rgb},${h ? 0.4 : 0.22})`,
+    background: h
+      ? "linear-gradient(180deg, rgba(28,38,50,0.69), rgba(14,22,34,0.65))"
+      : "linear-gradient(180deg, rgba(22,30,40,0.63), rgba(12,18,28,0.59))",
+    border: `1px solid rgba(255,255,255,${h ? 0.22 : 0.17})`,
     boxShadow: h
-      ? `0 0 30px rgba(${rgb},0.32), 0 0 80px rgba(${rgb},0.16), 0 16px 40px rgba(0,0,0,0.55), inset 0 0 40px rgba(${rgb},0.08)`
-      : `0 0 18px rgba(${rgb},0.18), 0 0 55px rgba(${rgb},0.09), 0 12px 32px rgba(0,0,0,0.45), inset 0 0 30px rgba(${rgb},0.05)`,
-    transition: "all 0.35s cubic-bezier(0.16,1,0.3,1)",
+      ? `0 14px 38px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.34), 0 0 24px rgba(${rgb},0.16)`
+      : `0 10px 30px rgba(0,0,0,0.3), 0 2px 10px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.22), 0 0 16px rgba(${rgb},0.1)`,
+    backdropFilter: h ? "blur(14px) saturate(190%)" : "blur(12px) saturate(180%)",
+    WebkitBackdropFilter: h ? "blur(14px) saturate(190%)" : "blur(12px) saturate(180%)",
+    color: "#edf3ff",
+    textShadow: "0 1px 1px rgba(0,0,0,0.35)",
+    transition: "all 0.3s cubic-bezier(0.4,0,0.2,1)",
   };
 }
 
@@ -73,7 +79,7 @@ function KanbanCard({ card, col }) {
         )}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: isGen && card.pct != null ? 6 : 8 }}>
           <span style={{ ...mono, fontSize: 10, color: "#334" }}>{card.scene}</span>
-          <span style={{ ...mono, fontSize: 10, color: isGen ? col.color : col.key === "queued" ? "#334" : col.color + "99" }}>
+          <span style={{ ...mono, fontSize: 10, color: isGen ? col.color : col.key === "queued" ? col.color + "B3" : col.color + "99" }}>
             {isGen && card.pct != null ? card.pct + "%" : isGen ? "Starting" : card.tool}
           </span>
         </div>
