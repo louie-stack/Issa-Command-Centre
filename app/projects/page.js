@@ -25,16 +25,16 @@ const GOLD = "212,168,0";
 function glowCard(rgb, h) {
   return {
     background: h
-      ? "linear-gradient(180deg, rgba(28,38,50,0.43), rgba(14,22,34,0.39))"
-      : "linear-gradient(180deg, rgba(22,30,40,0.37), rgba(12,18,28,0.33))",
-    border: `1px solid rgba(255,255,255,${h ? 0.22 : 0.17})`,
+      ? "linear-gradient(180deg, rgba(6,32,38,0.78), rgba(10,22,34,0.75) 48%, rgba(6,18,26,0.8))"
+      : "linear-gradient(180deg, rgba(5,30,35,0.75), rgba(10,20,30,0.72) 48%, rgba(6,16,24,0.78))",
+    border: `1px solid rgba(${rgb},${h ? 0.42 : 0.35})`,
     boxShadow: h
-      ? `0 14px 38px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.34), 0 0 24px rgba(${rgb},0.16)`
-      : `0 10px 30px rgba(0,0,0,0.3), 0 2px 10px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.22), 0 0 16px rgba(${rgb},0.1)`,
-    backdropFilter: h ? "blur(14px) saturate(190%)" : "blur(12px) saturate(180%)",
-    WebkitBackdropFilter: h ? "blur(14px) saturate(190%)" : "blur(12px) saturate(180%)",
-    color: "#edf3ff",
-    textShadow: "0 1px 1px rgba(0,0,0,0.35)",
+      ? `0 0 40px rgba(${rgb},0.24), 0 0 78px rgba(${rgb},0.12), 0 10px 26px rgba(0,0,0,0.46), inset 0 1px 0 rgba(255,255,255,0.16)`
+      : `0 0 25px rgba(${rgb},0.12), 0 0 50px rgba(${rgb},0.06), 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12)`,
+    backdropFilter: h ? "blur(9px) saturate(125%)" : "blur(8px) saturate(120%)",
+    WebkitBackdropFilter: h ? "blur(9px) saturate(125%)" : "blur(8px) saturate(120%)",
+    color: "#F2F7FF",
+    textShadow: "0 1px 1px rgba(0,0,0,0.4)",
     transition: "all 0.3s cubic-bezier(0.4,0,0.2,1)",
   };
 }
@@ -163,7 +163,7 @@ function ProjectsPageInner() {
                       <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse 90% 60% at 50% 0%, rgba(${rgb},0.06) 0%, transparent 70%)` }} />
                     )}
                     <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                      <span style={{ ...jakarta, fontSize: 12, fontWeight: 700, color: sel ? "#E8E8F0" : "#667" }}>{p.name}</span>
+                      <span style={{ ...jakarta, fontSize: 12, fontWeight: 700, color: sel ? "#E8E8F0" : "#AAB8C8" }}>{p.name}</span>
                       {p.pct != null ? <span style={{ ...mono, fontSize: 10, color: p.color }}>{p.pct}%</span> : <span style={{ ...mono, fontSize: 10, padding: "2px 6px", borderRadius: 10, background: p.color + "0F", color: p.color }}>{p.status.toUpperCase()}</span>}
                     </div>
                     <div style={{ position: "relative", ...mono, fontSize: 10, color: "#334", marginTop: 4 }}>{p.shots ? p.shots + " shots" : p.sub}</div>
@@ -207,7 +207,7 @@ function ProjectsPageInner() {
                     border: `1px solid ${i === activeProject ? p.color + "44" : "rgba(255,255,255,0.08)"}`,
                     ...mono,
                     fontSize: 11,
-                    color: i === activeProject ? p.color : "#556",
+                    color: i === activeProject ? p.color : "#8FA1B8",
                     transition: "all 0.2s",
                   }}>
                   {p.name}
@@ -220,11 +220,11 @@ function ProjectsPageInner() {
           <div style={{ padding: isMobile ? "12px 16px" : "20px 28px", display: "flex", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 8 : 0, justifyContent: "space-between", borderBottom: "1px dashed rgba(255,255,255,0.06)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
               <span style={{ ...jakarta, fontSize: isMobile ? 15 : 18, fontWeight: 800 }}>{proj.name}</span>
-              <span style={{ ...mono, fontSize: 11, color: "#445" }}>{proj.sub}</span>
+              <span style={{ ...mono, fontSize: 11, color: "#6E819A" }}>{proj.sub}</span>
               <span style={{ ...mono, fontSize: 10, color: proj.color, padding: "3px 8px", border: "1px solid " + proj.color + "1A", borderRadius: 20 }}>{proj.status.toUpperCase()}</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 4 }}><span style={{ width: 5, height: 5, borderRadius: "50%", background: proj.agentColor }} /><span style={{ ...mono, fontSize: 11, color: "#556" }}>{proj.agent}</span></div>
+              <div style={{ display: "flex", alignItems: "center", gap: 4 }}><span style={{ width: 5, height: 5, borderRadius: "50%", background: proj.agentColor }} /><span style={{ ...mono, fontSize: 11, color: "#8FA1B8" }}>{proj.agent}</span></div>
               <span style={{ ...mono, fontSize: 11, color: "#334" }}>{proj.deadline}</span>
             </div>
           </div>
@@ -258,7 +258,7 @@ function ProjectsPageInner() {
                         border: `1px solid rgba(${col.rgb},${mobileBoardCol === col.key ? 0.4 : 0.12})`,
                         ...mono,
                         fontSize: 10,
-                        color: mobileBoardCol === col.key ? col.color : "#445",
+                        color: mobileBoardCol === col.key ? col.color : "#6E819A",
                         transition: "all 0.2s",
                       }}>
                       {col.label} ({proj.board[col.key].length})
@@ -278,7 +278,7 @@ function ProjectsPageInner() {
                       <div style={{ padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                           <span style={{ width: 6, height: 6, borderRadius: "50%", background: col.color }} />
-                          <span style={{ ...mono, fontSize: 11, color: "#556", letterSpacing: "0.06em" }}>{col.label}</span>
+                          <span style={{ ...mono, fontSize: 11, color: "#8FA1B8", letterSpacing: "0.06em" }}>{col.label}</span>
                         </div>
                         <span style={{ ...jakarta, fontSize: 14, fontWeight: 800, color: col.color + "66" }}>{cards.length}</span>
                       </div>
@@ -342,7 +342,7 @@ function ProjectsPageInner() {
                 <div style={{ ...mono, fontSize: 9, color: "#2DD4BF", letterSpacing: "0.1em", marginBottom: 4 }}>NEW PROJECT</div>
                 <div style={{ ...jakarta, fontSize: 18, fontWeight: 800, color: "#E8E8F0" }}>Create Project</div>
               </div>
-              <button onClick={() => setShowNewForm(false)} style={{ width: 28, height: 28, borderRadius: 8, border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)", color: "#556", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>×</button>
+              <button onClick={() => setShowNewForm(false)} style={{ width: 28, height: 28, borderRadius: 8, border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)", color: "#8FA1B8", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>×</button>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {[
@@ -352,13 +352,13 @@ function ProjectsPageInner() {
                 { label: "Target Deadline", el: <input type="date" value={npDeadline} onChange={e => setNpDeadline(e.target.value)} style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(45,212,191,0.15)", borderRadius: 8, padding: "9px 12px", color: "#C8E8E4", fontSize: 13, fontFamily: "inherit", outline: "none", colorScheme: "dark", boxSizing: "border-box" }} /> },
               ].map(({ label, el }) => (
                 <div key={label}>
-                  <div style={{ ...mono, fontSize: 9, color: "#556", letterSpacing: "0.08em", marginBottom: 6 }}>{label.toUpperCase()}</div>
+                  <div style={{ ...mono, fontSize: 9, color: "#8FA1B8", letterSpacing: "0.08em", marginBottom: 6 }}>{label.toUpperCase()}</div>
                   {el}
                 </div>
               ))}
             </div>
             <div style={{ display: "flex", gap: 10, marginTop: 22 }}>
-              <button onClick={() => setShowNewForm(false)} style={{ flex: 1, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)", background: "transparent", color: "#556", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: "pointer" }}>CANCEL</button>
+              <button onClick={() => setShowNewForm(false)} style={{ flex: 1, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)", background: "transparent", color: "#8FA1B8", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: "pointer" }}>CANCEL</button>
               <button onClick={saveNewProject} disabled={!npName.trim() || npSaving} style={{ flex: 2, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(45,212,191,0.3)", background: "rgba(45,212,191,0.1)", color: "#2DD4BF", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: npName.trim() ? "pointer" : "not-allowed", opacity: npName.trim() ? 1 : 0.4, transition: "all 0.2s" }}>{npSaving ? "SAVING..." : "CREATE PROJECT →"}</button>
             </div>
           </div>
@@ -417,7 +417,7 @@ function DeliverableCard({ d }) {
         <div>
           <div style={{ fontSize: 14, fontWeight: 600, color: d.status === "not_started" ? "#778" : "#E8E8F0", marginBottom: 3 }}>{d.title}</div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-            <span style={{ ...mono, fontSize: 10, color: "#445" }}>{d.detail}</span>
+            <span style={{ ...mono, fontSize: 10, color: "#6E819A" }}>{d.detail}</span>
             {d.sent && <span style={{ ...mono, fontSize: 10, color: "#334" }}>{d.status === "pending" ? d.sent : "Sent " + d.sent}</span>}
           </div>
         </div>
@@ -428,3 +428,4 @@ function DeliverableCard({ d }) {
     </div>
   );
 }
+

@@ -23,16 +23,16 @@ const ORANGE = "249,115,22";
 function glowCard(rgb, h) {
   return {
     background: h
-      ? "linear-gradient(180deg, rgba(28,38,50,0.43), rgba(14,22,34,0.39))"
-      : "linear-gradient(180deg, rgba(22,30,40,0.37), rgba(12,18,28,0.33))",
-    border: `1px solid rgba(255,255,255,${h ? 0.22 : 0.17})`,
+      ? "linear-gradient(180deg, rgba(6,32,38,0.78), rgba(10,22,34,0.75) 48%, rgba(6,18,26,0.8))"
+      : "linear-gradient(180deg, rgba(5,30,35,0.75), rgba(10,20,30,0.72) 48%, rgba(6,16,24,0.78))",
+    border: `1px solid rgba(${rgb},${h ? 0.42 : 0.35})`,
     boxShadow: h
-      ? `0 14px 38px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.34), 0 0 24px rgba(${rgb},0.16)`
-      : `0 10px 30px rgba(0,0,0,0.3), 0 2px 10px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.22), 0 0 16px rgba(${rgb},0.1)`,
-    backdropFilter: h ? "blur(14px) saturate(190%)" : "blur(12px) saturate(180%)",
-    WebkitBackdropFilter: h ? "blur(14px) saturate(190%)" : "blur(12px) saturate(180%)",
-    color: "#edf3ff",
-    textShadow: "0 1px 1px rgba(0,0,0,0.35)",
+      ? `0 0 40px rgba(${rgb},0.24), 0 0 78px rgba(${rgb},0.12), 0 10px 26px rgba(0,0,0,0.46), inset 0 1px 0 rgba(255,255,255,0.16)`
+      : `0 0 25px rgba(${rgb},0.12), 0 0 50px rgba(${rgb},0.06), 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12)`,
+    backdropFilter: h ? "blur(9px) saturate(125%)" : "blur(8px) saturate(120%)",
+    WebkitBackdropFilter: h ? "blur(9px) saturate(125%)" : "blur(8px) saturate(120%)",
+    color: "#F2F7FF",
+    textShadow: "0 1px 1px rgba(0,0,0,0.4)",
     transition: "all 0.3s cubic-bezier(0.4,0,0.2,1)",
   };
 }
@@ -50,11 +50,11 @@ function DealCard({ deal }) {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
           <div>
             <div style={{ ...jakarta, fontSize: 16, fontWeight: 700, marginBottom: 3 }}>{deal.name}</div>
-            <div style={{ ...mono, fontSize: 10, color: "#445" }}>{deal.type}</div>
+            <div style={{ ...mono, fontSize: 10, color: "#6E819A" }}>{deal.type}</div>
           </div>
           <div style={{ ...jakarta, fontSize: 24, fontWeight: 800, color: `rgba(${rgb},0.55)`, lineHeight: 1 }}>{deal.value}</div>
         </div>
-        <div style={{ fontSize: 12, color: "#667", marginBottom: 14 }}>{deal.meta}</div>
+        <div style={{ fontSize: 12, color: "#AAB8C8", marginBottom: 14 }}>{deal.meta}</div>
         <div style={{ marginBottom: 12 }}>
           <div style={{ width: "100%", height: 3, background: "rgba(255,255,255,0.04)", borderRadius: 2 }}>
             <div style={{ width: deal.pct + "%", height: "100%", background: `rgba(${rgb},0.85)`, borderRadius: 2, transition: "width 0.6s" }} />
@@ -82,7 +82,7 @@ function WorkshopCard({ ws }) {
             <div style={{ ...jakarta, fontSize: 16, fontWeight: 700, marginBottom: 6 }}>{ws.name}</div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               {[ws.date, ws.location, ws.duration].map((t, i) => (
-                <span key={i} style={{ ...mono, fontSize: 10, color: "#556" }}>{t}</span>
+                <span key={i} style={{ ...mono, fontSize: 10, color: "#8FA1B8" }}>{t}</span>
               ))}
             </div>
           </div>
@@ -91,17 +91,17 @@ function WorkshopCard({ ws }) {
         <div style={{ borderTop: "1px dashed rgba(255,255,255,0.06)", paddingTop: 14, display: "flex", gap: 28, alignItems: "flex-end" }}>
           <div>
             <div style={{ ...jakarta, fontSize: 24, fontWeight: 800, color: "#2DD4BF" }}>{ws.seats}</div>
-            <div style={{ ...mono, fontSize: 10, color: "#445", marginTop: 2 }}>of {ws.totalSeats} seats</div>
+            <div style={{ ...mono, fontSize: 10, color: "#6E819A", marginTop: 2 }}>of {ws.totalSeats} seats</div>
           </div>
           <div>
             <div style={{ ...jakarta, fontSize: 24, fontWeight: 800, color: "#D4A800" }}>{ws.revenue}</div>
-            <div style={{ ...mono, fontSize: 10, color: "#445", marginTop: 2 }}>revenue</div>
+            <div style={{ ...mono, fontSize: 10, color: "#6E819A", marginTop: 2 }}>revenue</div>
           </div>
           <div style={{ flex: 1 }}>
             <div style={{ width: "100%", height: 3, background: "rgba(255,255,255,0.04)", borderRadius: 2, marginTop: 10 }}>
               <div style={{ width: ws.fillPct + "%", height: "100%", background: "#2DD4BF", borderRadius: 2 }} />
             </div>
-            <div style={{ ...mono, fontSize: 10, color: "#556", marginTop: 4, textAlign: "right" }}>{ws.fillPct}% full</div>
+            <div style={{ ...mono, fontSize: 10, color: "#8FA1B8", marginTop: 4, textAlign: "right" }}>{ws.fillPct}% full</div>
           </div>
         </div>
       </div>
@@ -128,11 +128,11 @@ function RevenueSlide({ slide, active, isMobile }) {
           <circle cx={sz/2} cy={sz/2} r={sz*0.25} fill={`rgba(${rgb},0.015)`} />
         </svg>
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-          <div style={{ ...mono, fontSize: isMobile ? 8 : 10, color: "#445", letterSpacing: "0.08em", marginBottom: 6 }}>{label}</div>
+          <div style={{ ...mono, fontSize: isMobile ? 8 : 10, color: "#6E819A", letterSpacing: "0.08em", marginBottom: 6 }}>{label}</div>
           <div style={{ ...jakarta, fontSize: isMobile ? 30 : 44, fontWeight: 800, color, lineHeight: 0.9, letterSpacing: "-0.03em" }}>{value}</div>
           <div style={{ display: "flex", alignItems: "center", gap: 4, marginTop: 8 }}>
             {subColor && <span style={{ display: "inline-block", width: 0, height: 0, borderLeft: "3px solid transparent", borderRight: "3px solid transparent", borderBottom: "5px solid " + subColor }} />}
-            <span style={{ ...mono, fontSize: 10, color: subColor || "#556" }}>{sub}</span>
+            <span style={{ ...mono, fontSize: 10, color: subColor || "#8FA1B8" }}>{sub}</span>
           </div>
         </div>
       </div>
@@ -194,7 +194,7 @@ export default function BusinessPage() {
             ].map((s, i) => (
               <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 5, padding: isMobile ? "0 12px 0 0" : "0 20px", borderLeft: !isMobile && i > 0 ? "1px dashed rgba(255,255,255,0.06)" : "none" }}>
                 <span style={{ ...jakarta, fontSize: isMobile ? 15 : 18, fontWeight: 800, color: s.color }}>{s.val}</span>
-                <span style={{ ...mono, fontSize: 10, color: "#445" }}>{s.label}</span>
+                <span style={{ ...mono, fontSize: 10, color: "#6E819A" }}>{s.label}</span>
               </div>
             ))}
           </div>
@@ -204,7 +204,7 @@ export default function BusinessPage() {
         <div style={{ textAlign: "center", padding: "48px 0 40px" }}>
           <div style={{ ...mono, fontSize: 10, color: "#D4A800", letterSpacing: "0.12em", marginBottom: 12 }}>REVENUE</div>
           <h2 style={{ ...jakarta, fontSize: 36, fontWeight: 800, letterSpacing: "-0.03em", marginBottom: 8 }}>DEALS, WORKSHOPS &amp; REVENUE.</h2>
-          <p style={{ fontSize: 13, color: "#556", maxWidth: 440, margin: "0 auto 40px" }}>Your business at a glance. Active contracts, upcoming workshops, and revenue tracking across all streams.</p>
+          <p style={{ fontSize: 13, color: "#8FA1B8", maxWidth: 440, margin: "0 auto 40px" }}>Your business at a glance. Active contracts, upcoming workshops, and revenue tracking across all streams.</p>
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 24 }}>
             {/* Prev */}
@@ -226,7 +226,7 @@ export default function BusinessPage() {
           <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 20 }}>
             {slides.map((_, i) => (
               <div key={i} onClick={() => setSlide(i)} style={{ width: 28, height: 28, borderRadius: "50%", border: `1px solid ${i === slide ? slideColors[i] : "rgba(255,255,255,0.08)"}`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.3s", background: i === slide ? `rgba(${slideRgbs[i]},0.08)` : "transparent", boxShadow: i === slide ? `0 0 12px rgba(${slideRgbs[i]},0.2)` : "none" }}>
-                <span style={{ ...mono, fontSize: 10, color: i === slide ? slideColors[i] : "#445" }}>0{i + 1}</span>
+                <span style={{ ...mono, fontSize: 10, color: i === slide ? slideColors[i] : "#6E819A" }}>0{i + 1}</span>
               </div>
             ))}
           </div>
@@ -257,7 +257,7 @@ export default function BusinessPage() {
           <LeadRow
             label="PLANNING" labelColor="#F97316"
             name="Advanced Prompt Engineering" sub="Jun 01 / Online"
-            badge="Registration opens May 10" badgeColor="#445"
+            badge="Registration opens May 10" badgeColor="#6E819A"
             rgb={TEAL}
           />
         </div>
@@ -268,7 +268,7 @@ export default function BusinessPage() {
             {bottomStats.map((s, i) => (
               <div key={i} style={{ borderLeft: i > 0 ? "1px dashed rgba(255,255,255,0.06)" : "none" }}>
                 <div style={{ ...jakarta, fontSize: 26, fontWeight: 800, color: s.color }}>{s.value}</div>
-                <div style={{ ...mono, fontSize: 10, color: "#445", letterSpacing: "0.06em", marginTop: 3 }}>{s.label}</div>
+                <div style={{ ...mono, fontSize: 10, color: "#6E819A", letterSpacing: "0.06em", marginTop: 3 }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -298,3 +298,4 @@ function LeadRow({ label, labelColor, name, sub, badge, badgeColor, rgb }) {
     </div>
   );
 }
+

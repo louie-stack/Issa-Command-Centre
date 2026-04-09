@@ -9,8 +9,8 @@ import { LiquidCard } from "@/components/ui/liquid-glass-card";
 const AGENT_META = [
   { color: "#2DD4BF", rgb: "45,212,191", statusColor: "#2DD4BF", video: "/Chronos%20Character%20Vid.mp4", agentId: "chronos", roleLabel: "CHIEF OF STAFF" },
   { color: "#F97316", rgb: "249,115,22", statusColor: "#F97316", video: "/SCRIPT-V%20Character%20Vid.mp4", agentId: "scriptv", roleLabel: "CONTENT PIPELINE" },
-  { color: "#D4A800", rgb: "212,168,0", statusColor: "#445", video: "/LUMEN%20Character%20Vid.mp4", agentId: "lumen", roleLabel: "COLOR + GRADE" },
-  { color: "#8CA0C8", rgb: "140,160,200", statusColor: "#445", video: "/SYNTHETIX%20Character%20Vid.mp4", agentId: "synthetix", roleLabel: "RESEARCH INTEL" },
+  { color: "#D4A800", rgb: "212,168,0", statusColor: "#6E819A", video: "/LUMEN%20Character%20Vid.mp4", agentId: "lumen", roleLabel: "COLOR + GRADE" },
+  { color: "#8CA0C8", rgb: "140,160,200", statusColor: "#6E819A", video: "/SYNTHETIX%20Character%20Vid.mp4", agentId: "synthetix", roleLabel: "RESEARCH INTEL" },
 ];
 const SC = { "In Production": "#2DD4BF", Review: "#F59E0B", Concept: "#5EEAD4", Generating: "#F97316", Queued: "#64748B" };
 const riskC = { none: "#10B981", low: "#2DD4BF", medium: "#F59E0B" };
@@ -367,7 +367,7 @@ function SectionBadge({ children, idx = "01" }) {
     <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
       <svg width="12" height="12" viewBox="0 0 12 12"><line x1="6" y1="0" x2="6" y2="12" stroke="#2DD4BF" strokeWidth="0.6" opacity="0.4"/><line x1="0" y1="6" x2="12" y2="6" stroke="#2DD4BF" strokeWidth="0.6" opacity="0.4"/></svg>
       <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, letterSpacing: "0.08em", color: "#2DD4BF" }}>[{idx}]</span>
-      <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, letterSpacing: "0.08em", color: "#556" }}>{children}</span>
+      <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, letterSpacing: "0.08em", color: "#8FA1B8" }}>{children}</span>
     </div>
   );
 }
@@ -379,13 +379,13 @@ function SectionHeader({ badge, idx, title, desc, right }) {
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
           <svg width="10" height="10" viewBox="0 0 10 10"><line x1="5" y1="0" x2="5" y2="10" stroke="#2DD4BF" strokeWidth="0.5" opacity="0.3" /><line x1="0" y1="5" x2="10" y2="5" stroke="#2DD4BF" strokeWidth="0.5" opacity="0.3" /></svg>
           <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#2DD4BF" }}>[{idx}]</span>
-          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#556" }}>{badge}</span>
+          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#8FA1B8" }}>{badge}</span>
         </div>
       </Reveal>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 16 }}>
         <div>
           <WordReveal text={title} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32, fontWeight: 700, letterSpacing: "0.02em", lineHeight: 1.1, textTransform: "uppercase", marginBottom: desc ? 10 : 0, color: "#FFFFFF", textShadow: "0 1px 2px rgba(0,0,0,0.35)" }} />
-          {desc && <Reveal delay={200}><p style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: "#445", maxWidth: 480, lineHeight: 1.6 }}>{desc}</p></Reveal>}
+          {desc && <Reveal delay={200}><p style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: "#6E819A", maxWidth: 480, lineHeight: 1.6 }}>{desc}</p></Reveal>}
         </div>
         {right && <Reveal delay={300}>{right}</Reveal>}
       </div>
@@ -421,7 +421,7 @@ function MeetingItem({ meeting: m, sel, onSelect }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
           <div style={{ fontSize: 13, fontWeight: 600, color: active ? "#F0DC82" : "#E8E8F0", transition: "color 0.2s" }}>{m.title}</div>
-          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445", marginTop: 2, fontSize: 11 }}>{m.dur}</div>
+          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#6E819A", marginTop: 2, fontSize: 11 }}>{m.dur}</div>
         </div>
         <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: "#D4A800", fontWeight: 600 }}>[{m.time}]</span>
       </div>
@@ -441,10 +441,10 @@ function WorkshopItem({ workshop: w, sel, onSelect }) {
       <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 5, color: active ? "#C8E8E4" : "#E8E8F0", transition: "color 0.2s" }}>{w.name}</div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", gap: 8 }}>
-          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445" }}>{w.date}</span>
-          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445" }}>{w.format}</span>
+          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#6E819A" }}>{w.date}</span>
+          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#6E819A" }}>{w.format}</span>
         </div>
-        <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, fontWeight: 700, color: "#2DD4BF" }}>{w.reg}<span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#445", marginLeft: 4 }}>reg</span></span>
+        <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, fontWeight: 700, color: "#2DD4BF" }}>{w.reg}<span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#6E819A", marginLeft: 4 }}>reg</span></span>
       </div>
     </div>
   );
@@ -587,7 +587,7 @@ function ChatCard({ visible }) {
         </div>
         <div>
           <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 15, fontWeight: 700, color: "#E8E8F0" }}>Just start talking.</div>
-          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#556" }}>4 agents standing by</div>
+          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#8FA1B8" }}>4 agents standing by</div>
         </div>
         <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 4 }}>
           {[1,1,1,0].map((on,j) => <span key={j} style={{ width: 4, height: 4, borderRadius: "50%", background: on ? "#2DD4BF" : "rgba(255,255,255,0.06)", boxShadow: on ? "0 0 5px rgba(45,212,191,0.4)" : "none" }} />)}
@@ -607,7 +607,7 @@ function ChatCard({ visible }) {
             <div style={{ width: 22, height: 22, borderRadius: 7, background: `rgba(${m.color},0.06)`, border: `1px solid rgba(${m.color},0.1)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 7, fontWeight: 800, color: `rgba(${m.color},0.8)`, flexShrink: 0 }}>{m.name}</div>
             <div style={{ padding: "9px 14px", borderRadius: "14px 14px 14px 4px", background: `rgba(${m.color},0.03)`, border: `1px solid rgba(${m.color},0.05)`, maxWidth: "75%" }}>
               <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#889", lineHeight: 1.5 }}>{m.text}</div>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445", marginTop: 3 }}>{m.agent} / {m.time}</div>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#6E819A", marginTop: 3 }}>{m.agent} / {m.time}</div>
             </div>
           </div>
         ))}
@@ -871,7 +871,7 @@ export default function Page() {
 
       {/* TODAY'S FOCUS */}
       <section style={{ padding: isMobile ? "100px 16px 40px" : "100px 60px 40px", maxWidth: 1440, margin: "0 auto" }}>
-        <SectionHeader idx="01" badge="YOUR DAY" title="Today's Focus" desc="priorities · schedule · quick_actions" right={<div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 14px", borderRadius: 3, border: "1px solid rgba(45,212,191,0.06)" }}><span style={{ fontSize: 16 }}>{"\u2600"}</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, fontWeight: 700 }}>72deg</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#445" }}>NYC</span></div>} />
+        <SectionHeader idx="01" badge="YOUR DAY" title="Today's Focus" desc="priorities · schedule · quick_actions" right={<div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 14px", borderRadius: 3, border: "1px solid rgba(45,212,191,0.06)" }}><span style={{ fontSize: 16 }}>{"\u2600"}</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, fontWeight: 700 }}>72deg</span><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: "#6E819A" }}>NYC</span></div>} />
 
         {/* Focus cards */}
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(12, 1fr)", gap: 12 }}>
@@ -937,7 +937,7 @@ export default function Page() {
           </Reveal>
           <Reveal delay={120} style={{ gridColumn: isMobile ? undefined : "span 3" }}>
             <Card>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#556", marginBottom: 14 }}>QUICK ACTIONS</div>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, letterSpacing: "0.08em", color: "#8FA1B8", marginBottom: 14 }}>QUICK ACTIONS</div>
               {[
                 { l: "New Project", ic: "+", c: "#2DD4BF", fn: () => setShowNewProject(true) },
                 { l: "Gen Prompt", ic: "✦", c: "#D4A800", fn: () => { setGpResult(""); setShowGenPrompt(true); } },
@@ -961,7 +961,7 @@ export default function Page() {
               <img src={PROFILE_IMG} alt="" style={{ width: 40, height: 40, borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(255,255,255,0.1)", flexShrink: 0 }} />
               <div>
                 <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, fontWeight: 700, color: "#D8D8E0", lineHeight: 1.2 }}>Issa Sissoko</div>
-                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#556", marginTop: 4, lineHeight: 1.4 }}>AI Filmmaker · Creative Director</div>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#8FA1B8", marginTop: 4, lineHeight: 1.4 }}>AI Filmmaker · Creative Director</div>
               </div>
             </div>
             {/* Agents */}
@@ -973,14 +973,14 @@ export default function Page() {
               </div>
               <div>
                 <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, fontWeight: 800, color: "#2DD4BF", lineHeight: 1 }}>{siteData?.stats?.agentsOnline ?? 3}</div>
-                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.08em", marginTop: 4 }}>AGENTS ONLINE</div>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#AAB8C8", letterSpacing: "0.08em", marginTop: 4 }}>AGENTS ONLINE</div>
               </div>
             </div>
             {/* Assets */}
             <div className="bento-hover" {...hoverGlow("212,168,0","rgba(212,168,0,0.2)","0 0 16px rgba(212,168,0,0.12), 0 0 50px rgba(212,168,0,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(212,168,0,0.04)")} style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 12, background: "rgba(212,168,0,0.03)", border: "1px solid rgba(212,168,0,0.1)", cursor: "default" }}>
               <div>
                 <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, fontWeight: 800, color: "#D4A800", lineHeight: 1 }}>{siteData?.stats?.assetsGenerated ?? 847}</div>
-                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.08em", marginTop: 4 }}>ASSETS GENERATED</div>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#AAB8C8", letterSpacing: "0.08em", marginTop: 4 }}>ASSETS GENERATED</div>
               </div>
             </div>
             {/* Pipeline */}
@@ -989,7 +989,7 @@ export default function Page() {
                 <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, fontWeight: 800, color: "#E8E8F0", lineHeight: 1, display: "flex", alignItems: "baseline", gap: 2 }}>
                   <span style={{ fontSize: 16, fontWeight: 700 }}>$</span>{siteData?.stats?.pipelineValue ?? 26}k
                 </div>
-                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#667", letterSpacing: "0.08em", marginTop: 4 }}>PIPELINE VALUE</div>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#AAB8C8", letterSpacing: "0.08em", marginTop: 4 }}>PIPELINE VALUE</div>
               </div>
             </div>
           </div>
@@ -1007,7 +1007,7 @@ export default function Page() {
           <section style={{ padding: "80px 0 0", position: "relative" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "1px dashed rgba(255,255,255,0.06)" }} />
             
-            <SectionHeader idx="02" badge="PROJECTS" title="Active Work" desc="personal_ip ' client_work ' consulting" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 36, fontWeight: 700, color: "#2DD4BF" }}><Counter to={4} dur={1200} /><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#445", marginLeft: 6 }}>active</span></span>} />
+            <SectionHeader idx="02" badge="PROJECTS" title="Active Work" desc="personal_ip ' client_work ' consulting" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 36, fontWeight: 700, color: "#2DD4BF" }}><Counter to={4} dur={1200} /><span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#6E819A", marginLeft: 6 }}>active</span></span>} />
 
             {/*  FEATURED: MANSA  */}
             <Reveal delay={40} parallax={0.2}>
@@ -1035,15 +1035,15 @@ export default function Page() {
                       <Pill t="FEATURED" c="#2DD4BF" />
                       <Pill t="IN PRODUCTION" c="#2DD4BF" />
                     </div>
-                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#445", letterSpacing: "0.08em", marginBottom: 8 }}>PERSONAL IP ' EPISODE 1</div>
+                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#6E819A", letterSpacing: "0.08em", marginBottom: 8 }}>PERSONAL IP ' EPISODE 1</div>
                     <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 26, fontWeight: 800, color: "#F0F0F5", margin: "0 0 10px", letterSpacing: "-0.02em" }}>Mansa: Whispers of the Wind</h3>
-                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#556", lineHeight: 1.6, margin: "0 0 24px" }}>African historical epic. Full storyboard pipeline from script to first-frame prompts, motion direction, and camera language. Collaborating with Hoyt Dwyer.</p>
+                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#8FA1B8", lineHeight: 1.6, margin: "0 0 24px" }}>African historical epic. Full storyboard pipeline from script to first-frame prompts, motion direction, and camera language. Collaborating with Hoyt Dwyer.</p>
                     <div style={{ marginTop: "auto" }}>
                       <div style={{ display: "flex", gap: 1, borderRadius: 12, overflow: "hidden" }}>
                         {[{v: siteData?.projects?.[0]?.shots ?? "24", l:"SHOTS"},{v: siteData?.projects?.[0]?.scenes ?? "6", l:"SCENES"},{v: (siteData?.projects?.[0]?.completion ?? "72") + "%", l:"COMPLETE"},{v: siteData?.projects?.[0]?.deadline ?? "Apr 15", l:"TARGET"}].map((s,j)=>(
                           <div key={j} style={{ flex: 1, background: "rgba(255,255,255,0.03)", padding: "14px 8px", textAlign: "center", borderRight: j<3 ? "1px solid rgba(255,255,255,0.03)" : "none" }}>
                             <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 16, fontWeight: 800, color: "rgba(45,212,191,0.8)" }}>{s.v}</div>
-                            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 6, color: "#445", marginTop: 3, letterSpacing: "0.1em" }}>{s.l}</div>
+                            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 6, color: "#6E819A", marginTop: 3, letterSpacing: "0.1em" }}>{s.l}</div>
                           </div>
                         ))}
                       </div>
@@ -1067,8 +1067,8 @@ export default function Page() {
                       <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="6" y="4" width="24" height="28" rx="3" stroke="#F97316" strokeWidth="0.8" opacity="0.3"/><line x1="11" y1="11" x2="25" y2="11" stroke="#F97316" strokeWidth="0.5" opacity="0.2"/><line x1="11" y1="16" x2="22" y2="16" stroke="#F97316" strokeWidth="0.5" opacity="0.15"/></svg>
                     </div>
                     <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 15, fontWeight: 800, color: "#E8E8F0", margin: "20px 0 6px", textTransform: "uppercase" }}>Coca-Cola Holiday</h3>
-                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#556", lineHeight: 1.5, margin: "0 0 14px" }}>Brand campaign. Script interpretation, visual storytelling. Awaiting client review.</p>
-                    <div style={{ display: "flex", gap: 12, fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#445" }}>
+                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#8FA1B8", lineHeight: 1.5, margin: "0 0 14px" }}>Brand campaign. Script interpretation, visual storytelling. Awaiting client review.</p>
+                    <div style={{ display: "flex", gap: 12, fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#6E819A" }}>
                       <span><span style={{ color: "#F97316", fontWeight: 700, fontSize: 13 }}>12</span> frames</span>
                       <span>Mar 28</span>
                     </div>
@@ -1088,8 +1088,8 @@ export default function Page() {
                       <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="12" r="5" stroke="#5EEAD4" strokeWidth="0.8" opacity="0.3"/><path d="M8 30 Q18 22 28 30" stroke="#5EEAD4" strokeWidth="0.8" opacity="0.25" fill="none"/></svg>
                     </div>
                     <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 15, fontWeight: 800, color: "#E8E8F0", margin: "20px 0 6px", textTransform: "uppercase" }}>AI Workshop Series</h3>
-                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#556", lineHeight: 1.5, margin: "0 0 14px" }}>Teaching creators to harness AI. Practical, hands-on sessions.</p>
-                    <div style={{ display: "flex", gap: 12, fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#445" }}>
+                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#8FA1B8", lineHeight: 1.5, margin: "0 0 14px" }}>Teaching creators to harness AI. Practical, hands-on sessions.</p>
+                    <div style={{ display: "flex", gap: 12, fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#6E819A" }}>
                       <span><span style={{ color: "#5EEAD4", fontWeight: 700, fontSize: 13 }}>24</span> registered</span>
                       <span>May 01</span>
                     </div>
@@ -1109,8 +1109,8 @@ export default function Page() {
                       <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="5" y="5" width="10" height="10" rx="2" stroke="#2DD4BF" strokeWidth="0.7" opacity="0.3"/><rect x="19" y="5" width="10" height="10" rx="2" stroke="#2DD4BF" strokeWidth="0.7" opacity="0.3"/><rect x="5" y="19" width="10" height="10" rx="2" stroke="#2DD4BF" strokeWidth="0.7" opacity="0.3"/><rect x="19" y="19" width="10" height="10" rx="2" stroke="#2DD4BF" strokeWidth="0.7" opacity="0.3"/></svg>
                     </div>
                     <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 15, fontWeight: 800, color: "#E8E8F0", margin: "20px 0 6px", textTransform: "uppercase" }}>Freepik AI Templates</h3>
-                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#556", lineHeight: 1.5, margin: "0 0 14px" }}>AI creative consultant deliverables. Scalable template system.</p>
-                    <div style={{ display: "flex", gap: 12, fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#445" }}>
+                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#8FA1B8", lineHeight: 1.5, margin: "0 0 14px" }}>AI creative consultant deliverables. Scalable template system.</p>
+                    <div style={{ display: "flex", gap: 12, fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#6E819A" }}>
                       <span><span style={{ color: "#2DD4BF", fontWeight: 700, fontSize: 13 }}>4</span> templates</span>
                       <span>Mar 31</span>
                     </div>
@@ -1125,7 +1125,7 @@ export default function Page() {
             <div style={{ textAlign: "center", marginBottom: 48 }}>
               <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#2DD4BF", letterSpacing: "0.12em", marginBottom: 12 }}>CONTENT PIPELINE</div>
               <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 36, fontWeight: 800, color: "#E8E8F0", letterSpacing: "-0.02em", margin: "0 0 12px", textTransform: "uppercase" }}>From prompt to delivery.</h2>
-              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: "#556", maxWidth: 440, margin: "0 auto" }}>Your agents move content through the pipeline. Every frame tracked, every stage visible.</p>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: "#8FA1B8", maxWidth: 440, margin: "0 auto" }}>Your agents move content through the pipeline. Every frame tracked, every stage visible.</p>
             </div>
 
             {/* Horizontal flow line with agent nodes */}
@@ -1167,10 +1167,10 @@ export default function Page() {
                           <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, letterSpacing: "0.1em", color: stage.color }}>{stage.label}</span>
                           <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 20, fontWeight: 800, color: stage.color }}>{stage.count}</span>
                         </div>
-                        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#556", lineHeight: 1.5, margin: "0 0 14px" }}>{stage.desc}</p>
+                        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#8FA1B8", lineHeight: 1.5, margin: "0 0 14px" }}>{stage.desc}</p>
                         <div style={{ display: "flex", alignItems: "center", gap: 6, paddingTop: 10, borderTop: "1px solid rgba(255,255,255,0.03)" }}>
                           <span style={{ width: 4, height: 4, borderRadius: "50%", background: stage.color, opacity: 0.6 }} />
-                          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445" }}>{stage.agent}</span>
+                          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#6E819A" }}>{stage.agent}</span>
                         </div>
                       </div>
                     ); })()}
@@ -1230,11 +1230,11 @@ export default function Page() {
     </div>
     <div style={{ padding: "18px 18px 16px" }}>
       <h4 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 17, fontWeight: 800, color: "#E8E8F0", marginBottom: 4 }}>{agent.name}</h4>
-      <p style={{ fontSize: 12, color: "#667", lineHeight: 1.5, marginBottom: 14, minHeight: 36 }}>{agent.desc}</p>
+      <p style={{ fontSize: 12, color: "#AAB8C8", lineHeight: 1.5, marginBottom: 14, minHeight: 36 }}>{agent.desc}</p>
       {agent.progress > 0 ? (
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#445" }}>ACTIVE</span>
+            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#6E819A" }}>ACTIVE</span>
             <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: agent.color }}>{agent.progress}%</span>
           </div>
           <div style={{ height: 2, background: "rgba(255,255,255,0.06)", borderRadius: 2 }}>
@@ -1254,7 +1254,7 @@ export default function Page() {
           <section style={{ padding: "80px 0 0", position: "relative" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "1px dashed rgba(255,255,255,0.06)" }} />
             
-            <SectionHeader idx="04" badge="BUSINESS" title="Deals + Pipeline" desc="partnerships ' workshops ' credentials" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: isMobile ? 22 : 32, fontWeight: 700, color: "#F59E0B" }}>$<Counter to={siteData?.stats?.pipelineValue ?? 26} dur={1400} />k<span style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 9 : 11, color: "#445", marginLeft: 6 }}>pipeline</span></span>} />
+            <SectionHeader idx="04" badge="BUSINESS" title="Deals + Pipeline" desc="partnerships ' workshops ' credentials" right={<span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: isMobile ? 22 : 32, fontWeight: 700, color: "#F59E0B" }}>$<Counter to={siteData?.stats?.pipelineValue ?? 26} dur={1400} />k<span style={{ fontFamily: "'Space Mono', monospace", fontSize: isMobile ? 9 : 11, color: "#6E819A", marginLeft: 6 }}>pipeline</span></span>} />
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(12, 1fr)", gap: 12 }}>
               <Reveal delay={40} style={{ gridColumn: isMobile ? undefined : "span 5" }}>
                 <Card onClick={() => router.push("/business#deals")} style={{ cursor: "pointer" }}>
@@ -1269,7 +1269,7 @@ export default function Page() {
                         <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, fontWeight: 700 }}>{d.val}</span>
                       </div>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#445" }}>{d.type}</span>
+                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#6E819A" }}>{d.type}</span>
                         <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: riskC[d.risk], padding: "2px 8px", borderRadius: 2, background: `${riskC[d.risk]}08`, border: `1px solid ${riskC[d.risk]}15` }}>IP'{d.risk.toUpperCase()}</span>
                       </div>
                     </div>
@@ -1320,7 +1320,7 @@ export default function Page() {
                     ].map((s, i) => (
                       <div key={i} onClick={() => s.href && router.push(s.href)} style={{ textAlign: "center", padding: "24px 16px", borderRight: i < 2 ? "1px solid rgba(255,255,255,0.03)" : "none", cursor: s.href ? "pointer" : "default", transition: "background 0.2s" }} onMouseEnter={e => { if (s.href) e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }} onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}>
                         <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32, fontWeight: 700, color: s.c, lineHeight: 1 }}><Counter to={s.v} /></div>
-                        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, letterSpacing: "0.12em", color: "#445", marginTop: 8 }}>{s.l}{s.href && <span style={{ marginLeft: 4, opacity: 0.4 }}>→</span>}</div>
+                        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, letterSpacing: "0.12em", color: "#6E819A", marginTop: 8 }}>{s.l}{s.href && <span style={{ marginLeft: 4, opacity: 0.4 }}>→</span>}</div>
                       </div>
                     ))}
                   </div>
@@ -1361,7 +1361,7 @@ export default function Page() {
                 <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#2DD4BF", letterSpacing: "0.1em", marginBottom: 4 }}>NEW PROJECT</div>
                 <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 18, fontWeight: 800, color: "#E8E8F0" }}>Create Project</div>
               </div>
-              <button onClick={() => setShowNewProject(false)} style={{ width: 28, height: 28, borderRadius: 8, border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)", color: "#556", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>×</button>
+              <button onClick={() => setShowNewProject(false)} style={{ width: 28, height: 28, borderRadius: 8, border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)", color: "#8FA1B8", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>×</button>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {[
@@ -1371,13 +1371,13 @@ export default function Page() {
                 { label: "Target Deadline", el: <input type="date" value={npDeadline} onChange={e => setNpDeadline(e.target.value)} style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(45,212,191,0.15)", borderRadius: 8, padding: "9px 12px", color: "#C8E8E4", fontSize: 13, fontFamily: "inherit", outline: "none", colorScheme: "dark", boxSizing: "border-box" }} /> },
               ].map(({ label, el }) => (
                 <div key={label}>
-                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#556", letterSpacing: "0.08em", marginBottom: 6 }}>{label.toUpperCase()}</div>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#8FA1B8", letterSpacing: "0.08em", marginBottom: 6 }}>{label.toUpperCase()}</div>
                   {el}
                 </div>
               ))}
             </div>
             <div style={{ display: "flex", gap: 10, marginTop: 22 }}>
-              <button onClick={() => setShowNewProject(false)} style={{ flex: 1, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)", background: "transparent", color: "#556", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: "pointer" }}>CANCEL</button>
+              <button onClick={() => setShowNewProject(false)} style={{ flex: 1, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)", background: "transparent", color: "#8FA1B8", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: "pointer" }}>CANCEL</button>
               <button onClick={saveNewProject} disabled={!npName.trim() || npSaving} style={{ flex: 2, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(45,212,191,0.3)", background: "rgba(45,212,191,0.1)", color: "#2DD4BF", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: npName.trim() ? "pointer" : "not-allowed", opacity: npName.trim() ? 1 : 0.4, transition: "all 0.2s" }}>{npSaving ? "SAVING..." : "CREATE PROJECT →"}</button>
             </div>
           </div>
@@ -1393,24 +1393,24 @@ export default function Page() {
                 <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#D4A800", letterSpacing: "0.1em", marginBottom: 4 }}>AGENT TASK</div>
                 <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 18, fontWeight: 800, color: "#E8E8F0" }}>Generate Brief</div>
               </div>
-              <button onClick={() => setShowGenPrompt(false)} style={{ width: 28, height: 28, borderRadius: 8, border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)", color: "#556", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>×</button>
+              <button onClick={() => setShowGenPrompt(false)} style={{ width: 28, height: 28, borderRadius: 8, border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)", color: "#8FA1B8", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>×</button>
             </div>
             <div style={{ display: "flex", gap: 12, marginBottom: 14 }}>
               <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#556", letterSpacing: "0.08em", marginBottom: 6 }}>AGENT</div>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#8FA1B8", letterSpacing: "0.08em", marginBottom: 6 }}>AGENT</div>
                 <select value={gpAgent} onChange={e => setGpAgent(e.target.value)} style={{ width: "100%", background: "rgba(6,12,18,0.98)", border: "1px solid rgba(212,168,0,0.15)", borderRadius: 8, padding: "9px 12px", color: "#C8E8E4", fontSize: 12, fontFamily: "'Space Mono', monospace", outline: "none", cursor: "pointer" }}>
                   {["Chronos","Script-V","Lumen","Synthetix"].map(o => <option key={o} value={o}>{o}</option>)}
                 </select>
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#556", letterSpacing: "0.08em", marginBottom: 6 }}>PROJECT</div>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#8FA1B8", letterSpacing: "0.08em", marginBottom: 6 }}>PROJECT</div>
                 <select value={gpProject} onChange={e => setGpProject(e.target.value)} style={{ width: "100%", background: "rgba(6,12,18,0.98)", border: "1px solid rgba(212,168,0,0.15)", borderRadius: 8, padding: "9px 12px", color: "#C8E8E4", fontSize: 12, fontFamily: "'Space Mono', monospace", outline: "none", cursor: "pointer" }}>
                   {["Mansa","Coca-Cola","AI Workshop","Freepik"].map(o => <option key={o} value={o}>{o}</option>)}
                 </select>
               </div>
             </div>
             <div style={{ marginBottom: 14 }}>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#556", letterSpacing: "0.08em", marginBottom: 6 }}>TASK DESCRIPTION</div>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#8FA1B8", letterSpacing: "0.08em", marginBottom: 6 }}>TASK DESCRIPTION</div>
               <textarea value={gpTask} onChange={e => setGpTask(e.target.value)} placeholder={"Describe what you need the agent to do…\n\ne.g. Generate 6 shot prompts for the coronation scene — cinematic, golden hour, wide establishing and 2 close-ups."} rows={4} style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(212,168,0,0.15)", borderRadius: 8, padding: "10px 12px", color: "#C8E8E4", fontSize: 13, fontFamily: "inherit", outline: "none", resize: "vertical", boxSizing: "border-box", lineHeight: 1.5 }} />
             </div>
             {gpResult ? (
@@ -1422,12 +1422,12 @@ export default function Page() {
             <div style={{ display: "flex", gap: 10 }}>
               {gpResult ? (
                 <>
-                  <button onClick={() => { setGpResult(""); setGpTask(""); }} style={{ flex: 1, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)", background: "transparent", color: "#556", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: "pointer" }}>RESET</button>
+                  <button onClick={() => { setGpResult(""); setGpTask(""); }} style={{ flex: 1, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)", background: "transparent", color: "#8FA1B8", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: "pointer" }}>RESET</button>
                   <button onClick={copyPrompt} style={{ flex: 2, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(212,168,0,0.3)", background: "rgba(212,168,0,0.1)", color: "#D4A800", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: "pointer", transition: "all 0.2s" }}>{gpCopied ? "✓ COPIED" : "COPY BRIEF"}</button>
                 </>
               ) : (
                 <>
-                  <button onClick={() => setShowGenPrompt(false)} style={{ flex: 1, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)", background: "transparent", color: "#556", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: "pointer" }}>CANCEL</button>
+                  <button onClick={() => setShowGenPrompt(false)} style={{ flex: 1, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)", background: "transparent", color: "#8FA1B8", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: "pointer" }}>CANCEL</button>
                   <button onClick={generatePrompt} disabled={!gpTask.trim()} style={{ flex: 2, padding: "10px 0", borderRadius: 8, border: "1px solid rgba(212,168,0,0.3)", background: "rgba(212,168,0,0.1)", color: "#D4A800", fontSize: 12, fontFamily: "'Space Mono', monospace", cursor: gpTask.trim() ? "pointer" : "not-allowed", opacity: gpTask.trim() ? 1 : 0.4, transition: "all 0.2s" }}>GENERATE BRIEF →</button>
                 </>
               )}
@@ -1438,6 +1438,7 @@ export default function Page() {
     </div>
   );
 }
+
 
 
 

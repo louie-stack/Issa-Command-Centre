@@ -9,16 +9,16 @@ const jk = { fontFamily: "'Plus Jakarta Sans', sans-serif" };
 function glowCard(rgb, h) {
   return {
     background: h
-      ? "linear-gradient(180deg, rgba(28,38,50,0.43), rgba(14,22,34,0.39))"
-      : "linear-gradient(180deg, rgba(22,30,40,0.37), rgba(12,18,28,0.33))",
-    border: `1px solid rgba(255,255,255,${h ? 0.22 : 0.17})`,
+      ? "linear-gradient(180deg, rgba(6,32,38,0.78), rgba(10,22,34,0.75) 48%, rgba(6,18,26,0.8))"
+      : "linear-gradient(180deg, rgba(5,30,35,0.75), rgba(10,20,30,0.72) 48%, rgba(6,16,24,0.78))",
+    border: `1px solid rgba(${rgb},${h ? 0.42 : 0.35})`,
     boxShadow: h
-      ? `0 14px 38px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.34), 0 0 24px rgba(${rgb},0.16)`
-      : `0 10px 30px rgba(0,0,0,0.3), 0 2px 10px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.22), 0 0 16px rgba(${rgb},0.1)`,
-    backdropFilter: h ? "blur(14px) saturate(190%)" : "blur(12px) saturate(180%)",
-    WebkitBackdropFilter: h ? "blur(14px) saturate(190%)" : "blur(12px) saturate(180%)",
-    color: "#edf3ff",
-    textShadow: "0 1px 1px rgba(0,0,0,0.35)",
+      ? `0 0 40px rgba(${rgb},0.24), 0 0 78px rgba(${rgb},0.12), 0 10px 26px rgba(0,0,0,0.46), inset 0 1px 0 rgba(255,255,255,0.16)`
+      : `0 0 25px rgba(${rgb},0.12), 0 0 50px rgba(${rgb},0.06), 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12)`,
+    backdropFilter: h ? "blur(9px) saturate(125%)" : "blur(8px) saturate(120%)",
+    WebkitBackdropFilter: h ? "blur(9px) saturate(125%)" : "blur(8px) saturate(120%)",
+    color: "#F2F7FF",
+    textShadow: "0 1px 1px rgba(0,0,0,0.4)",
     transition: "all 0.3s cubic-bezier(0.4,0,0.2,1)",
   };
 }
@@ -238,7 +238,7 @@ function AgentsPageInner() {
                 <span key={i} style={{ width: 6, height: 6, borderRadius: "50%", background: "#2DD4BF", boxShadow: "0 0 6px rgba(45,212,191,0.4)", animation: `gPulse 2s ease-in-out ${d}s infinite` }} />
               ))}
               <span style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(255,255,255,0.06)" }} />
-              <span style={{ ...mo, fontSize: 11, color: "#556", marginLeft: 4 }}>3 of 4 online</span>
+              <span style={{ ...mo, fontSize: 11, color: "#8FA1B8", marginLeft: 4 }}>3 of 4 online</span>
             </div>
           </div>
         </div>
@@ -273,7 +273,7 @@ function AgentsPageInner() {
                 )}
                 <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 6 : 10, paddingLeft: isMobile ? 10 : 16, position: "relative", flexWrap: isMobile ? "wrap" : "nowrap" }}>
                   <span style={{ width: 5, height: 5, borderRadius: "50%", background: ag.color, opacity: on ? 1 : 0.3, boxShadow: on ? `0 0 6px rgba(${ag.rgb},0.4)` : "none", flexShrink: 0 }} />
-                  <span style={{ ...jk, fontSize: isMobile ? 11 : 12, fontWeight: 800, color: on ? "#E8E8F0" : "#445" }}>{ag.name}</span>
+                  <span style={{ ...jk, fontSize: isMobile ? 11 : 12, fontWeight: 800, color: on ? "#E8E8F0" : "#6E819A" }}>{ag.name}</span>
                   {!isMobile && <span style={{ ...mo, fontSize: 10, color: on ? `rgba(${ag.rgb},0.6)` : "#334" }}>{ag.role}</span>}
                 </div>
               </div>
@@ -311,7 +311,7 @@ function AgentsPageInner() {
                 <span style={{ width: 5, height: 5, borderRadius: "50%", background: a.color, boxShadow: `0 0 6px rgba(${a.rgb},0.4)` }} />
                 <span style={{ ...mo, fontSize: 11, color: a.color, letterSpacing: "0.08em" }}>{a.role.toUpperCase()}</span>
                 <span style={{ width: 1, height: 10, background: "rgba(255,255,255,0.06)" }} />
-                <span style={{ ...mo, fontSize: 11, color: "#445" }}>{statusLabel}</span>
+                <span style={{ ...mo, fontSize: 11, color: "#6E819A" }}>{statusLabel}</span>
               </div>
 
               {/* Name */}
@@ -321,7 +321,7 @@ function AgentsPageInner() {
               <p style={{ ...jk, fontSize: 16, fontWeight: 600, color: a.color, marginBottom: 20, opacity: 0.9 }}>{a.headline}</p>
 
               {/* Description */}
-              <p style={{ fontSize: 14, color: "#667", lineHeight: 1.75, marginBottom: 32, maxWidth: 420 }}>{a.desc}</p>
+              <p style={{ fontSize: 14, color: "#AAB8C8", lineHeight: 1.75, marginBottom: 32, maxWidth: 420 }}>{a.desc}</p>
 
               {/* Stats row — 2x2 on mobile */}
               <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, auto)", gap: isMobile ? 16 : 32, marginBottom: 32 }}>
@@ -333,7 +333,7 @@ function AgentsPageInner() {
                 ].map((s, i) => (
                   <div key={i}>
                     <div style={{ ...jk, fontSize: 22, fontWeight: 800, color: i === 0 || i === 3 ? a.color : "#E8E8F0", lineHeight: 1, marginBottom: 4 }}>{s.v}</div>
-                    <div style={{ ...mo, fontSize: 10, color: "#445", letterSpacing: "0.04em" }}>{s.l}</div>
+                    <div style={{ ...mo, fontSize: 10, color: "#6E819A", letterSpacing: "0.04em" }}>{s.l}</div>
                   </div>
                 ))}
               </div>
@@ -490,3 +490,4 @@ function QueueRow({ task: t, agent: a, isLast }) {
     </div>
   );
 }
+
