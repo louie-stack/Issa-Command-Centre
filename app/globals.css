@@ -35,8 +35,8 @@ html { scroll-behavior: smooth; }
 .bento-hover {
   --card-accent-rgb: 45, 212, 191;
   --card-secondary-rgb: 94, 234, 212;
-  --card-glow-opacity: 0.68;
-  --card-glow-opacity-hover: 0.92;
+  --card-glow-opacity: 0.12;
+  --card-glow-opacity-hover: 0.16;
 
   position: relative;
   isolation: isolate;
@@ -46,18 +46,17 @@ html { scroll-behavior: smooth; }
   background:
     linear-gradient(
       180deg,
-      rgba(var(--card-accent-rgb), 0.085),
-      rgba(10, 14, 22, 0.3) 48%,
-      rgba(var(--card-secondary-rgb), 0.055)
+      rgba(5, 30, 35, 0.75),
+      rgba(10, 20, 30, 0.72) 48%,
+      rgba(6, 16, 24, 0.78)
     ) !important;
-  border: 1px solid rgba(var(--card-accent-rgb), 0.3) !important;
-  backdrop-filter: blur(12px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+  border: 1px solid rgba(var(--card-accent-rgb), 0.25) !important;
+  backdrop-filter: blur(8px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(8px) saturate(120%) !important;
   box-shadow:
-    0 0 40px rgba(var(--card-accent-rgb), 0.3),
-    0 0 80px rgba(var(--card-accent-rgb), 0.15),
-    0 8px 32px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    0 0 15px rgba(var(--card-accent-rgb), 0.08),
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
   color: #edf3ff;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -100,12 +99,12 @@ html { scroll-behavior: smooth; }
   opacity: var(--card-glow-opacity);
   background: radial-gradient(
     ellipse at 50% 50%,
-    rgba(var(--card-accent-rgb), 0.6) 0%,
-    rgba(var(--card-secondary-rgb), 0.42) 36%,
-    rgba(var(--card-accent-rgb), 0.22) 58%,
+    rgba(var(--card-accent-rgb), 0.2) 0%,
+    rgba(var(--card-secondary-rgb), 0.14) 36%,
+    rgba(var(--card-accent-rgb), 0.08) 58%,
     transparent 76%
   );
-  filter: blur(52px) saturate(140%);
+  filter: blur(40px) saturate(110%);
   transform: scale(1);
   transition: opacity 0.35s ease, transform 0.35s ease;
   animation: liquidBacklightPulse 4.8s ease-in-out infinite;
@@ -142,18 +141,17 @@ html { scroll-behavior: smooth; }
   background:
     linear-gradient(
       180deg,
-      rgba(var(--card-accent-rgb), 0.11),
-      rgba(12, 18, 28, 0.35) 48%,
-      rgba(var(--card-secondary-rgb), 0.08)
+      rgba(6, 32, 38, 0.78),
+      rgba(10, 22, 34, 0.75) 48%,
+      rgba(6, 18, 26, 0.8)
     ) !important;
-  border: 1px solid rgba(var(--card-accent-rgb), 0.42) !important;
-  backdrop-filter: blur(14px) saturate(190%) !important;
-  -webkit-backdrop-filter: blur(14px) saturate(190%) !important;
+  border: 1px solid rgba(var(--card-accent-rgb), 0.32) !important;
+  backdrop-filter: blur(9px) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(9px) saturate(125%) !important;
   box-shadow:
-    0 0 56px rgba(var(--card-accent-rgb), 0.42),
-    0 0 96px rgba(var(--card-accent-rgb), 0.24),
-    0 14px 42px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.26) !important;
+    0 0 18px rgba(var(--card-accent-rgb), 0.1),
+    0 8px 24px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
 }
 
 .card-hover:hover::before,
