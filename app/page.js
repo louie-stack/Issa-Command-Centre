@@ -460,6 +460,8 @@ function Card({ children, label, color = "45,212,191", style = {}, onClick }) {
       onMouseEnter={() => setH(true)}
       onMouseLeave={() => setH(false)}
       style={{
+        "--card-accent-rgb": color,
+        "--card-secondary-rgb": color,
         borderRadius: 14,
         padding: 22,
         position: "relative",
@@ -743,6 +745,8 @@ export default function Page() {
   // Returns onMouseEnter/onMouseLeave handlers that intensify a card's own-colour glow on hover
   const hoverGlow = (rgb, restBorder, restShadow) => ({
     onMouseEnter: e => {
+      e.currentTarget.style.setProperty("--card-accent-rgb", rgb);
+      e.currentTarget.style.setProperty("--card-secondary-rgb", rgb);
       e.currentTarget.style.boxShadow = `0 0 35px rgba(${rgb},0.38), 0 0 90px rgba(${rgb},0.18), 0 20px 50px rgba(0,0,0,0.6), inset 0 0 50px rgba(${rgb},0.1)`;
       e.currentTarget.style.borderColor = `rgba(${rgb},0.5)`;
     },
