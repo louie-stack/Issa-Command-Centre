@@ -957,7 +957,7 @@ export default function Page() {
         <Reveal delay={160}>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 12, marginTop: 32 }}>
             {/* Profile */}
-            <div className="bento-hover" {...hoverGlow("255,255,255","rgba(255,255,255,0.1)","0 0 16px rgba(255,255,255,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(255,255,255,0.02)")} style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 12, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", cursor: "default" }}>
+            <div className="bento-hover" {...hoverGlow("255,255,255","rgba(255,255,255,0.1)","0 0 16px rgba(255,255,255,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(255,255,255,0.02)")} style={{ "--card-accent-rgb": "255,255,255", "--card-secondary-rgb": "255,255,255", display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 12, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", cursor: "default" }}>
               <img src={PROFILE_IMG} alt="" style={{ width: 40, height: 40, borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(255,255,255,0.1)", flexShrink: 0 }} />
               <div>
                 <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, fontWeight: 700, color: "#D8D8E0", lineHeight: 1.2 }}>Issa Sissoko</div>
@@ -965,7 +965,7 @@ export default function Page() {
               </div>
             </div>
             {/* Agents */}
-            <div className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.2)","0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)")} style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 12, background: "rgba(45,212,191,0.03)", border: "1px solid rgba(45,212,191,0.1)", cursor: "default" }}>
+            <div className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.2)","0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)")} style={{ "--card-accent-rgb": "45,212,191", "--card-secondary-rgb": "45,212,191", display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 12, background: "rgba(45,212,191,0.03)", border: "1px solid rgba(45,212,191,0.1)", cursor: "default" }}>
               <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                 {[0, 0.3, 0.6].map((d, i) => (
                   <span key={i} style={{ width: 7, height: 7, borderRadius: "50%", background: "#2DD4BF", boxShadow: "0 0 8px rgba(45,212,191,0.5)", animation: `pulse 2s ease-in-out ${d}s infinite`, display: "block" }} />
@@ -977,14 +977,14 @@ export default function Page() {
               </div>
             </div>
             {/* Assets */}
-            <div className="bento-hover" {...hoverGlow("212,168,0","rgba(212,168,0,0.2)","0 0 16px rgba(212,168,0,0.12), 0 0 50px rgba(212,168,0,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(212,168,0,0.04)")} style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 12, background: "rgba(212,168,0,0.03)", border: "1px solid rgba(212,168,0,0.1)", cursor: "default" }}>
+            <div className="bento-hover" {...hoverGlow("212,168,0","rgba(212,168,0,0.2)","0 0 16px rgba(212,168,0,0.12), 0 0 50px rgba(212,168,0,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(212,168,0,0.04)")} style={{ "--card-accent-rgb": "212,168,0", "--card-secondary-rgb": "212,168,0", display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 12, background: "rgba(212,168,0,0.03)", border: "1px solid rgba(212,168,0,0.1)", cursor: "default" }}>
               <div>
                 <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, fontWeight: 800, color: "#D4A800", lineHeight: 1 }}>{siteData?.stats?.assetsGenerated ?? 847}</div>
                 <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#AAB8C8", letterSpacing: "0.08em", marginTop: 4 }}>ASSETS GENERATED</div>
               </div>
             </div>
             {/* Pipeline */}
-            <div className="bento-hover" {...hoverGlow("255,255,255","rgba(255,255,255,0.1)","0 0 16px rgba(255,255,255,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(255,255,255,0.02)")} style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 12, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", cursor: "default" }}>
+            <div className="bento-hover" {...hoverGlow("255,255,255","rgba(255,255,255,0.1)","0 0 16px rgba(255,255,255,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(255,255,255,0.02)")} style={{ "--card-accent-rgb": "255,255,255", "--card-secondary-rgb": "255,255,255", display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 12, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", cursor: "default" }}>
               <div>
                 <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, fontWeight: 800, color: "#E8E8F0", lineHeight: 1, display: "flex", alignItems: "baseline", gap: 2 }}>
                   <span style={{ fontSize: 16, fontWeight: 700 }}>$</span>{siteData?.stats?.pipelineValue ?? 26}k
@@ -1011,7 +1011,7 @@ export default function Page() {
 
             {/*  FEATURED: MANSA  */}
             <Reveal delay={40} parallax={0.2}>
-              <div onClick={() => router.push("/projects?p=0")} className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.2)","0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)")} style={{ borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 360, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(45,212,191,0.2)", boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer", marginBottom: 24 }}>
+              <div onClick={() => router.push("/projects?p=0")} className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.2)","0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)")} style={{ "--card-accent-rgb": "45,212,191", "--card-secondary-rgb": "45,212,191", borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 360, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(45,212,191,0.2)", boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer", marginBottom: 24 }}>
                 <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
                   <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(45,212,191,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                 </div>
@@ -1057,7 +1057,7 @@ export default function Page() {
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: 10 }}>
               {/* COCA-COLA */}
               <Reveal delay={100} parallax={0.25}>
-                <div onClick={() => router.push("/projects?p=1")} className="bento-hover" {...hoverGlow("249,115,22","rgba(249,115,22,0.18)","0 0 16px rgba(249,115,22,0.12), 0 0 50px rgba(249,115,22,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.04)")} style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(249,115,22,0.18)", boxShadow: "0 0 16px rgba(249,115,22,0.12), 0 0 50px rgba(249,115,22,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.04)", cursor: "pointer" }}>
+                <div onClick={() => router.push("/projects?p=1")} className="bento-hover" {...hoverGlow("249,115,22","rgba(249,115,22,0.18)","0 0 16px rgba(249,115,22,0.12), 0 0 50px rgba(249,115,22,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.04)")} style={{ "--card-accent-rgb": "249,115,22", "--card-secondary-rgb": "249,115,22", borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(249,115,22,0.18)", boxShadow: "0 0 16px rgba(249,115,22,0.12), 0 0 50px rgba(249,115,22,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.04)", cursor: "pointer" }}>
                   <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
                     <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(249,115,22,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                   </div>
@@ -1078,7 +1078,7 @@ export default function Page() {
 
               {/* WORKSHOP */}
               <Reveal delay={160} parallax={0.3}>
-                <div onClick={() => router.push("/projects?p=2")} className="bento-hover" {...hoverGlow("94,234,212","rgba(94,234,212,0.15)","0 0 16px rgba(94,234,212,0.12), 0 0 50px rgba(94,234,212,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(94,234,212,0.04)")} style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(94,234,212,0.15)", boxShadow: "0 0 16px rgba(94,234,212,0.12), 0 0 50px rgba(94,234,212,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(94,234,212,0.04)", cursor: "pointer" }}>
+                <div onClick={() => router.push("/projects?p=2")} className="bento-hover" {...hoverGlow("94,234,212","rgba(94,234,212,0.15)","0 0 16px rgba(94,234,212,0.12), 0 0 50px rgba(94,234,212,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(94,234,212,0.04)")} style={{ "--card-accent-rgb": "94,234,212", "--card-secondary-rgb": "94,234,212", borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(94,234,212,0.15)", boxShadow: "0 0 16px rgba(94,234,212,0.12), 0 0 50px rgba(94,234,212,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(94,234,212,0.04)", cursor: "pointer" }}>
                   <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
                     <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(94,234,212,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                   </div>
@@ -1099,7 +1099,7 @@ export default function Page() {
 
               {/* FREEPIK */}
               <Reveal delay={220} parallax={0.35}>
-                <div onClick={() => router.push("/projects?p=3")} className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.2)","0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)")} style={{ borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(45,212,191,0.2)", boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer" }}>
+                <div onClick={() => router.push("/projects?p=3")} className="bento-hover" {...hoverGlow("45,212,191","rgba(45,212,191,0.2)","0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)")} style={{ "--card-accent-rgb": "45,212,191", "--card-secondary-rgb": "45,212,191", borderRadius: 14, padding: "24px 22px", position: "relative", overflow: "hidden", minHeight: 200, background: "rgba(6,12,16,0.97)", border: "1px solid rgba(45,212,191,0.2)", boxShadow: "0 0 16px rgba(45,212,191,0.12), 0 0 50px rgba(45,212,191,0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(45,212,191,0.04)", cursor: "pointer" }}>
                   <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
                     <div className="bento-glow" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 65% at 50% 0%, rgba(45,212,191,0.1) 0%, transparent 70%)", opacity: 0.6, transition: "opacity 0.5s" }} />
                   </div>
@@ -1159,7 +1159,7 @@ export default function Page() {
 
                       {/* Card */}
                       {(() => { const rgb = stage.color.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(','); const restShadow = `0 0 16px rgba(${rgb},0.12), 0 0 50px rgba(${rgb},0.06), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${rgb},0.04)`; return (
-                      <div className="bento-hover" {...hoverGlow(rgb,`rgba(${rgb},0.2)`,restShadow)} style={{ width: "90%", padding: "20px 18px", borderRadius: 14, border: `1px solid rgba(${rgb},0.2)`, background: "rgba(6,12,16,0.97)", boxShadow: restShadow, cursor: "pointer", textAlign: "left", position: "relative", overflow: "hidden" }}>
+                      <div className="bento-hover" {...hoverGlow(rgb,`rgba(${rgb},0.2)`,restShadow)} style={{ "--card-accent-rgb": rgb, "--card-secondary-rgb": rgb, width: "90%", padding: "20px 18px", borderRadius: 14, border: `1px solid rgba(${rgb},0.2)`, background: "rgba(6,12,16,0.97)", boxShadow: restShadow, cursor: "pointer", textAlign: "left", position: "relative", overflow: "hidden" }}>
                         <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: "inherit", pointerEvents: "none" }}>
                           <div className="bento-glow" style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse 90% 65% at 50% 0%, rgba(${stage.color.replace('#','').match(/.{2}/g).map(h=>parseInt(h,16)).join(',')},0.1) 0%, transparent 70%)`, opacity: 0.6, transition: "opacity 0.5s" }} />
                         </div>
@@ -1184,7 +1184,7 @@ export default function Page() {
             <Reveal delay={120}>
               <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 8 }}>
                 {(siteData?.contentQueue ?? []).map((item, i) => { const isCoca = item.project === "Coca-Cola"; const rgb = isCoca ? "249,115,22" : "45,212,191"; const hex = isCoca ? "#F97316" : "#2DD4BF"; return (
-                  <div key={i} className="bento-hover" {...hoverGlow(rgb,`rgba(${rgb},0.15)`,`0 0 16px rgba(${rgb},0.08), 0 0 50px rgba(${rgb},0.04), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${rgb},0.03)`)} style={{ padding: "14px 16px", borderRadius: 10, border: `1px solid rgba(${rgb},0.15)`, background: "rgba(6,12,16,0.97)", boxShadow: `0 0 16px rgba(${rgb},0.08), 0 0 50px rgba(${rgb},0.04), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${rgb},0.03)`, cursor: "pointer", position: "relative", overflow: "hidden" }}>
+                  <div key={i} className="bento-hover" {...hoverGlow(rgb,`rgba(${rgb},0.15)`,`0 0 16px rgba(${rgb},0.08), 0 0 50px rgba(${rgb},0.04), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${rgb},0.03)`)} style={{ "--card-accent-rgb": rgb, "--card-secondary-rgb": rgb, padding: "14px 16px", borderRadius: 10, border: `1px solid rgba(${rgb},0.15)`, background: "rgba(6,12,16,0.97)", boxShadow: `0 0 16px rgba(${rgb},0.08), 0 0 50px rgba(${rgb},0.04), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 30px rgba(${rgb},0.03)`, cursor: "pointer", position: "relative", overflow: "hidden" }}>
                     <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#AAB", lineHeight: 1.4, marginBottom: 8 }}>{item.prompt}</div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
@@ -1210,7 +1210,7 @@ export default function Page() {
     onMouseEnter={e => { e.currentTarget.querySelector("video")?.play(); e.currentTarget.style.boxShadow = `0 0 35px rgba(${agent.rgb},0.4), 0 0 90px rgba(${agent.rgb},0.2), 0 20px 50px rgba(0,0,0,0.6), inset 0 0 50px rgba(${agent.rgb},0.12)`; e.currentTarget.style.borderColor = `rgba(${agent.rgb},0.5)`; }}
     onMouseLeave={e => { const v = e.currentTarget.querySelector("video"); if (v && !isMobile) { v.pause(); v.currentTime = 0; } e.currentTarget.style.boxShadow = `0 0 22px rgba(${agent.rgb},0.22), 0 0 60px rgba(${agent.rgb},0.12), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 40px rgba(${agent.rgb},0.08)`; e.currentTarget.style.borderColor = `rgba(${agent.rgb},0.32)`; }}
     onClick={() => window.location.href = `/agents#${agent.agentId}`}
-    style={{ borderRadius: 16, overflow: "hidden", background: "rgba(6,12,16,0.97)", border: `1px solid rgba(${agent.rgb},0.32)`, boxShadow: `0 0 22px rgba(${agent.rgb},0.22), 0 0 60px rgba(${agent.rgb},0.12), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 40px rgba(${agent.rgb},0.08)`, cursor: "pointer", transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)" }}>
+    style={{ "--card-accent-rgb": agent.rgb, "--card-secondary-rgb": agent.rgb, borderRadius: 16, overflow: "hidden", background: "rgba(6,12,16,0.97)", border: `1px solid rgba(${agent.rgb},0.32)`, boxShadow: `0 0 22px rgba(${agent.rgb},0.22), 0 0 60px rgba(${agent.rgb},0.12), 0 12px 32px rgba(0,0,0,0.5), inset 0 0 40px rgba(${agent.rgb},0.08)`, cursor: "pointer", transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)" }}>
     <div style={{ position: "relative", height: 170, overflow: "hidden", background: "#06080D" }}>
       {/* Agent character video — plays on hover (desktop) / autoplay (mobile) */}
       <video
@@ -1438,6 +1438,7 @@ export default function Page() {
     </div>
   );
 }
+
 
 
 
